@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.modulkassa.pos.integrationtest">
+
+    <uses-permission android:name="ru.modulkassa.pos.permission.PRINT_CHECK"/>
+    <uses-permission android:name="ru.modulkassa.pos.permission.KKT_INFO"/>
+    <uses-permission android:name="ru.modulkassa.pos.permission.CHECK_INFO"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".DemoBroadcastReceiver">
+            <intent-filter>
+                <action android:name="ru.modulkassa.pos.events.CHECK_CLOSED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".UiEventsBroadcastReceiver">
+            <intent-filter>
+                <action android:name="ru.modulkassa.pos.events.UI_RETURN_TO_MAIN_SCREEN"/>
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

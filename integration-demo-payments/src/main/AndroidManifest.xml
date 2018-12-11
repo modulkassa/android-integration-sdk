@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.modulkassa.pos.integrationdemo.payments">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".SampleStartActivity"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SamplePayActivity"
+            android:noHistory="true"
+            android:excludeFromRecents="true">
+        </activity>
+
+        <service
+            android:name=".SamplePaymentService"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_big_logo"
+            android:label="@string/modulkassa_button_label">
+            <intent-filter>
+                <action android:name="ru.modulkassa.PAYMENT_SERVICE"/>
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

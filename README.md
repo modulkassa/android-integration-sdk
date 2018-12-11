@@ -390,8 +390,12 @@ fun paySucceeded(result: PayResult) {
 }
 ```
 
-После успешной оплаты требуется вернуть соответсвующий объект: для оплаты - `PayResult`,
-для возврата - `RefundResult`, для отмены - `CancelResult`.
+После успешной оплаты требуется вернуть соответсвующий объект:
+* для оплаты - `PayResult`,
+* для возврата - `RefundResult`,
+* для отмены - `CancelResult`.
+
+Демонстрационный пример представлен в модуле [integration-demo-payments](https://github.com/modulkassa/android-integration-sdk/tree/master/integration-demo-payments)
 
 ## Получение информации о ККТ
 

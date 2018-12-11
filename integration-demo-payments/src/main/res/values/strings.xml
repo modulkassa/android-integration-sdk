@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Демо эквайринг</string>
+    <string name="modulkassa_button_label">Демо эквайринг</string>
+
+    <string name="start_notes">Демонстрационное приложение для оплаты, которое интегрировано с Модулькассой</string>
+    <string name="pay_title">Оплата</string>
+</resources>

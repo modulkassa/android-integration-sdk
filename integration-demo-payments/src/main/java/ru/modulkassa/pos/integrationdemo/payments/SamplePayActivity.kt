@@ -1,0 +1,39 @@
+package ru.modulkassa.pos.integrationdemo.payments
+
+import android.os.Bundle
+import android.os.Handler
+import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_sample_pay.amount
+import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
+import ru.modulkassa.pos.integration.entity.payment.PayRequest
+import ru.modulkassa.pos.integration.entity.payment.PayResult
+import java.util.UUID
+
+class SamplePayActivity : AppCompatActivity() {
+
+    companion object {
+        const val KEY_DATA = "data"
+        const val TIMEOUT: Long = 3000
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_sample_pay)
+
+        val payRequest = PayRequest.fromBundle(intent.getBundleExtra(KEY_DATA))
+        amount.text = payRequest.amount.toString()
+
+        // Ответим через 3 сек, чтобы показать длительное выполнение запроса
+        Handler().postDelayed(
+            {
+                PluginServiceCallbackHolder.getFromIntent(intent)?.get()?.succeeded(
+                    PayResult(UUID.randomUUID().toString(), listOf()).toBundle())
+
+                // после завершения обработки нужно закрыть активити
+                finish()
+            },
+            TIMEOUT
+        )
+
+    }
+}

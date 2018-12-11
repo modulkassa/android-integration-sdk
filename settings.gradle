@@ -1,1 +1,1 @@
-include ':integration-demo', ':integration-library'
+include ':integration-demo', ':integration-library', ':integration-demo-payments'

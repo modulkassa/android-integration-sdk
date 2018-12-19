@@ -1,5 +1,6 @@
 package ru.modulkassa.pos.integration.entity.check
 
+import ru.modulkassa.pos.integration.entity.check.InventType.INVENTORY
 import java.math.BigDecimal
 
 /**
@@ -33,5 +34,9 @@ data class InventPosition(
     /**
      * Штрихкод товара
      */
-    var barcode: String? = null
+    var barcode: String? = null,
+    /**
+     * Тип товара
+     */
+    var inventType: InventType? = INVENTORY
 )

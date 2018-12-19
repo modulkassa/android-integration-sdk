@@ -22,6 +22,7 @@ import ru.modulkassa.pos.integration.entity.check.Check
 import ru.modulkassa.pos.integration.entity.check.DocumentType
 import ru.modulkassa.pos.integration.entity.check.FiscalInfo
 import ru.modulkassa.pos.integration.entity.check.InventPosition
+import ru.modulkassa.pos.integration.entity.check.InventType.INVENTORY
 import ru.modulkassa.pos.integration.entity.check.Measure.PCS
 import ru.modulkassa.pos.integration.entity.check.MoneyPosition
 import ru.modulkassa.pos.integration.entity.check.ReportLine
@@ -71,7 +72,8 @@ class MainActivity : AppCompatActivity() {
                 vatTag = TAG_1103,
                 quantity = BigDecimal.ONE,
                 measure = PCS,
-                inventCode = "2880000023757"
+                inventCode = "2880000023757",
+                inventType = INVENTORY
             ),
             InventPosition(
                 name = "Жесткий ™™™™™™ диск «вфыдл» ©®°µ£¢@¦ ",

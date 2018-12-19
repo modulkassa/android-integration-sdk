@@ -49,9 +49,12 @@ data class Check(
      * если чек приходит от приложения МодульКассы
      */
     var modulKassaId: String? = null,
-
     /**
      * Текст, который должен быть распечатан на чеке
      */
-    var textToPrint: String? = null
+    var textToPrint: String? = null,
+    /**
+     * Информация о зарегистрированном чеке из ФН
+     */
+    var fiscalInfo: FiscalInfo? = null
 )

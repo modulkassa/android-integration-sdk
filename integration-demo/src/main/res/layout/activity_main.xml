@@ -32,5 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Напечатать чек через МодульКассу"/>
+    <Button
+        android:id="@+id/printText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Напечатать произвольный текст"/>
 
 </LinearLayout>

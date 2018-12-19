@@ -4,6 +4,8 @@
 
 Версия | Изменения
 -------|----------
+0.7.0 | В чек добавлено поле fiscalInfo, которое содержит информацию из ФН.
+| | Добавлена возможность печати произвольного текста.
 0.6.1 | Добавлена поддержка 2х чеков (кассира и покупателя, `Slip.DELIMITER_VALUE`)
 0.6.0 | Дополнена информация о ККТ полями с данными точки (id, ИНН, название, адрес).<br>Добавлено новое событие `ru.modulkassa.pos.events.UI_RETURN_TO_MAIN_SCREEN`
 
@@ -19,6 +21,8 @@
 
 [Получение информации о ККТ](#Получение-информации-о-ККТ)
 
+[Печать произвольного текста](#Печать-произвольного-текста)
+
 ## Подключение библиотеки
 
 Для интеграции вашего приложения с МодульКасса, к вашему проекту потребуется подключить модуль 
@@ -26,12 +30,12 @@
 
 ## Окружение
 
-**Внимание!** Cуществует несколько окружений при работе с МодульКассой.
+**Внимание!** Существует несколько окружений при работе с МодульКассой.
 
 Отличаются они названием
  - МодульКасса - продакшен версия (https://my.modulkassa.ru)
- - МодульКасса (RC) - версия, которая работает в окружении RC (https://staging.dev.avanpos.com)
- - МодульКасса (Staging) - версия, которая работает в окружении Staging (https://rc.dev.avanpos.com)
+ - МодульКасса (RC) - версия, которая работает в окружении RC (https://rc.dev.avanpos.com)
+ - МодульКасса (Staging) - версия, которая работает в окружении Staging (https://staging.dev.avanpos.com)
 
 В зависимости от окружением необходимо использовать соответсвующий intent/имя пакета (например, `ModulKassaServiceIntent`/`StagingModulKassaServiceIntent`/`RcModulKassaServiceIntent`
 
@@ -109,7 +113,7 @@
     }
 ```
 
-Обратите внимание на испльзуемое окружение. Для подключения к сервису приложения настроенного 
+Обратите внимание на используемое окружение. Для подключения к сервису приложения настроенного
 на *staging* следует использовать ```StagingModulKassaServiceIntent```, *rc* - ```RcModulKassaServiceIntent```, 
 *production* - ```ModulKassaServiceIntent```.
 
@@ -471,7 +475,7 @@ fun paySucceeded(result: PayResult) {
     }
 ```
 
-Обратите внимание на испльзуемое окружение. Для подключения к сервису приложения настроенного 
+Обратите внимание на используемое окружение. Для подключения к сервису приложения настроенного
 на *staging* следует использовать ```StagingModulKassaServiceIntent```, *rc* - ```RcModulKassaServiceIntent```, 
 *production* - ```ModulKassaServiceIntent```.
 
@@ -496,4 +500,121 @@ fun paySucceeded(result: PayResult) {
                 })
             }
         }
+```
+
+## Печать произвольного текста
+
+Статус: **предоставляется по запросу**
+
+1. Приложение должно объявить в манифесте (AndroidManifest.xml), разрешение на печать чека
+```ru.modulkassa.pos.permission.PRINT_CHECK```
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.modulkassa.pos.integrationtest">
+    <uses-permission android:name="ru.modulkassa.pos.permission.PRINT_CHECK"/>
+
+    <application ...>
+        ...
+    </application>
+</manifest>
+```
+
+2. Разрешение ```ru.modulkassa.pos.permission.PRINT_CHECK``` также должно быть запрошено перед
+обращением подключением к сервису. Более подробно можно о запросе разрешения можно почитать тут -
+[Request App Permissions](https://developer.android.com/training/permissions/requesting)
+
+```kotlin
+        if (ContextCompat.checkSelfPermission(this, "ru.modulkassa.pos.permission.PRINT_CHECK")
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf("ru.modulkassa.pos.permission.PRINT_CHECK"),
+                PRINT_CHECK_PERMISSION_REQUEST)
+        } else {
+            connectToService()
+        }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PRINT_CHECK_PERMISSION_REQUEST -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    connectToService()
+                } else {
+                    Toast.makeText(this, "Разрешение на печать было отклонено пользователем",
+                        Toast.LENGTH_LONG).show()
+                    finish()
+                }
+                return
+            }
+            else -> {
+                // Ignore all other requests.
+            }
+        }
+    }
+```
+
+3. После того, как разрешение было получено, можно подключаться к сервису.
+
+```kotlin
+    private var modulkassa: IModulKassa? = null
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+            modulkassa = null
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            modulkassa = IModulKassa.Stub.asInterface(service)
+        }
+    }
+
+    private fun connectToService() {
+        val serviceIntent = StagingModulKassaServiceIntent() // ModulKassaServiceIntent()
+        startService(serviceIntent)
+        bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
+    }
+```
+
+Обратите внимание на используемое окружение. Для подключения к сервису приложения настроенного
+на *staging* следует использовать ```StagingModulKassaServiceIntent```, *rc* - ```RcModulKassaServiceIntent```,
+*production* - ```ModulKassaServiceIntent```.
+
+4. Нужно создать отчет для печати.
+Пример формирования чека ЕГАИС для печати
+```kotlin
+    val lines = ArrayList<ReportLine>().apply {
+        add(ReportLine("        ООО 'Магазин-2014'        ", TEXT))
+        add(ReportLine("ИНН: 4959166101     КПП: 495901001", TEXT))
+        add(ReportLine("КАССА: 11022            СМЕНА: 693", TEXT))
+        add(ReportLine("ЧЕК: 3027   ДАТА: 13.12.2012 11:12", TEXT))
+        add(ReportLine("                                  ", TEXT))
+        add(ReportLine("http://check.egais.ru?id=88a7a3ed-39ae-45de-a3cc-644639f36f4e&dt=0910141104&" +
+            "cn=030000255555", QR))
+        add(ReportLine("                                  ", TEXT))
+        addAll(("http://check.egais.ru?id=88a7a3ed-39ae-45de-a3cc-644639f36f4e&dt=0910141104&" +
+            "cn=030000255555").chunked(34).map { line -> ReportLine(line, TEXT) })
+        addAll(("04 40 EA 2B C7 08 75 5D F0 43 C1 04 5C 06 96 71 69 DD BF 30 D9 2D 6B 7D F0 FE 81" +
+            " 43 F9 C4 51 21 E3 42 C9 67 63 4F 24 D5 42 B1 8B 1D 3D F8 6F 91 21 00 6D 8B DE 56 91" +
+            " CA BB ED 0D 36 11 96 B4 33").chunked(34).map { line -> ReportLine(line, TEXT) })
+    }
+```
+5. Теперь можно отправлять текст на печать
+
+```kotlin
+    modulkassa?.let { service ->
+        PrintTextAction(TextReport(lines)).execute(service, object : ActionCallback<Boolean> {
+            override fun succeed(result: Boolean?) {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "Текст напечатан", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun failed(message: String, extra: Map<String, Any>?) {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
 ```

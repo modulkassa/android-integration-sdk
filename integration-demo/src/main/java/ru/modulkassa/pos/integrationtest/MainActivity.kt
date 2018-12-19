@@ -13,21 +13,27 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
 import kotlinx.android.synthetic.main.activity_main.printCheck
 import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassa
+import kotlinx.android.synthetic.main.activity_main.printText
 import ru.modulkassa.pos.integration.core.action.ActionCallback
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
+import ru.modulkassa.pos.integration.core.action.PrintTextAction
 import ru.modulkassa.pos.integration.entity.check.Check
 import ru.modulkassa.pos.integration.entity.check.DocumentType
 import ru.modulkassa.pos.integration.entity.check.FiscalInfo
 import ru.modulkassa.pos.integration.entity.check.InventPosition
 import ru.modulkassa.pos.integration.entity.check.Measure.PCS
 import ru.modulkassa.pos.integration.entity.check.MoneyPosition
+import ru.modulkassa.pos.integration.entity.check.ReportLine
+import ru.modulkassa.pos.integration.entity.check.ReportLineType.QR
+import ru.modulkassa.pos.integration.entity.check.ReportLineType.TEXT
 import ru.modulkassa.pos.integration.entity.check.TaxationMode.COMMON
+import ru.modulkassa.pos.integration.entity.check.TextReport
 import ru.modulkassa.pos.integration.entity.check.VatTag.TAG_1103
 import ru.modulkassa.pos.integration.entity.kkt.KktDescription
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
+import ru.modulkassa.pos.integration.intent.ModulKassaServiceIntent
 import ru.modulkassa.pos.integration.intent.PrintCheckIntent
-import ru.modulkassa.pos.integration.intent.StagingModulKassaServiceIntent
 import ru.modulkassa.pos.integration.service.IModulKassa
 import java.math.BigDecimal
 import java.util.UUID
@@ -155,6 +161,41 @@ class MainActivity : AppCompatActivity() {
                 pin = "")
             startActivity(intent)
         }
+
+        printText.setOnClickListener {
+            modulkassa?.let { service ->
+                val lines = ArrayList<ReportLine>().apply {
+                    add(ReportLine("        ООО 'Магазин-2014'        ", TEXT))
+                    add(ReportLine("ИНН: 4959166101     КПП: 495901001", TEXT))
+                    add(ReportLine("КАССА: 11022            СМЕНА: 693", TEXT))
+                    add(ReportLine("ЧЕК: 3027   ДАТА: 13.12.2012 11:12", TEXT))
+                    add(ReportLine("                                  ", TEXT))
+                    add(ReportLine("http://check.egais.ru?id=88a7a3ed-39ae-45de-a3cc-644639f36f4e&dt=0910141104&" +
+                        "cn=030000255555", QR))
+                    add(ReportLine("                                  ", TEXT))
+                    add(ReportLine("http://check.egais.ru?id=88a7a3ed-39ae-45de-a3cc-644639f36f4e&dt=0910141104&" +
+                        "cn=030000255555", TEXT))
+                    add(ReportLine("04 40 EA 2B C7 08 75 5D F0 43 C1 04 5C 06 96 71 69 DD BF 30 D9 2D 6B 7D F0 FE 81" +
+                        " 43 F9 C4 51 21 E3 42 C9 67 63 4F 24 D5 42 B1 8B 1D 3D F8 6F 91 21 00 6D 8B DE 56 91" +
+                        " CA BB ED 0D 36 11 96 B4 33", TEXT))
+                }
+
+                PrintTextAction(TextReport(lines)).execute(service, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Текст напечатан",
+                                Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -187,7 +228,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToService() {
-        val serviceIntent = StagingModulKassaServiceIntent() // ModulKassaServiceIntent()
+        val serviceIntent = ModulKassaServiceIntent() // StagingModulKassaServiceIntent()
         startService(serviceIntent)
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
     }

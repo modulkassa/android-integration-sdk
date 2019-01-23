@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToService() {
-        val serviceIntent = ModulKassaServiceIntent() // StagingModulKassaServiceIntent()
+        val serviceIntent = ModulKassaServiceIntent()
         startService(serviceIntent)
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
     }

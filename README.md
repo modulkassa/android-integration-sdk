@@ -12,8 +12,6 @@
 
 [Подключение библиотеки](#Подключение-библиотеки)
 
-[Окружение](#Окружение)
-
 [Печать чека (фискализация)](#Печать-чека-фискализация)
 
 [Печать чека (фискализация) в рамках интерфейса приложения МодульКасса](#Печать-чека-фискализация-в-рамках-интерфейса-приложения-МодульКасса)
@@ -28,17 +26,6 @@
 
 Для интеграции вашего приложения с МодульКасса, к вашему проекту потребуется подключить модуль 
 ```integration-library```. Демо приложение находится в модуле ```integration-demo```.
-
-## Окружение
-
-**Внимание!** Существует несколько окружений при работе с МодульКассой.
-
-Отличаются они названием
- - МодульКасса - продакшен версия (https://my.modulkassa.ru)
- - МодульКасса (RC) - версия, которая работает в окружении RC (https://rc.dev.avanpos.com)
- - МодульКасса (Staging) - версия, которая работает в окружении Staging (https://staging.dev.avanpos.com)
-
-В зависимости от окружением необходимо использовать соответсвующий intent/имя пакета (например, `ModulKassaServiceIntent`/`StagingModulKassaServiceIntent`/`RcModulKassaServiceIntent`
 
 ## Печать чека (фискализация)
 
@@ -108,15 +95,11 @@
     }
     
     private fun connectToService() {
-        val serviceIntent = StagingModulKassaServiceIntent() // ModulKassaServiceIntent()
+        val serviceIntent = ModulKassaServiceIntent()
         startService(serviceIntent)
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
     }
 ```
-
-Обратите внимание на используемое окружение. Для подключения к сервису приложения настроенного
-на *staging* следует использовать ```StagingModulKassaServiceIntent```, *rc* - ```RcModulKassaServiceIntent```, 
-*production* - ```ModulKassaServiceIntent```.
 
 4.  Теперь можно отправлять чек на печать
 
@@ -470,15 +453,11 @@ fun paySucceeded(result: PayResult) {
     }
     
     private fun connectToService() {
-        val serviceIntent = StagingModulKassaServiceIntent() // ModulKassaServiceIntent()
+        val serviceIntent = ModulKassaServiceIntent()
         startService(serviceIntent)
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
     }
 ```
-
-Обратите внимание на используемое окружение. Для подключения к сервису приложения настроенного
-на *staging* следует использовать ```StagingModulKassaServiceIntent```, *rc* - ```RcModulKassaServiceIntent```, 
-*production* - ```ModulKassaServiceIntent```.
 
 4. Теперь можно запрашивать данные
 
@@ -571,15 +550,11 @@ fun paySucceeded(result: PayResult) {
     }
 
     private fun connectToService() {
-        val serviceIntent = StagingModulKassaServiceIntent() // ModulKassaServiceIntent()
+        val serviceIntent = ModulKassaServiceIntent()
         startService(serviceIntent)
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
     }
 ```
-
-Обратите внимание на используемое окружение. Для подключения к сервису приложения настроенного
-на *staging* следует использовать ```StagingModulKassaServiceIntent```, *rc* - ```RcModulKassaServiceIntent```,
-*production* - ```ModulKassaServiceIntent```.
 
 4. Нужно создать отчет для печати.
 Пример формирования чека ЕГАИС для печати

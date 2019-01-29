@@ -4,8 +4,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
-import com.avanpos.pos.integration.lib.R
 import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
+import ru.modulkassa.pos.integration.lib.R
 import ru.modulkassa.pos.integration.service.IPluginService
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback
 import timber.log.Timber

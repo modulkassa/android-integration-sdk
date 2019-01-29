@@ -1,5 +1,11 @@
 package ru.modulkassa.pos.integration.entity.check
 
+import android.os.Bundle
+import com.google.gson.Gson
+import ru.modulkassa.pos.integration.ModulKassaClient
+import ru.modulkassa.pos.integration.entity.Bundable
+import java.math.BigDecimal
+
 /**
  * Документ из другого приложения, который необходимо фискализировать
  */
@@ -57,4 +63,23 @@ data class Check(
      * Информация о зарегистрированном чеке из ФН
      */
     var fiscalInfo: FiscalInfo? = null
-)
+) : Bundable {
+
+    companion object {
+        const val KEY_SERIALIZED_CHECK = "integration.entity.check.serialized_check"
+        private val gson = Gson()
+
+        fun fromBundle(data: Bundle): Check? {
+            return gson.fromJson(data.getString(KEY_SERIALIZED_CHECK), Check::class.java)
+        }
+    }
+
+    override fun toBundle(): Bundle {
+        return Bundle().also {
+            val serializedCheck = gson.toJson(Check@this)
+            it.putString(KEY_SERIALIZED_CHECK, serializedCheck)
+        }
+    }
+
+
+}

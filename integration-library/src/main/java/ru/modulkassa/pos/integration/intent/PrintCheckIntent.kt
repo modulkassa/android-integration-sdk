@@ -2,11 +2,13 @@ package ru.modulkassa.pos.integration.intent
 
 import android.content.Intent
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import ru.modulkassa.pos.integration.entity.check.Check
 
 /**
  * Intent для печати(фискализации) чека в рамках приложения МодульКасса
  */
+@Deprecated("Используйте ```CheckManager.createPrintCheckIntent()```")
 class PrintCheckIntent(
     /**
      * Чек, который необходимо распечатать/фискализировать
@@ -30,8 +32,14 @@ class PrintCheckIntent(
 
         fun checkFromIntent(intent: Intent): Check {
             val serializedCheck = intent.getStringExtra(KEY_SERIALIZED_CHECK)
-            val gson = Gson()
-            return gson.fromJson(serializedCheck, Check::class.java)
+            return try {
+                val gson = Gson()
+                gson.fromJson(serializedCheck, Check::class.java)
+            } catch (e: IllegalStateException) {
+                throw InvalidCheckBodyException(serializedCheck, e)
+            } catch (e: JsonSyntaxException) {
+                throw InvalidCheckBodyException(serializedCheck, e)
+            }
         }
 
         fun employeeNameFromIntent(intent: Intent) = intent.getStringExtra(KEY_EMPLOYEE_NAME)

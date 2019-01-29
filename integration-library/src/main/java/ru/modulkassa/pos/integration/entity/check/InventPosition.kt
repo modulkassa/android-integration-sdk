@@ -4,7 +4,7 @@ import ru.modulkassa.pos.integration.entity.check.InventType.INVENTORY
 import java.math.BigDecimal
 
 /**
- * Позация в чеке
+ * Строка в чеке
  */
 data class InventPosition(
     /**
@@ -12,15 +12,17 @@ data class InventPosition(
      */
     var inventCode: String?,
     /**
-     * Наименование товаа
+     * Наименование товара
      */
     var name: String,
     /**
      * Цена товара
+     * Точность должна быть указана до 2х знаков [BigDecimal.setScale(2, BigDecimal.ROUND_DOWN)]
      */
     var price: BigDecimal,
     /**
-     * Количество товаа
+     * Количество товара
+     * Точность должна быть указана до 3х знаков [BigDecimal.setScale(3, BigDecimal.ROUND_DOWN)]
      */
     var quantity: BigDecimal,
     /**

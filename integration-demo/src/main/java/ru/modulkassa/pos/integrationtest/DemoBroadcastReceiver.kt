@@ -14,7 +14,7 @@ class DemoBroadcastReceiver : CheckUpdatesBroadcastReceiver() {
         Log.i("DemoBroadcastReceiver", "чек - $check")
         Toast.makeText(
             context,
-            "Чек закрыт: id - $checkId, linkedId - $linkedDocId, сумма - $sum, чек - $check}",
+            "Broadcast: Чек закрыт: id - $checkId, linkedId - $linkedDocId, сумма - $sum",
             Toast.LENGTH_LONG
         ).show()
     }

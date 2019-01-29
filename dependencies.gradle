@@ -1,18 +1,8 @@
-ext.versions = [
-                minSdk     : 21,
-                targetSdk  : 26,
-                compileSdk : 26,
-                buildTools : '27.0.3',
-
-                kotlin     : '1.2.30',
-                anko       : '0.10.4',
-                dagger     : '2.7',
-                retrofit   : '2.3.0',
-                room       : '1.0.0',
-                okhttp     : '3.9.0',
-
-                moxy       : '1.5.3',
-                supportLibs: '26.1.0']
+ext.versions = [minSdk    : 21,
+                targetSdk : 26,
+                compileSdk: 28,
+                buildTools: '28.0.3',
+                kotlin    : '1.3.10',]
 
 ext.gradlePlugins = [android         : 'com.android.tools.build:gradle:3.1.1',
                      grgit           : 'org.ajoberstar:grgit:1.1.0',
@@ -22,54 +12,15 @@ ext.gradlePlugins = [android         : 'com.android.tools.build:gradle:3.1.1',
                      jacoco          : 'org.jacoco:org.jacoco.core:0.7.4.201502262128',
                      jacocoReports   : 'org.jacoco:org.jacoco.report:0.7.4.201502262128']
 
-ext.libraries = [timber                 : "com.jakewharton.timber:timber:4.5.1",
-                 oval                   : "net.sf.oval:oval:1.87",
+ext.libraries = [timber       : "com.jakewharton.timber:timber:4.5.1",
 
-                 dagger                 : "com.google.dagger:dagger:$versions.dagger",
-                 daggerCompiler         : "com.google.dagger:dagger-compiler:$versions.dagger",
+                 kotlin       : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
+                 kotlinReflect: "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
+                 kotlinJUnit  : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
 
-                 support                : "com.android.support:support-v13:$versions.supportLibs",
-                 supportAnnotations     : "com.android.support:support-annotations:$versions.supportLibs",
-                 supportAppCompat       : "com.android.support:appcompat-v7:$versions.supportLibs",
-                 supportDesign          : "com.android.support:design:$versions.supportLibs",
-                 supportRecyclerView    : "com.android.support:recyclerview-v7:$versions.supportLibs",
-                 supportCardView        : "com.android.support:cardview-v7:$versions.supportLibs",
-                 supportGridLayout      : "com.android.support:gridlayout-v7:$versions.supportLibs",
-                 supportConstraintLayout: "com.android.support.constraint:constraint-layout:1.1.0-beta4",
+                 junit        : 'junit:junit:4.12',
+                 mockito      : 'org.mockito:mockito-core:2.7.19',
+                 mockitoKotlin: 'com.nhaarman:mockito-kotlin:1.1.0',
+                 robolectric  : 'org.robolectric:robolectric:3.3.2',
 
-                 moxyCompat             : "com.arello-mobile:moxy-app-compat:$versions.moxy",
-                 moxy                   : "com.arello-mobile:moxy:$versions.moxy",
-                 moxyAndroid            : "com.arello-mobile:moxy-android:$versions.moxy",
-                 moxyCompiler           : "com.arello-mobile:moxy-compiler:$versions.moxy",
-
-                 kotlin                 : "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin",
-                 kotlinReflect          : "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
-                 kotlinJUnit            : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
-                 anko                   : "org.jetbrains.anko:anko-commons:$versions.anko",
-                 ankoSqlite             : "org.jetbrains.anko:anko-sqlite:$versions.anko",
-
-                 junit                  : 'junit:junit:4.12',
-                 mockito                : 'org.mockito:mockito-core:2.7.19',
-                 mockitoKotlin          : 'com.nhaarman:mockito-kotlin:1.1.0',
-                 robolectric            : 'org.robolectric:robolectric:3.3.2',
-                 okHttpMockWebServer    : "com.squareup.okhttp3:mockwebserver:$versions.okhttp",
-
-                 jodaTime               : 'joda-time:joda-time:2.9.1',
-                 okhttp                 : "com.squareup.okhttp3:okhttp:$versions.okhttp",
-                 priorityJobQueue       : 'com.birbit:android-priority-jobqueue:2.0.1',
-
-                 gson                   : 'com.google.code.gson:gson:2.8.2',
-                 gsonExtras             : 'org.danilopianini:gson-extras:0.2.1',
-
-                 rxjava2                : 'io.reactivex.rxjava2:rxjava:2.1.6',
-                 rxandroid              : 'io.reactivex.rxjava2:rxandroid:2.0.1',
-                 rxKotlin               : 'io.reactivex.rxjava2:rxkotlin:2.2.0',
-
-                 retrofit               : "com.squareup.retrofit2:retrofit:$versions.retrofit",
-                 retrofitGson           : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
-                 retrofitXml            : "com.squareup.retrofit2:converter-simplexml:$versions.retrofit",
-                 retrofitRx             : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
-
-                 room                   : "android.arch.persistence.room:runtime:$versions.room",
-                 roomRx                 : "android.arch.persistence.room:rxjava2:$versions.room",
-                 roomCompiler           : "android.arch.persistence.room:compiler:$versions.room"]
+                 gson         : 'com.google.code.gson:gson:2.8.2',]

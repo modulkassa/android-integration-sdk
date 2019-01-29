@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def libVersionName = "0.7.1"
+def libVersionName = "0.8.0"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -32,4 +32,7 @@ dependencies {
 
     testImplementation libraries.junit
     testImplementation libraries.robolectric
+    testImplementation libraries.mockito
+    testImplementation libraries.mockitoKotlin
+    testImplementation libraries.kotlinJUnit
 }

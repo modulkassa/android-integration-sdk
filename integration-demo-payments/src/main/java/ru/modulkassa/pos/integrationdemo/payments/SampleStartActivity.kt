@@ -1,7 +1,7 @@
 package ru.modulkassa.pos.integrationdemo.payments
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class SampleStartActivity : AppCompatActivity() {
 

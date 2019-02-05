@@ -1,6 +1,6 @@
 # Библиотека для интеграции с приложением МодульКасса
 
-[![Download](https://api.bintray.com/packages/modulkassa/public/ru.modulkassa.integration/images/download.svg?version=0.8.0) ](https://bintray.com/modulkassa/public/ru.modulkassa.integration/0.8.0/link)
+[![Download](https://api.bintray.com/packages/modulkassa/public/ru.modulkassa.integration/images/download.svg) ](https://bintray.com/modulkassa/public/ru.modulkassa.integration/_latestVersion)
 
 Предоставляет набор сущностей и методов для работы с МодульКассой.
 

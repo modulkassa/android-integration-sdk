@@ -1,7 +1,7 @@
 package ru.modulkassa.pos.integration.entity.check
 
 /**
- * Тип товара
+ * Тип товара (признак предмета расчета, тег 1212)
  */
 enum class InventType {
     /**
@@ -35,5 +35,45 @@ enum class InventType {
     /**
      * Слабый алкоголь. Обрабатывается как обычный товар
      */
-    LIGHT_ALCOHOL
+    LIGHT_ALCOHOL,
+    /**
+     * Работа
+     */
+    JOB,
+    /**
+     * Ставка азартной игры
+     */
+    GAMBLING_BET,
+    /**
+     * Выигрыш азартной игры
+     */
+    GAMBLING_PRIZE,
+    /**
+     * Лотерейный билет
+     */
+    LOTTERY,
+    /**
+     * Выигрыш лотереи
+     */
+    LOTTERY_PRIZE,
+    /**
+     * Предоставление прав на использование результатов интеллектуальной деятельности
+     */
+    INTELLECTUAL_ACTIVITY,
+    /**
+     * Платеж
+     */
+    PAYMENT,
+    /**
+     * Агентское вознаграждение
+     */
+    AGENT_COMISSION,
+    /**
+     * Составной предмет расчета
+     */
+    COMPOSITE,
+    /**
+     * Иной предмет расчета
+     */
+    ANOTHER
 }

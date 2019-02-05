@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             check?.let {
                 Toast.makeText(
                     this@MainActivity,
-                    "Activity: Чек закрыт: id - ${check.id}, сумма - ${check.fiscalInfo}",
+                    "Activity: Чек закрыт: id - ${check.id}, фискальная информация - ${check.fiscalInfo}",
                     Toast.LENGTH_LONG
                 ).show()
             }

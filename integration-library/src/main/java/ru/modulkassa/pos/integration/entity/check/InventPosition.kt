@@ -1,6 +1,7 @@
 package ru.modulkassa.pos.integration.entity.check
 
 import ru.modulkassa.pos.integration.entity.check.InventType.INVENTORY
+import ru.modulkassa.pos.integration.entity.check.PaymentMethod.FULL_PAYMENT
 import java.math.BigDecimal
 
 /**
@@ -38,7 +39,11 @@ data class InventPosition(
      */
     var barcode: String? = null,
     /**
-     * Тип товара
+     * Тип товара (признак предмета расчета, тег 1212)
      */
-    var inventType: InventType? = INVENTORY
+    var inventType: InventType? = INVENTORY,
+    /**
+     * Признак способа расчета (тег 1214)
+     */
+    var paymentMethod: PaymentMethod? = FULL_PAYMENT
 )

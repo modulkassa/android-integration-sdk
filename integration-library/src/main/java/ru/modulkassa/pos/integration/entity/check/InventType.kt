@@ -75,5 +75,25 @@ enum class InventType {
     /**
      * Иной предмет расчета
      */
-    ANOTHER
+    ANOTHER,
+    /**
+     * Имущественное право
+     */
+    PROPERTY_RIGHT,
+    /**
+     * Внереализационный доход
+     */
+    NON_OPERATION_GAIN,
+    /**
+     * Страховые взносы
+     */
+    INSURANCE_PREMIUM,
+    /**
+     * Торговый сбор
+     */
+    SALES_TAX,
+    /**
+     * Курортный сбор
+     */
+    RESORT_FEE
 }

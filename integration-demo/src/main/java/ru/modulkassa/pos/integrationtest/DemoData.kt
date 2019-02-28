@@ -11,7 +11,6 @@ import ru.modulkassa.pos.integration.entity.check.ReportLineType.QR
 import ru.modulkassa.pos.integration.entity.check.ReportLineType.TEXT
 import ru.modulkassa.pos.integration.entity.check.TaxationMode.COMMON
 import ru.modulkassa.pos.integration.entity.check.VatTag.TAG_1103
-import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CASH
 import java.math.BigDecimal
 

@@ -2,5 +2,6 @@
     <string name="app_name">integration-library</string>
 
     <string name="method_is_unsupported">Приложение не поддерживает эту операцию</string>
+    <string name="loyalty_request_is_invalid">Некорректная структура запроса</string>
     <string name="error_unknown">Произошла неизвестная ошибка</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.modulkassa.pos.integrationtest">
 
     <uses-permission android:name="ru.modulkassa.pos.permission.PRINT_CHECK"/>
@@ -14,6 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".DemoApp">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,6 +36,19 @@
                 <action android:name="ru.modulkassa.pos.events.UI_RETURN_TO_MAIN_SCREEN"/>
             </intent-filter>
         </receiver>
+
+        <service android:name=".SampleLoyaltyService"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:label="@string/loyalty_button_label"
+            android:description="@string/loyalty_description">
+
+            <intent-filter>
+                <action android:name="ru.modulkassa.LOYALTY_SERVICE"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

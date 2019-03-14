@@ -2,6 +2,8 @@
 .idea
 .*.iml
 *.iml
+*.jks
+**/*.jks
 **/*.iml
 local.properties
 build

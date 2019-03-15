@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+Properties localProperties = new Properties()
+File propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    localProperties.load(propertiesFile.newDataInputStream())
+}
+
 android {
     compileSdkVersion 28
 
@@ -18,6 +25,10 @@ android {
 
     signingConfigs {
         release {
+            storeFile file("../demo_keystore.jks")
+            storePassword System.getProperty("android.storePassword") ?: localProperties.getProperty("android.storePassword")
+            keyAlias System.getProperty("android.keyAlias") ?: localProperties.getProperty("android.keyAlias")
+            keyPassword System.getProperty("android.keyPassword") ?: localProperties.getProperty("android.keyPassword")
         }
     }
 

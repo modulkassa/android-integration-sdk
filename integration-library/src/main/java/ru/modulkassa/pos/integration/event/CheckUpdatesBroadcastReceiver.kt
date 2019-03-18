@@ -10,7 +10,7 @@ import java.math.BigDecimal
 /**
  * Класс для получения сообщений об изменении чека
  */
-abstract class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
+open class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
         const val KEY_CHECK_ID = "check_id"
@@ -23,12 +23,27 @@ abstract class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         intent?.let {
-            onCheckClosed(
-                context,
-                it.getStringExtra(KEY_CHECK_ID),
-                it.getStringExtra(KEY_CHECK_LINKED_ID),
-                BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
-                gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
+            when (intent.action) {
+                Events.CHECK_CLOSED -> onCheckClosed(
+                    context,
+                    it.getStringExtra(KEY_CHECK_ID),
+                    it.getStringExtra(KEY_CHECK_LINKED_ID),
+                    BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
+                    gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
+                "ru.modulkassa.pos.events.CHECK_MODIFIED" -> onCheckChanged(
+                    context,
+                    it.getStringExtra(KEY_CHECK_ID),
+                    it.getStringExtra(KEY_CHECK_LINKED_ID),
+                    BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
+                    gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
+                "ru.modulkassa.pos.events.CHECK_CANCELLED" -> onCheckCancelled(
+                    context,
+                    it.getStringExtra(KEY_CHECK_ID),
+                    it.getStringExtra(KEY_CHECK_LINKED_ID),
+                    BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
+                    gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
+
+            }
         }
     }
 
@@ -37,6 +52,28 @@ abstract class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
      * @param checkId - ID чека в приложении МодульКасса
      * @param linkedDocId - ID в системе, которая сформировала чек (заказ, чек из другого приложения и тд)
      */
-    abstract fun onCheckClosed(context: Context, checkId: String, linkedDocId: String?,
-                               sum: BigDecimal, check: Check)
+    open fun onCheckClosed(context: Context, checkId: String, linkedDocId: String?,
+                           sum: BigDecimal, check: Check) {
+
+    }
+
+    /**
+     * Метод сообщающий о том, что чек отменен
+     * @param checkId - ID чека в приложении МодульКасса
+     * @param linkedDocId - ID в системе, которая сформировала чек (заказ, чек из другого приложения и тд)
+     */
+    open fun onCheckCancelled(context: Context, checkId: String, linkedDocId: String?,
+                              sum: BigDecimal, check: Check) {
+
+    }
+
+    /**
+     * Метод сообщающий о том, что чек изменен
+     * @param checkId - ID чека в приложении МодульКасса
+     * @param linkedDocId - ID в системе, которая сформировала чек (заказ, чек из другого приложения и тд)
+     */
+    open fun onCheckChanged(context: Context, checkId: String, linkedDocId: String?,
+                            sum: BigDecimal, check: Check) {
+
+    }
 }

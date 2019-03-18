@@ -30,13 +30,13 @@ open class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
                     it.getStringExtra(KEY_CHECK_LINKED_ID),
                     BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
                     gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
-                "ru.modulkassa.pos.events.CHECK_MODIFIED" -> onCheckChanged(
+                Events.CHECK_CHANGED -> onCheckChanged(
                     context,
                     it.getStringExtra(KEY_CHECK_ID),
                     it.getStringExtra(KEY_CHECK_LINKED_ID),
                     BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
                     gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
-                "ru.modulkassa.pos.events.CHECK_CANCELLED" -> onCheckCancelled(
+                Events.CHECK_CANCELLED -> onCheckCancelled(
                     context,
                     it.getStringExtra(KEY_CHECK_ID),
                     it.getStringExtra(KEY_CHECK_LINKED_ID),

@@ -83,7 +83,7 @@ enum class InventType {
     /**
      * Внереализационный доход
      */
-    NON_OPERATION_GAIN,
+    NON_OPERATING_GAIN,
     /**
      * Страховые взносы
      */

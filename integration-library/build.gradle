@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'com.jfrog.bintray'
 
-def libVersionName = "0.9.0"
+def libVersionName = "0.9.1"
 version = libVersionName
 group 'ru.modulkassa.pos'
 
@@ -49,6 +49,18 @@ if (propertiesFile.exists()) {
 }
 
 publishing {
+
+    repositories {
+        maven {
+            name 'Internal'
+            url properties.getProperty("nexus.url")
+            credentials {
+                username properties.getProperty("nexus.username")
+                password properties.getProperty("nexus.password")
+            }
+        }
+    }
+
     publications {
         Bintray(MavenPublication) {
             groupId group

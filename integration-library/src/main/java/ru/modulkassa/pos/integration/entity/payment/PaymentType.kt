@@ -11,5 +11,9 @@ enum class PaymentType {
     /**
      * Оплата картой
      */
-    CARD
+    CARD,
+    /**
+     * Предоплата (аванс)
+     */
+    PREPAID
 }

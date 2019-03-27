@@ -3,6 +3,7 @@ package ru.modulkassa.pos.integration.core.manager
 import android.content.Intent
 import ru.modulkassa.pos.integration.entity.ResultError
 import ru.modulkassa.pos.integration.entity.check.Check
+import ru.modulkassa.pos.integration.entity.kkt.MoneyCheck
 
 /**
  * Отвечает за регистрацию чеков
@@ -23,4 +24,14 @@ interface CheckManager {
      * Получение информации об ошибке при печати чека
      */
     fun parsePrintCheckError(data: Intent): ResultError
+
+    /**
+     * Подготовить `Intent` для создание чека внесения/выема
+     */
+    fun createMoneyCheckIntent(check: MoneyCheck): Intent
+
+    /**
+     * Получение информации об ошибке при создании чека внесения/выема
+     */
+    fun parseMoneyCheckError(data: Intent): ResultError
 }

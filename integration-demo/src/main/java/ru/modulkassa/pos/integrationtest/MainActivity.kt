@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             PRINT_CHECK_REQUEST_CODE -> handlePrintCheckAnswer(resultCode, data)
             SHIFT_ACTION_REQUEST_CODE -> handleShiftActionAnswer(resultCode, data)
+            CREATE_MONEY_DOC_REQUEST_CODE -> handleMoneyCheckAnswer(resultCode, data)
         }
     }
 
@@ -101,6 +102,19 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        } else {
+            val resultError = modulKassaClient.checkManager().parsePrintCheckError(data ?: Intent())
+            Toast.makeText(
+                this@MainActivity,
+                "Activity: Ошибка: ${resultError.message}",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun handleMoneyCheckAnswer(resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this@MainActivity, "Внесение произошло", Toast.LENGTH_LONG)
         } else {
             val resultError = modulKassaClient.checkManager().parsePrintCheckError(data ?: Intent())
             Toast.makeText(

@@ -35,5 +35,9 @@ data class CheckLevelAgentInformation(
     /**
      * Телефон оператора перевода (тег 1075)
      */
-    val transferOperatorPhone: String? = null
+    val transferOperatorPhone: String? = null,
+    /**
+     * Наименование оператора перевода (тег 1026)
+     */
+    val transferOperatorName: String? = null
 )

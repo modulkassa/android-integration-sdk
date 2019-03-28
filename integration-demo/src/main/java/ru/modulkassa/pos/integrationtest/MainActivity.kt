@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleMoneyCheckAnswer(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this@MainActivity, "Внесение произошло", Toast.LENGTH_LONG)
+                Toast.makeText(this@MainActivity, "Внесение произошло", Toast.LENGTH_LONG).show()
         } else {
             val resultError = modulKassaClient.checkManager().parsePrintCheckError(data ?: Intent())
             Toast.makeText(

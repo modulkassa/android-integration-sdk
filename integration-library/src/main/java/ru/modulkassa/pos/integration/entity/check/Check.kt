@@ -62,7 +62,11 @@ data class Check(
     /**
      * Информация о зарегистрированном чеке из ФН
      */
-    var fiscalInfo: FiscalInfo? = null
+    var fiscalInfo: FiscalInfo? = null,
+    /**
+     * Информация о платежном агенте
+     */
+    var agentInformation: CheckLevelAgentInformation? = null
 ) : Bundable {
 
     companion object {

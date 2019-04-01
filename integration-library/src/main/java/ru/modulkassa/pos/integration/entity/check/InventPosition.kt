@@ -45,5 +45,9 @@ data class InventPosition(
     /**
      * Признак способа расчета (тег 1214)
      */
-    var paymentMethod: PaymentMethod? = FULL_PAYMENT
+    var paymentMethod: PaymentMethod? = FULL_PAYMENT,
+    /**
+     * Информация о платежном агенте
+     */
+    var agentInformation: InventPositionLevelAgentInformation? = null
 )

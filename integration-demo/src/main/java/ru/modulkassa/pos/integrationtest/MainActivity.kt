@@ -282,7 +282,8 @@ class MainActivity : AppCompatActivity() {
 
         createMoneyDoc.setOnClickListener {
             startActivityForResult(
-                modulKassaClient.checkManager().createMoneyCheckIntent(MoneyCheck(INCOME, BigDecimal("100"), listOf("Иванов Иван"))),
+                modulKassaClient.checkManager().createMoneyCheckIntent(
+                    MoneyCheck(INCOME, BigDecimal("100"), listOf("Внесение при открытии смены"), Employee("Иванов И.И."))),
                 CREATE_MONEY_DOC_REQUEST_CODE
             )
         }

@@ -14,7 +14,7 @@ data class Employee(
 ) : Bundable {
 
     companion object {
-        private const val KEY_EMPLOYEE_NAME = "integration.entity.employee.employee_name"
+        const val KEY_EMPLOYEE_NAME = "integration.entity.employee.employee_name"
 
         fun fromBundle(bundle: Bundle): Employee? {
             return bundle.getString(KEY_EMPLOYEE_NAME)?.let {

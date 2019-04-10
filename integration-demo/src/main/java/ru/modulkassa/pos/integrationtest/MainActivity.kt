@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.cancelByCard
 import kotlinx.android.synthetic.main.activity_main.closeShift
+import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
 import kotlinx.android.synthetic.main.activity_main.openShift
 import kotlinx.android.synthetic.main.activity_main.printCheck
@@ -32,6 +33,8 @@ import ru.modulkassa.pos.integration.entity.check.FiscalInfo
 import ru.modulkassa.pos.integration.entity.check.MoneyPosition
 import ru.modulkassa.pos.integration.entity.check.TextReport
 import ru.modulkassa.pos.integration.entity.kkt.KktDescription
+import ru.modulkassa.pos.integration.entity.kkt.MoneyCheck
+import ru.modulkassa.pos.integration.entity.kkt.MoneyCheckType.INCOME
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CASH
 import ru.modulkassa.pos.integration.intent.ModulKassaServiceIntent
@@ -45,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         private const val PRINT_CHECK_PERMISSION_REQUEST = 1
         private const val PRINT_CHECK_REQUEST_CODE = 2
         private const val SHIFT_ACTION_REQUEST_CODE = 3
+        private const val CREATE_MONEY_DOC_REQUEST_CODE = 4
     }
 
     private var modulkassa: IModulKassa? = null
@@ -67,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             PRINT_CHECK_REQUEST_CODE -> handlePrintCheckAnswer(resultCode, data)
             SHIFT_ACTION_REQUEST_CODE -> handleShiftActionAnswer(resultCode, data)
+            CREATE_MONEY_DOC_REQUEST_CODE -> handleMoneyCheckAnswer(resultCode, data)
         }
     }
 
@@ -97,6 +102,19 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        } else {
+            val resultError = modulKassaClient.checkManager().parsePrintCheckError(data ?: Intent())
+            Toast.makeText(
+                this@MainActivity,
+                "Activity: Ошибка: ${resultError.message}",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun handleMoneyCheckAnswer(resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this@MainActivity, "Внесение произошло", Toast.LENGTH_LONG).show()
         } else {
             val resultError = modulKassaClient.checkManager().parsePrintCheckError(data ?: Intent())
             Toast.makeText(
@@ -259,6 +277,14 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(
                 modulKassaClient.shiftManager().createCloseShiftIntent(Employee(name = "Иванов Иван")),
                 SHIFT_ACTION_REQUEST_CODE
+            )
+        }
+
+        createMoneyDoc.setOnClickListener {
+            startActivityForResult(
+                modulKassaClient.checkManager().createMoneyCheckIntent(
+                    MoneyCheck(INCOME, BigDecimal("100"), listOf("Внесение при открытии смены"), Employee("Иванов И.И."))),
+                CREATE_MONEY_DOC_REQUEST_CODE
             )
         }
     }

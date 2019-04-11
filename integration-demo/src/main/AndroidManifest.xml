@@ -28,6 +28,8 @@
         <receiver android:name=".DemoBroadcastReceiver">
             <intent-filter>
                 <action android:name="ru.modulkassa.pos.events.CHECK_CLOSED"/>
+                <action android:name="ru.modulkassa.pos.events.CHECK_MODIFIED"/>
+                <action android:name="ru.modulkassa.pos.events.CHECK_CANCELLED"/>
             </intent-filter>
         </receiver>
 

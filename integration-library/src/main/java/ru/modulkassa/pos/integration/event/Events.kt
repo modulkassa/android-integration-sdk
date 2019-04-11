@@ -6,6 +6,14 @@ package ru.modulkassa.pos.integration.event
 class Events {
     companion object {
         /**
+         * Чек изменен
+         */
+        const val CHECK_CHANGED = "ru.modulkassa.pos.events.CHECK_MODIFIED"
+        /**
+         * Чек отменен
+         */
+        const val CHECK_CANCELLED = "ru.modulkassa.pos.events.CHECK_CANCELLED"
+        /**
          * Фискализация чека завершена
          */
         const val CHECK_CLOSED = "ru.modulkassa.pos.events.CHECK_CLOSED"

@@ -77,6 +77,12 @@
             android:text="Закрыть смену"/>
 
         <Button
+            android:id="@+id/getShiftInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Плучить данные о смене"/>
+
+        <Button
             android:id="@+id/createMoneyDoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

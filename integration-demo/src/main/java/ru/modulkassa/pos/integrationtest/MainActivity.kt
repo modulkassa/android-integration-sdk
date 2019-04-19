@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.cancelByCard
 import kotlinx.android.synthetic.main.activity_main.closeShift
 import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
+import kotlinx.android.synthetic.main.activity_main.getShiftInfo
 import kotlinx.android.synthetic.main.activity_main.openShift
 import kotlinx.android.synthetic.main.activity_main.printCheck
 import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassa
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.refund
 import kotlinx.android.synthetic.main.activity_main.refundByCard
 import ru.modulkassa.pos.integration.core.action.ActionCallback
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
+import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintTextAction
 import ru.modulkassa.pos.integration.entity.check.DocumentType.RETURN
@@ -35,6 +37,7 @@ import ru.modulkassa.pos.integration.entity.check.TextReport
 import ru.modulkassa.pos.integration.entity.kkt.KktDescription
 import ru.modulkassa.pos.integration.entity.kkt.MoneyCheck
 import ru.modulkassa.pos.integration.entity.kkt.MoneyCheckType.INCOME
+import ru.modulkassa.pos.integration.entity.kkt.Shift
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CASH
 import ru.modulkassa.pos.integration.intent.ModulKassaServiceIntent
@@ -253,6 +256,25 @@ class MainActivity : AppCompatActivity() {
                     override fun succeed(result: Boolean?) {
                         runOnUiThread {
                             Toast.makeText(this@MainActivity, "Текст напечатан",
+                                Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
+        }
+
+        getShiftInfo.setOnClickListener {
+            modulkassa?.let { service ->
+                GetShiftInfoAction().execute(service, object : ActionCallback<Shift> {
+                    override fun succeed(result: Shift?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Результат: $result",
                                 Toast.LENGTH_LONG).show()
                         }
                     }

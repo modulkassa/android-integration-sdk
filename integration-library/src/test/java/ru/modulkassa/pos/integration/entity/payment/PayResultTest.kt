@@ -36,4 +36,29 @@ class PayResultTest {
         assertThat(bundle.getStringArrayList("slip"), equalTo(arrayListOf("some text")))
     }
 
+    @Test
+    fun ToBundle_WithAdditionalData_SavesData() {
+        val payResult = PayResult(
+            paymentCancelId = "cancel-id",
+            slip = listOf("some text"),
+            authorizationCode = "auth-code",
+            transactionNumber = "transaction-number",
+            maskedCardNumber = "card-number",
+            cardExpiryDate = "expiry-date",
+            operationDateTime = "datetime",
+            terminalNumber = "terminal-number",
+            paymentSystemName = "payment-system-name"
+        )
+
+        val bundle = payResult.toBundle()
+
+        assertThat(bundle.getString("authorization_code"), equalTo("auth-code"))
+        assertThat(bundle.getString("transaction_number"), equalTo("transaction-number"))
+        assertThat(bundle.getString("masked_card_number"), equalTo("card-number"))
+        assertThat(bundle.getString("card_expiry_date"), equalTo("expiry-date"))
+        assertThat(bundle.getString("operation_datetime"), equalTo("datetime"))
+        assertThat(bundle.getString("terminal_number"), equalTo("terminal-number"))
+        assertThat(bundle.getString("payment_system_name"), equalTo("payment-system-name"))
+    }
+
 }

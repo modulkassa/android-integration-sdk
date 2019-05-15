@@ -25,6 +25,29 @@ class PayResultTest {
     }
 
     @Test
+    fun FromBundle_WithAdditionalData_ReturnsResult() {
+        val bundle = Bundle().apply {
+            putString("authorization_code", "auth-code")
+            putString("transaction_number", "transaction-number")
+            putString("masked_card_number", "card-number")
+            putString("card_expiry_date", "expiry-date")
+            putString("operation_datetime", "datetime")
+            putString("terminal_number", "terminal-number")
+            putString("payment_system_name", "payment-system-name")
+        }
+
+        val result = PayResult.fromBundle(bundle)
+
+        assertThat(result.authorizationCode, equalTo("auth-code"))
+        assertThat(result.transactionNumber, equalTo("transaction-number"))
+        assertThat(result.maskedCardNumber, equalTo("card-number"))
+        assertThat(result.cardExpiryDate, equalTo("expiry-date"))
+        assertThat(result.operationDateTime, equalTo("datetime"))
+        assertThat(result.terminalNumber, equalTo("terminal-number"))
+        assertThat(result.paymentSystemName, equalTo("payment-system-name"))
+    }
+
+    @Test
     fun ToBundle_ByDefault_SavesData() {
         val payResult = PayResult("cancel-id", listOf("some text"), "info")
 

@@ -75,7 +75,14 @@ data class PayResult(
                 paymentCancelId = bundle.getString(KEY_CANCEL_ID) ?: "",
                 slip = bundle.getStringArrayList(KEY_SLIP) ?: arrayListOf(),
                 paymentInfo = bundle.getString(KEY_PAYMENT_INFO),
-                paymentType = PaymentType.valueOf(bundle.getString(KEY_PAYMENT_TYPE) ?: "CARD")
+                paymentType = PaymentType.valueOf(bundle.getString(KEY_PAYMENT_TYPE) ?: "CARD"),
+                authorizationCode = bundle.getString(KEY_AUTHORIZATION_CODE),
+                transactionNumber = bundle.getString(KEY_TRANSACTION_NUMBER),
+                maskedCardNumber = bundle.getString(KEY_MASKED_CARD_NUMBER),
+                cardExpiryDate = bundle.getString(KEY_CARD_EXPIRY_DATE),
+                operationDateTime = bundle.getString(KEY_OPERATION_DATETIME),
+                terminalNumber = bundle.getString(KEY_TERMINAL_NUMBER),
+                paymentSystemName = bundle.getString(KEY_PAYMENT_SYSTEM_NAME)
             )
         }
     }

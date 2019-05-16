@@ -22,29 +22,20 @@ class PayResultTest {
         assertThat(result.slip, equalTo(listOf()))
         assertThat(result.paymentType, equalTo(CARD))
         assertThat(result.paymentInfo, nullValue())
+        assertThat(result.transactionDetails, nullValue())
     }
 
     @Test
     fun FromBundle_WithAdditionalData_ReturnsResult() {
         val bundle = Bundle().apply {
-            putString("authorization_code", "auth-code")
-            putString("transaction_number", "transaction-number")
-            putString("masked_card_number", "card-number")
-            putString("card_expiry_date", "expiry-date")
-            putString("operation_datetime", "datetime")
-            putString("terminal_number", "terminal-number")
-            putString("payment_system_name", "payment-system-name")
+            putString("transaction_details/authorization_code", "auth-code")
+            putString("transaction_details/transaction_number", "transaction-number")
         }
 
         val result = PayResult.fromBundle(bundle)
 
-        assertThat(result.authorizationCode, equalTo("auth-code"))
-        assertThat(result.transactionNumber, equalTo("transaction-number"))
-        assertThat(result.maskedCardNumber, equalTo("card-number"))
-        assertThat(result.cardExpiryDate, equalTo("expiry-date"))
-        assertThat(result.operationDateTime, equalTo("datetime"))
-        assertThat(result.terminalNumber, equalTo("terminal-number"))
-        assertThat(result.paymentSystemName, equalTo("payment-system-name"))
+        assertThat(result.transactionDetails?.authorizationCode, equalTo("auth-code"))
+        assertThat(result.transactionDetails?.transactionNumber, equalTo("transaction-number"))
     }
 
     @Test
@@ -57,6 +48,7 @@ class PayResultTest {
         assertThat(bundle.getString("payment_info"), equalTo("info"))
         assertThat(bundle.getString("payment_type"), equalTo("CARD"))
         assertThat(bundle.getStringArrayList("slip"), equalTo(arrayListOf("some text")))
+        assertThat(bundle.keySet().any { it.startsWith("transaction_details") }, equalTo(false))
     }
 
     @Test
@@ -64,24 +56,14 @@ class PayResultTest {
         val payResult = PayResult(
             paymentCancelId = "cancel-id",
             slip = listOf("some text"),
-            authorizationCode = "auth-code",
-            transactionNumber = "transaction-number",
-            maskedCardNumber = "card-number",
-            cardExpiryDate = "expiry-date",
-            operationDateTime = "datetime",
-            terminalNumber = "terminal-number",
-            paymentSystemName = "payment-system-name"
+            transactionDetails = TransactionDetails(
+                authorizationCode = "auth-code"
+            )
         )
 
         val bundle = payResult.toBundle()
 
-        assertThat(bundle.getString("authorization_code"), equalTo("auth-code"))
-        assertThat(bundle.getString("transaction_number"), equalTo("transaction-number"))
-        assertThat(bundle.getString("masked_card_number"), equalTo("card-number"))
-        assertThat(bundle.getString("card_expiry_date"), equalTo("expiry-date"))
-        assertThat(bundle.getString("operation_datetime"), equalTo("datetime"))
-        assertThat(bundle.getString("terminal_number"), equalTo("terminal-number"))
-        assertThat(bundle.getString("payment_system_name"), equalTo("payment-system-name"))
+        assertThat(bundle.getString("transaction_details/authorization_code"), equalTo("auth-code"))
     }
 
 }

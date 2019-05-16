@@ -28,7 +28,7 @@ data class TransactionDetails(
      */
     val operationDateTime: String? = null,
     /**
-     * Номер транзакции
+     * Номер терминала
      */
     val terminalNumber: String? = null,
     /**

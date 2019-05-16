@@ -25,7 +25,11 @@ data class PayResult(
     /**
      * Тип оплаты
      */
-    val paymentType: PaymentType = CARD
+    val paymentType: PaymentType = CARD,
+    /**
+     * Данные транзакции
+     */
+    val transactionDetails: TransactionDetails? = null
 ) : Bundable {
 
     companion object {
@@ -39,18 +43,20 @@ data class PayResult(
                 paymentCancelId = bundle.getString(KEY_CANCEL_ID) ?: "",
                 slip = bundle.getStringArrayList(KEY_SLIP) ?: arrayListOf(),
                 paymentInfo = bundle.getString(KEY_PAYMENT_INFO),
-                paymentType = PaymentType.valueOf(bundle.getString(KEY_PAYMENT_TYPE) ?: "CARD")
+                paymentType = PaymentType.valueOf(bundle.getString(KEY_PAYMENT_TYPE) ?: "CARD"),
+                transactionDetails = TransactionDetails.fromBundle(bundle)
             )
         }
     }
 
     override fun toBundle(): Bundle {
-        val bundle = Bundle()
-        bundle.putString(KEY_CANCEL_ID, paymentCancelId)
-        bundle.putStringArrayList(KEY_SLIP, ArrayList(slip))
-        bundle.putString(KEY_PAYMENT_INFO, paymentInfo)
-        bundle.putString(KEY_PAYMENT_TYPE, paymentType.toString())
-        return bundle
+        return Bundle().apply {
+            putString(KEY_CANCEL_ID, paymentCancelId)
+            putStringArrayList(KEY_SLIP, ArrayList(slip))
+            putString(KEY_PAYMENT_INFO, paymentInfo)
+            putString(KEY_PAYMENT_TYPE, paymentType.toString())
+            putAll(transactionDetails?.toBundle() ?: Bundle.EMPTY)
+        }
     }
 
 }

@@ -24,4 +24,9 @@ interface ShiftManager {
      */
     fun parseShiftActionResult(data: Intent): ResultError
 
+    /**
+     * Подготовить `Intent` для печати x-отчета
+     */
+    fun createXReportIntent(): Intent
+
 }

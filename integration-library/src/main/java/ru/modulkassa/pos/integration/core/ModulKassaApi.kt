@@ -13,6 +13,7 @@ class ModulKassaApi {
         const val KEY_SHIFT_REQUEST_TYPE = "shift_request_type"
         const val OPEN_SHIFT_REQUEST = "OpenShift"
         const val CLOSE_SHIFT_REQUEST = "CloseShift"
+        const val X_REPORT_SHIFT_REQUEST = "XReport"
         // регистрация чека внесения/выема
         const val ACTION_MONEY_CHECK_REGISTRATION = "ru.modulkassa.pos.MONEY_CHECK_REGISTRATION"
     }

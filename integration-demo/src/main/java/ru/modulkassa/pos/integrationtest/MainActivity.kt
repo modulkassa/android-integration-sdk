@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassaByCar
 import kotlinx.android.synthetic.main.activity_main.printText
 import kotlinx.android.synthetic.main.activity_main.refund
 import kotlinx.android.synthetic.main.activity_main.refundByCard
+import kotlinx.android.synthetic.main.activity_main.xShiftReport
 import ru.modulkassa.pos.integration.core.action.ActionCallback
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
@@ -298,6 +299,13 @@ class MainActivity : AppCompatActivity() {
         closeShift.setOnClickListener {
             startActivityForResult(
                 modulKassaClient.shiftManager().createCloseShiftIntent(Employee(name = "Иванов Иван")),
+                SHIFT_ACTION_REQUEST_CODE
+            )
+        }
+
+        xShiftReport.setOnClickListener {
+            startActivityForResult(
+                modulKassaClient.shiftManager().createXReportIntent(),
                 SHIFT_ACTION_REQUEST_CODE
             )
         }

@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'com.jfrog.bintray'
 
-def libVersionName = "0.12.1"
+def libVersionName = "0.13.0_MK-9590"
 version = libVersionName
 group 'ru.modulkassa.pos'
 

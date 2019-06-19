@@ -49,5 +49,20 @@ data class InventPosition(
     /**
      * Информация о платежном агенте
      */
-    var agentInformation: InventPositionLevelAgentInformation? = null
+    var agentInformation: InventPositionLevelAgentInformation? = null,
+    /**
+     * Сумма налога.
+     * Необязательный параметр, сумма налога вычисленная внешней системой товарного учета. Передавать сумму налога
+     * нужно вместе с суммой строки чека. Если передать только сумму строки чека, МодульКасса сама посчитает сумму
+     * налога.
+     * Точность должна быть указана до 2х знаков [BigDecimal.setScale(2, BigDecimal.ROUND_DOWN)]
+     */
+    var vatAmount: BigDecimal? = null,
+    /**
+     * Сумма строки в чеке.
+     * Параметр имеет смысл передавать, если сумма строки в чеке отличается от произведения цены и количества.
+     * Например, при вычислении суммы налога от суммы всей строки.
+     * Точность должна быть указана до 2х знаков [BigDecimal.setScale(2, BigDecimal.ROUND_DOWN)]
+     */
+    var amount: BigDecimal? = null
 )

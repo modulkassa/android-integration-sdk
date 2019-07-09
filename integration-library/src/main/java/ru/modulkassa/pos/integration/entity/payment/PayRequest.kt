@@ -34,9 +34,9 @@ data class PayRequest(
 
         fun fromBundle(bundle: Bundle): PayRequest {
             return PayRequest(
-                checkId = bundle.getString(KEY_CHECK_ID),
-                amount = BigDecimal(bundle.getString(KEY_AMOUNT)),
-                description = bundle.getString(KEY_DESCRIPTION),
+                checkId = bundle.getString(KEY_CHECK_ID, ""),
+                amount = BigDecimal(bundle.getString(KEY_AMOUNT, "0")),
+                description = bundle.getString(KEY_DESCRIPTION, ""),
                 merchantId =  bundle.getString(KEY_MERCHANT_ID)
             )
         }

@@ -1,12 +1,10 @@
 package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -41,51 +39,4 @@ class RefundRequestTest {
         // then
         assertThat(refundRequest.paymentInfo, `is`(notNullValue()))
     }
-
-    @Test
-    fun FromBundle_WithMerchantId_RestoresData() {
-        val bundle = Bundle().apply {
-            putString("payment_id", "")
-            putString("amount", BigDecimal.ZERO.toPlainString())
-            putString("description", "")
-            putString("merchant_id", "123456")
-        }
-
-        val result = RefundRequest.fromBundle(bundle)
-
-        Assert.assertThat(result.merchantId, CoreMatchers.equalTo("123456"))
-    }
-
-
-    @Test
-    fun FromBundle_NoMerchantId_NoValue() {
-        val bundle = Bundle().apply {
-            putString("payment_id", "")
-            putString("amount", BigDecimal.ZERO.toPlainString())
-            putString("description", "")
-        }
-
-        val result = RefundRequest.fromBundle(bundle)
-
-        Assert.assertThat(result.merchantId, CoreMatchers.nullValue())
-    }
-
-    @Test
-    fun ToBundle_WithMerchantId_SavesFields() {
-        val result = RefundRequest("checkId", BigDecimal.TEN, "description", merchantId = "merchantId")
-
-        val bundle = result.toBundle()
-
-        Assert.assertThat(bundle.getString("merchant_id"), CoreMatchers.equalTo("merchantId"))
-    }
-
-    @Test
-    fun ToBundle_NoMerchantId_NoValue() {
-        val result = RefundRequest("checkId", BigDecimal.TEN, "description")
-
-        val bundle = result.toBundle()
-
-        Assert.assertThat(bundle.getString("merchant_id"), nullValue())
-    }
-
 }

@@ -2,6 +2,7 @@ package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.payment.RefundRequest.Companion
 import java.math.BigDecimal
 
 /**
@@ -25,11 +26,7 @@ data class CancelRequest(
      * **Внимание!** МодульКасса не ограничивает кассира в выборе способа оплаты при возврате.
      * Поэтому, поле может быть не заполнено или заполнено другими данными.
      */
-    val paymentInfo: String? = null,
-    /**
-     * Идентификатор мерчанта
-     */
-    val merchantId: String? = null
+    val paymentInfo: String? = null
 
 ) : Bundable {
 
@@ -38,15 +35,13 @@ data class CancelRequest(
         private const val KEY_AMOUNT = "amount"
         private const val KEY_DESCRIPTION = "description"
         private const val KEY_PAYMENT_INFO = "payment_info"
-        private const val KEY_MERCHANT_ID = "merchant_id"
 
         fun fromBundle(bundle: Bundle): CancelRequest {
             return CancelRequest(
                 paymentId = bundle.getString(KEY_PAYMENT_ID),
                 amount = BigDecimal(bundle.getString(KEY_AMOUNT)),
                 description = bundle.getString(KEY_DESCRIPTION),
-                paymentInfo = bundle.getString(KEY_PAYMENT_INFO, null),
-                merchantId = bundle.getString(KEY_MERCHANT_ID, null)
+                paymentInfo = bundle.getString(KEY_PAYMENT_INFO, null)
             )
         }
     }
@@ -57,7 +52,6 @@ data class CancelRequest(
         bundle.putString(KEY_AMOUNT, amount.toPlainString())
         bundle.putString(KEY_DESCRIPTION, description)
         bundle.putString(KEY_PAYMENT_INFO, paymentInfo)
-        bundle.putString(KEY_MERCHANT_ID, merchantId)
         return bundle
     }
 }

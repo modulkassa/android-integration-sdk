@@ -9,7 +9,7 @@ import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
  */
 data class PayResult(
     /**
-     * Идентификатор платежа, которые может понадобиться при его отмене.
+     * Идентификатор платежа, который может понадобиться при его отмене.
      * Для ingenico - это `rrn`, для Яндекс.Кассы это `paymentId`
      */
     val paymentCancelId: String,
@@ -20,6 +20,7 @@ data class PayResult(
     val slip: List<String>,
     /**
      * Дополнительная информация, которая будет передана при попытке отменить платеж
+     * Для Сбербанка - это `merchantId`
      */
     val paymentInfo: String? = null,
     /**

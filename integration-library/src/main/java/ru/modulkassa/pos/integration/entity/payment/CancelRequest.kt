@@ -2,7 +2,6 @@ package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
-import ru.modulkassa.pos.integration.entity.payment.RefundRequest.Companion
 import java.math.BigDecimal
 
 /**

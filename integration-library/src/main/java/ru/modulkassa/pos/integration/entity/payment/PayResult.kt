@@ -20,7 +20,6 @@ data class PayResult(
     val slip: List<String>,
     /**
      * Дополнительная информация, которая будет передана при попытке отменить платеж
-     * Для Сбербанка - это `merchantId`
      */
     val paymentInfo: String? = null,
     /**

@@ -66,7 +66,11 @@ data class Check(
     /**
      * Информация о платежном агенте
      */
-    var agentInformation: CheckLevelAgentInformation? = null
+    var agentInformation: CheckLevelAgentInformation? = null,
+    /**
+     * Данные покупателя
+     */
+    var clientInformation: ClientInformation? = null
 ) : Bundable {
 
     companion object {

@@ -64,5 +64,13 @@ data class InventPosition(
      * Например, при вычислении суммы налога от суммы всей строки.
      * Точность должна быть указана до 2х знаков [BigDecimal.setScale(2, BigDecimal.ROUND_DOWN)]
      */
-    var amount: BigDecimal? = null
+    var amount: BigDecimal? = null,
+    /**
+     * Код страны происхождения товара
+     */
+    var originCountryCode: String? = null,
+    /**
+     * Номер таможенной декларации
+     */
+    var customsDeclarationNumber: String? = null
 )

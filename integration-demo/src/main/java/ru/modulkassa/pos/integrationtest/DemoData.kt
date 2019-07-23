@@ -1,6 +1,7 @@
 package ru.modulkassa.pos.integrationtest
 
 import ru.modulkassa.pos.integration.entity.check.Check
+import ru.modulkassa.pos.integration.entity.check.ClientInformation
 import ru.modulkassa.pos.integration.entity.check.DocumentType.SALE
 import ru.modulkassa.pos.integration.entity.check.InventPosition
 import ru.modulkassa.pos.integration.entity.check.InventType.INVENTORY
@@ -29,7 +30,9 @@ val demoCheck = Check(
             quantity = BigDecimal.ONE,
             measure = PCS,
             inventCode = "2880000023757",
-            inventType = INVENTORY
+            inventType = INVENTORY,
+            originCountryCode = "22",
+            customsDeclarationNumber = "declaration 11"
         ),
         InventPosition(
             name = "Жесткий диск Seagate",
@@ -47,7 +50,8 @@ val demoCheck = Check(
         sum = BigDecimal("1000")
     )),
     taxMode = COMMON,
-    textToPrint = "Текст для дополнительной\nпечати на чеке"
+    textToPrint = "Текст для дополнительной\nпечати на чеке",
+    clientInformation = ClientInformation("ООО Фирма", null, "4959166101")
 )
 
 val linesForPrinting = ArrayList<ReportLine>().apply {

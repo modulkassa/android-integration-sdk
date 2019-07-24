@@ -19,19 +19,25 @@ data class PayRequest(
     /**
      * Описание платежа
      */
-    val description: String
+    val description: String,
+    /**
+     * Идентификатор мерчанта
+     */
+    val merchantId: String? = null
 ) : Bundable {
 
     companion object {
         private const val KEY_CHECK_ID = "check_id"
         private const val KEY_AMOUNT = "amount"
         private const val KEY_DESCRIPTION = "description"
+        private const val KEY_MERCHANT_ID = "merchant_id"
 
         fun fromBundle(bundle: Bundle): PayRequest {
             return PayRequest(
-                checkId = bundle.getString(KEY_CHECK_ID),
-                amount = BigDecimal(bundle.getString(KEY_AMOUNT)),
-                description = bundle.getString(KEY_DESCRIPTION)
+                checkId = bundle.getString(KEY_CHECK_ID, ""),
+                amount = BigDecimal(bundle.getString(KEY_AMOUNT, "0")),
+                description = bundle.getString(KEY_DESCRIPTION, ""),
+                merchantId =  bundle.getString(KEY_MERCHANT_ID)
             )
         }
     }
@@ -41,6 +47,7 @@ data class PayRequest(
         bundle.putString(KEY_CHECK_ID, checkId)
         bundle.putString(KEY_AMOUNT, amount.toPlainString())
         bundle.putString(KEY_DESCRIPTION, description)
+        bundle.putString(KEY_MERCHANT_ID, merchantId)
         return bundle
     }
 

@@ -18,7 +18,7 @@ data class ReconciliationResult(
 
         fun fromBundle(bundle: Bundle): ReconciliationResult {
             return ReconciliationResult(
-                slip = bundle.getStringArrayList(KEY_SLIP)
+                slip = bundle.getStringArrayList(KEY_SLIP) ?: arrayListOf()
             )
         }
 
@@ -27,6 +27,7 @@ data class ReconciliationResult(
     override fun toBundle(): Bundle {
         return Bundle().apply {
             putStringArrayList(KEY_SLIP, ArrayList(slip))
+            putString(RequestTypeSerialization.KEY, RequestType.RECONCILIATION.name)
         }
     }
 }

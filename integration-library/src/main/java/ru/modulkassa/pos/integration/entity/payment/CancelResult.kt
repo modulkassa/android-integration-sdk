@@ -33,6 +33,7 @@ data class CancelResult(
         return Bundle().apply {
             putStringArrayList(KEY_SLIP, ArrayList(slip))
             putAll(transactionDetails?.toBundle() ?: Bundle.EMPTY)
+            putString(RequestTypeSerialization.KEY, RequestType.CANCEL.name)
         }
     }
 }

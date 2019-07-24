@@ -52,6 +52,15 @@ class PayResultTest {
     }
 
     @Test
+    fun ToBundle_ByDefault_SavesRequestType() {
+        val payResult = PayResult("", emptyList(), "")
+
+        val bundle = payResult.toBundle()
+
+        assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("PAY"))
+    }
+
+    @Test
     fun ToBundle_WithAdditionalData_SavesData() {
         val payResult = PayResult(
             paymentCancelId = "cancel-id",

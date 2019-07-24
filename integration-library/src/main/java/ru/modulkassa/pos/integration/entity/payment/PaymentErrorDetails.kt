@@ -10,27 +10,30 @@ data class PaymentErrorDetails(
     /**
      * Информация от платежной системы, которую необходимо распечатать на чеке
      */
-    val slip: List<String>
+    val slip: List<String>,
+    /**
+     * Текст сообщения для пользователя
+     */
+    val message: String = ""
 ) : Bundable {
 
     companion object {
         private const val KEY_SLIP = "slip"
+        private const val KEY_MESSAGE = "error_message"
 
-        fun fromBundle(bundle: Bundle?): PaymentErrorDetails {
-            val slip: List<String> =
-                if (bundle != null) {
-                    bundle.getStringArrayList(KEY_SLIP) ?: listOf()
-                } else {
-                    listOf()
-                }
-            return PaymentErrorDetails(slip)
+        fun fromBundle(bundle: Bundle): PaymentErrorDetails {
+            return PaymentErrorDetails(
+                slip = bundle.getStringArrayList(KEY_SLIP) ?: listOf(),
+                message = bundle.getString(KEY_MESSAGE) ?: ""
+            )
         }
     }
 
     override fun toBundle(): Bundle {
-        val bundle = Bundle()
-        bundle.putStringArrayList(KEY_SLIP, ArrayList(slip))
-        return bundle
+        return Bundle().apply {
+            putStringArrayList(KEY_SLIP, ArrayList(slip))
+            putString(KEY_MESSAGE, message)
+        }
     }
 
 }

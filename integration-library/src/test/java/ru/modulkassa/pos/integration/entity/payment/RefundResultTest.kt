@@ -46,6 +46,15 @@ class RefundResultTest {
     }
 
     @Test
+    fun ToBundle_ByDefault_SavesRequestType() {
+        val result = RefundResult(emptyList())
+
+        val bundle = result.toBundle()
+
+        assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("REFUND"))
+    }
+
+    @Test
     fun ToBundle_TransactionDetailsIsPresent_SavesToBundle() {
         val result = RefundResult(
             slip = listOf("some text"),

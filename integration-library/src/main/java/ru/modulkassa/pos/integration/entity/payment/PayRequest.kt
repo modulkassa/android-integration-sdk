@@ -2,6 +2,7 @@ package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.payment.RequestType.PAY
 import java.math.BigDecimal
 
 /**
@@ -24,7 +25,7 @@ data class PayRequest(
      * Идентификатор мерчанта
      */
     val merchantId: String? = null
-) : Bundable {
+) : Bundable, PaymentRequest {
 
     companion object {
         private const val KEY_CHECK_ID = "check_id"
@@ -42,13 +43,17 @@ data class PayRequest(
         }
     }
 
+    override val requestType: RequestType
+        get() = PAY
+
     override fun toBundle(): Bundle {
-        val bundle = Bundle()
-        bundle.putString(KEY_CHECK_ID, checkId)
-        bundle.putString(KEY_AMOUNT, amount.toPlainString())
-        bundle.putString(KEY_DESCRIPTION, description)
-        bundle.putString(KEY_MERCHANT_ID, merchantId)
-        return bundle
+        return Bundle().apply {
+            putString(KEY_CHECK_ID, checkId)
+            putString(KEY_AMOUNT, amount.toPlainString())
+            putString(KEY_DESCRIPTION, description)
+            putString(KEY_MERCHANT_ID, merchantId)
+            putString(RequestTypeSerialization.KEY, requestType.name)
+        }
     }
 
 }

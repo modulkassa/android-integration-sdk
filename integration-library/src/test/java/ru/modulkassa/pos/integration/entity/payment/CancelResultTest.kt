@@ -44,6 +44,15 @@ class CancelResultTest {
     }
 
     @Test
+    fun ToBundle_ByDefault_SavesRequestType() {
+        val result = CancelResult(emptyList())
+
+        val bundle = result.toBundle()
+
+        assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("CANCEL"))
+    }
+
+    @Test
     fun ToBundle_TransactionDetailsIsPresent_SavesSlip() {
         val result = CancelResult(
             slip = listOf("some text"),

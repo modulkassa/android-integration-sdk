@@ -2,6 +2,7 @@ package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.payment.RequestType.CANCEL
 import java.math.BigDecimal
 
 /**
@@ -26,8 +27,7 @@ data class CancelRequest(
      * Поэтому, поле может быть не заполнено или заполнено другими данными.
      */
     val paymentInfo: String? = null
-
-) : Bundable {
+) : Bundable, PaymentRequest {
 
     companion object {
         private const val KEY_PAYMENT_ID = "payment_id"
@@ -37,20 +37,24 @@ data class CancelRequest(
 
         fun fromBundle(bundle: Bundle): CancelRequest {
             return CancelRequest(
-                paymentId = bundle.getString(KEY_PAYMENT_ID),
+                paymentId = bundle.getString(KEY_PAYMENT_ID) ?: "",
                 amount = BigDecimal(bundle.getString(KEY_AMOUNT)),
-                description = bundle.getString(KEY_DESCRIPTION),
+                description = bundle.getString(KEY_DESCRIPTION) ?: "",
                 paymentInfo = bundle.getString(KEY_PAYMENT_INFO, null)
             )
         }
     }
 
+    override val requestType: RequestType
+        get() = CANCEL
+
     override fun toBundle(): Bundle {
-        val bundle = Bundle()
-        bundle.putString(KEY_PAYMENT_ID, paymentId)
-        bundle.putString(KEY_AMOUNT, amount.toPlainString())
-        bundle.putString(KEY_DESCRIPTION, description)
-        bundle.putString(KEY_PAYMENT_INFO, paymentInfo)
-        return bundle
+        return Bundle().apply {
+            putString(KEY_PAYMENT_ID, paymentId)
+            putString(KEY_AMOUNT, amount.toPlainString())
+            putString(KEY_DESCRIPTION, description)
+            putString(KEY_PAYMENT_INFO, paymentInfo)
+            putString(RequestTypeSerialization.KEY, requestType.name)
+        }
     }
 }

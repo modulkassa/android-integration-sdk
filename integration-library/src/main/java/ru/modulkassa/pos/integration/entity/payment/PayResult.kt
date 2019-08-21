@@ -56,6 +56,7 @@ data class PayResult(
             putString(KEY_PAYMENT_INFO, paymentInfo)
             putString(KEY_PAYMENT_TYPE, paymentType.toString())
             putAll(transactionDetails?.toBundle() ?: Bundle.EMPTY)
+            putString(RequestTypeSerialization.KEY, RequestType.PAY.name)
         }
     }
 

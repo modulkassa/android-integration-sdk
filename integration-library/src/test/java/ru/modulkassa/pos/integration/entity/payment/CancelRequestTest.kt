@@ -2,6 +2,7 @@ package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -39,4 +40,16 @@ class CancelRequestTest {
         // then
         assertThat(cancelRequest.paymentInfo, `is`(notNullValue()))
     }
+
+    @Test
+    fun ToBundle_ByDefault_SavesRequestType() {
+        // given
+        val request = CancelRequest(paymentId = "id", amount = BigDecimal.ZERO, description = "")
+
+        // when
+        val bundle = request.toBundle()
+        // then
+        assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("CANCEL"))
+    }
+
 }

@@ -1,7 +1,8 @@
 package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
-import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.nullValue
 import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,10 +18,10 @@ class PayRequestTest {
 
         val result = PayRequest.fromBundle(bundle)
 
-        assertThat(result.checkId, CoreMatchers.equalTo(""))
-        assertThat(result.amount, CoreMatchers.equalTo(BigDecimal.ZERO))
-        assertThat(result.description, CoreMatchers.equalTo(""))
-        assertThat(result.merchantId, CoreMatchers.nullValue())
+        assertThat(result.checkId, equalTo(""))
+        assertThat(result.amount, equalTo(BigDecimal.ZERO))
+        assertThat(result.description, equalTo(""))
+        assertThat(result.merchantId, nullValue())
     }
 
     @Test
@@ -34,10 +35,10 @@ class PayRequestTest {
 
         val result = PayRequest.fromBundle(bundle)
 
-        assertThat(result.checkId, CoreMatchers.equalTo("check_id_123"))
-        assertThat(result.amount, CoreMatchers.equalTo(BigDecimal.valueOf(12)))
-        assertThat(result.description, CoreMatchers.equalTo("desc"))
-        assertThat(result.merchantId, CoreMatchers.equalTo("123456"))
+        assertThat(result.checkId, equalTo("check_id_123"))
+        assertThat(result.amount, equalTo(BigDecimal.valueOf(12)))
+        assertThat(result.description, equalTo("desc"))
+        assertThat(result.merchantId, equalTo("123456"))
     }
 
     @Test
@@ -46,10 +47,10 @@ class PayRequestTest {
 
         val bundle = result.toBundle()
 
-        assertThat(bundle.getString("check_id"), CoreMatchers.equalTo("checkId"))
-        assertThat(bundle.getString("amount"), CoreMatchers.equalTo("10"))
-        assertThat(bundle.getString("description"), CoreMatchers.equalTo("description"))
-        assertThat(bundle.getString("merchant_id"), CoreMatchers.equalTo("merchantId"))
+        assertThat(bundle.getString("check_id"), equalTo("checkId"))
+        assertThat(bundle.getString("amount"), equalTo("10"))
+        assertThat(bundle.getString("description"), equalTo("description"))
+        assertThat(bundle.getString("merchant_id"), equalTo("merchantId"))
     }
 
     @Test
@@ -58,9 +59,19 @@ class PayRequestTest {
 
         val bundle = result.toBundle()
 
-        assertThat(bundle.getString("check_id"), CoreMatchers.equalTo("checkId"))
-        assertThat(bundle.getString("amount"), CoreMatchers.equalTo("10"))
-        assertThat(bundle.getString("description"), CoreMatchers.equalTo("description"))
-        assertThat(bundle.getString("merchant_id"), CoreMatchers.nullValue())
+        assertThat(bundle.getString("check_id"), equalTo("checkId"))
+        assertThat(bundle.getString("amount"), equalTo("10"))
+        assertThat(bundle.getString("description"), equalTo("description"))
+        assertThat(bundle.getString("merchant_id"), nullValue())
     }
+
+    @Test
+    fun ToBundle_ByDefault_SavesRequestType() {
+        val request = PayRequest(checkId = "", amount = BigDecimal.ZERO, description = "")
+
+        val bundle = request.toBundle()
+
+        assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("PAY"))
+    }
+
 }

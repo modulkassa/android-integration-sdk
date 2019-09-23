@@ -2,9 +2,7 @@ package ru.modulkassa.pos.integration.entity.check
 
 import android.os.Bundle
 import com.google.gson.Gson
-import ru.modulkassa.pos.integration.ModulKassaClient
 import ru.modulkassa.pos.integration.entity.Bundable
-import java.math.BigDecimal
 
 /**
  * Документ из другого приложения, который необходимо фискализировать
@@ -70,7 +68,27 @@ data class Check(
     /**
      * Данные покупателя
      */
-    var clientInformation: ClientInformation? = null
+    var clientInformation: ClientInformation? = null,
+    /**
+     * Идентификатор торговой точки
+     * Значение заполняет приложение МодульКасса при возврате ответа.
+     */
+    var retailPointId: String? = null,
+    /**
+     * Идентификатор кассира
+     * Значение заполняет приложение МодульКасса при возврате ответа.
+     */
+    var userId: String? = null,
+    /**
+     * Дата и время закрытия чека в формате ISO 8601
+     * Значение заполняет приложение МодульКасса при возврате ответа.
+     */
+    var dateTime: String? = null,
+    /**
+     * Номер чека
+     * Значение заполняет приложение МодульКасса при возврате ответа.
+     */
+    var number: Int? = null
 ) : Bundable {
 
     companion object {
@@ -84,10 +102,9 @@ data class Check(
 
     override fun toBundle(): Bundle {
         return Bundle().also {
-            val serializedCheck = gson.toJson(Check@this)
+            val serializedCheck = gson.toJson(this)
             it.putString(KEY_SERIALIZED_CHECK, serializedCheck)
         }
     }
-
 
 }

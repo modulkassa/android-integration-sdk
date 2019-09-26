@@ -35,6 +35,7 @@ class DummyActivity : AppCompatActivity() {
             PluginServiceCallbackHolder.getFromIntent(intent)?.get()?.succeeded(
                 LoyaltyResult(data = "SampleLoyalty", impacts = impacts).toBundle()
             )
+            finish()
         }
     }
 

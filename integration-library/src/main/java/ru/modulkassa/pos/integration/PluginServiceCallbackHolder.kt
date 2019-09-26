@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
+import ru.modulkassa.pos.integration.core.rescue.RescueAnswerReceiverHolder
+import ru.modulkassa.pos.integration.core.rescue.RescueCallbackWrapper
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback
 
 /**

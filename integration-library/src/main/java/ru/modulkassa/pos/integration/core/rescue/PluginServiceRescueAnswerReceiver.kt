@@ -1,9 +1,8 @@
-package ru.modulkassa.pos.integration.core
+package ru.modulkassa.pos.integration.core.rescue
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import ru.modulkassa.pos.integration.RescueAnswerReceiver
 
 class PluginServiceRescueAnswerReceiver(
     private val context: Context
@@ -12,20 +11,23 @@ class PluginServiceRescueAnswerReceiver(
     override fun succeeded(data: Bundle?) {
         sendIntent {
             putExtras(data ?: Bundle.EMPTY)
-            putExtra(RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_SUCCESS)
+            putExtra(
+                RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_SUCCESS)
         }
     }
 
     override fun failed(message: String?, extraData: Bundle?) {
         sendIntent {
-            putExtra(RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_FAILED)
+            putExtra(
+                RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_FAILED)
             putExtra(RescueAnswerReceiver.MESSAGE_KEY, message ?: "")
         }
     }
 
     override fun cancelled() {
         sendIntent {
-            putExtra(RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_CANCELLED)
+            putExtra(
+                RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_CANCELLED)
         }
     }
 

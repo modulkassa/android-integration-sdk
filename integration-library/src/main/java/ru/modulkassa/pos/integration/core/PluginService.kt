@@ -5,8 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.IBinder
 import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
-import ru.modulkassa.pos.integration.RescueAnswerReceiver
-import ru.modulkassa.pos.integration.RescueAnswerReceiverHolder
+import ru.modulkassa.pos.integration.core.rescue.PluginServiceRescueAnswerReceiver
+import ru.modulkassa.pos.integration.core.rescue.RescueAnswerReceiver
+import ru.modulkassa.pos.integration.core.rescue.RescueAnswerReceiverHolder
 import ru.modulkassa.pos.integration.lib.R
 import ru.modulkassa.pos.integration.service.IPluginService
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback

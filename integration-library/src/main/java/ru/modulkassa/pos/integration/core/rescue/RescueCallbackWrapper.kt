@@ -1,4 +1,4 @@
-package ru.modulkassa.pos.integration
+package ru.modulkassa.pos.integration.core.rescue
 
 import android.os.Bundle
 import android.os.DeadObjectException

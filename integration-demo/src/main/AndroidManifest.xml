@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".DummyActivity">
+        <activity android:name=".SampleLoyaltyActivity">
         </activity>
 
         <activity android:name=".MainActivity">

@@ -2,7 +2,7 @@ package ru.modulkassa.pos.integrationtest
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_dummy.button
+import kotlinx.android.synthetic.main.activity_loyalty_sample.button
 import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
 import ru.modulkassa.pos.integration.entity.loyalty.LoyaltyPositionImpact
 import ru.modulkassa.pos.integration.entity.loyalty.LoyaltyRequest
@@ -10,7 +10,7 @@ import ru.modulkassa.pos.integration.entity.loyalty.LoyaltyResult
 import java.math.BigDecimal
 import java.util.UUID
 
-class DummyActivity : AppCompatActivity() {
+class SampleLoyaltyActivity : AppCompatActivity() {
 
     companion object {
         const val LOYALTY_DATA = "LOYALTY_DATA"
@@ -18,7 +18,7 @@ class DummyActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dummy)
+        setContentView(R.layout.activity_loyalty_sample)
 
         button.setOnClickListener {
 
@@ -35,6 +35,7 @@ class DummyActivity : AppCompatActivity() {
             PluginServiceCallbackHolder.getFromIntent(intent)?.get()?.succeeded(
                 LoyaltyResult(data = "SampleLoyalty", impacts = impacts).toBundle()
             )
+            // после завершения обработки нужно закрыть активити
             finish()
         }
     }

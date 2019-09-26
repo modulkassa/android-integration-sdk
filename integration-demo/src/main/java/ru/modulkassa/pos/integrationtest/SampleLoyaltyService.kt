@@ -14,24 +14,13 @@ class SampleLoyaltyService : PluginService() {
             object : LoyaltyOperationHandler(this@SampleLoyaltyService) {
                 override fun handleLoyaltyRequest(loyaltyRequest: LoyaltyRequest,
                                                   callback: PluginServiceCallbackHolder) {
-                    val intent = Intent(applicationContext, DummyActivity::class.java).apply {
+                    // запрос на расчет скидок обрабатывается в отдельной активити
+                    val intent = Intent(applicationContext, SampleLoyaltyActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        putExtra(DummyActivity.LOYALTY_DATA, loyaltyRequest.toBundle())
+                        putExtra(SampleLoyaltyActivity.LOYALTY_DATA, loyaltyRequest.toBundle())
                         callback.putToIntent(this)
                     }
                     startActivity(intent)
-
-//                    val impacts = loyaltyRequest.positions.mapIndexed { index, position ->
-//                        LoyaltyPositionImpact(
-//                            id = UUID.randomUUID().toString(),
-//                            positionId = position.id,
-//                            price = BigDecimal.TEN.multiply(BigDecimal.valueOf(index.toLong() + 1)),
-//                            quantity = position.quantity
-//                        )
-//                    }
-//                    callback.get().succeeded(
-//                        LoyaltyResult(data = "SampleLoyalty", impacts = impacts).toBundle()
-//                    )
                 }
             }
         )

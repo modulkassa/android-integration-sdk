@@ -1,7 +1,7 @@
 package ru.modulkassa.pos.integration.entity.payment
 
 /**
- * Тип запроса к платежной системе
+ * Тип запроса
  */
 enum class RequestType {
     /**
@@ -19,7 +19,11 @@ enum class RequestType {
     /**
      * Сверка итогов
      */
-    RECONCILIATION
+    RECONCILIATION,
+    /**
+     * Расчет скидок и бонусов
+     */
+    LOYALTY
 }
 
 /**

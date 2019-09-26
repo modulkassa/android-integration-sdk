@@ -2,6 +2,8 @@ package ru.modulkassa.pos.integration.entity.loyalty
 
 import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.payment.RequestType
+import ru.modulkassa.pos.integration.entity.payment.RequestTypeSerialization
 
 /**
  * Результат обращения к системе лояльности
@@ -46,6 +48,7 @@ data class LoyaltyResult(
         return Bundle().apply {
             putString(DATA_KEY, data)
             putString(PRINTABLE_DATA_KEY, printableData)
+            putString(RequestTypeSerialization.KEY, RequestType.LOYALTY.name)
 
             putStringArrayList(IMPACTS_KEY, ArrayList(impacts.map { it.id }))
             impacts.forEach { putAll(it.toBundle()) }

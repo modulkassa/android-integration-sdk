@@ -18,7 +18,7 @@ data class PluginServiceCallbackHolder(
     private val callback: IPluginServiceCallback
 ) : Parcelable {
 
-    fun get() = CallbackWrapper(callback, rescueAnswerReceiver?.get())
+    fun get(): IPluginServiceCallback = CallbackWrapper(callback, rescueAnswerReceiver?.get())
 
     constructor(parcel: Parcel) : this(
         IPluginServiceCallback.Stub.asInterface(parcel.readStrongBinder()))

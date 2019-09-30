@@ -5,7 +5,7 @@ import android.os.Bundle
 /**
  * Доставляет ответ до МодульКассы в случае обрыва связи, когда приложение выгружено из памяти.
  */
-interface RescueAnswerReceiver {
+interface RescueAnswerSender {
 
     companion object {
         const val RESULT_KEY = "RescueAnswerReceiver.Result"

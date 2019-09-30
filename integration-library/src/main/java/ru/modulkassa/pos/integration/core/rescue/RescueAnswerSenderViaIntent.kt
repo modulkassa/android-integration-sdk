@@ -2,41 +2,39 @@ package ru.modulkassa.pos.integration.core.rescue
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
 
-class PluginServiceRescueAnswerReceiver(
-    private val context: Context
-) : RescueAnswerReceiver {
+class RescueAnswerSenderViaIntent(
+    private val context: Context?,
+    private val intentSender: IntentSender?
+) : RescueAnswerSender {
 
     override fun succeeded(data: Bundle?) {
         sendIntent {
             putExtras(data ?: Bundle.EMPTY)
-            putExtra(
-                RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_SUCCESS)
+            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.RESULT_SUCCESS)
         }
     }
 
     override fun failed(message: String?, extraData: Bundle?) {
         sendIntent {
-            putExtra(
-                RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_FAILED)
-            putExtra(RescueAnswerReceiver.MESSAGE_KEY, message ?: "")
+            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.RESULT_FAILED)
+            putExtra(RescueAnswerSender.MESSAGE_KEY, message ?: "")
         }
     }
 
     override fun cancelled() {
         sendIntent {
-            putExtra(
-                RescueAnswerReceiver.RESULT_KEY, RescueAnswerReceiver.RESULT_CANCELLED)
+            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.RESULT_CANCELLED)
         }
     }
 
     private fun sendIntent(addExtras: Intent.() -> Unit) {
         val intent = Intent("ru.modulkassa.pos.RESCUE_SEND_ANSWER").apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
             addExtras()
         }
-        context.startActivity(intent)
+        intentSender?.sendIntent(context, 0, intent, null, null)
     }
 
 }

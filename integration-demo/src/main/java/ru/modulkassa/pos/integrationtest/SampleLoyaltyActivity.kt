@@ -32,7 +32,7 @@ class SampleLoyaltyActivity : AppCompatActivity() {
                 )
             }
 
-            PluginServiceCallbackHolder.getFromIntent(intent)?.get()?.succeeded(
+            PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
                 LoyaltyResult(data = "SampleLoyalty", impacts = impacts).toBundle()
             )
             // после завершения обработки нужно закрыть активити

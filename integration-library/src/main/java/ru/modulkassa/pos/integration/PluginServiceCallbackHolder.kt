@@ -1,11 +1,13 @@
 package ru.modulkassa.pos.integration
 
+import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
-import ru.modulkassa.pos.integration.core.rescue.RescueAnswerReceiverHolder
-import ru.modulkassa.pos.integration.core.rescue.RescueCallbackWrapper
+import ru.modulkassa.pos.integration.core.rescue.RescueAnswerSenderViaIntent
+import ru.modulkassa.pos.integration.core.rescue.RescueCallback
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback
 
 /**
@@ -13,16 +15,24 @@ import ru.modulkassa.pos.integration.service.IPluginServiceCallback
  * Положить ссылку на `callback` в Bundle нельзя, поэтому используем `Parcelable` класс
  */
 data class PluginServiceCallbackHolder(
-    private val callback: IPluginServiceCallback
+    private val callback: IPluginServiceCallback,
+    private val rescueAnswerSenderEngine: IntentSender?
 ) : Parcelable {
 
-    fun get(): IPluginServiceCallback = RescueCallbackWrapper(callback, RescueAnswerReceiverHolder.receiver)
+    private var applicationContext: Context? = null
+
+    fun get(): IPluginServiceCallback {
+        return RescueCallback(callback, RescueAnswerSenderViaIntent(applicationContext, rescueAnswerSenderEngine))
+    }
 
     constructor(parcel: Parcel) : this(
-        IPluginServiceCallback.Stub.asInterface(parcel.readStrongBinder()))
+        IPluginServiceCallback.Stub.asInterface(parcel.readStrongBinder()),
+        IntentSender.readIntentSenderOrNullFromParcel(parcel)
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeStrongBinder(callback.asBinder())
+        rescueAnswerSenderEngine?.writeToParcel(parcel, flags)
     }
 
     override fun describeContents(): Int {
@@ -45,8 +55,10 @@ data class PluginServiceCallbackHolder(
             return arrayOfNulls(size)
         }
 
-        fun getFromIntent(intent: Intent): PluginServiceCallbackHolder? {
-            return intent.getParcelableExtra(KEY_CALLBACK)
+        fun getFromIntent(intent: Intent, applicationContext: Context? = null): PluginServiceCallbackHolder? {
+            return intent.getParcelableExtra<PluginServiceCallbackHolder>(KEY_CALLBACK).apply {
+                this@apply.applicationContext = applicationContext?.applicationContext
+            }
         }
 
     }

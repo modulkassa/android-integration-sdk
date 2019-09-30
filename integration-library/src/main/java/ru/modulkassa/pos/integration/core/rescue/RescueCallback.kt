@@ -5,9 +5,9 @@ import android.os.DeadObjectException
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback
 import timber.log.Timber
 
-class RescueCallbackWrapper(
+class RescueCallback(
     private val origin: IPluginServiceCallback,
-    private val rescueAnswerReceiver: RescueAnswerReceiver?
+    private val rescueAnswerSender: RescueAnswerSender?
 ) : IPluginServiceCallback by origin {
 
     override fun succeeded(data: Bundle?) {
@@ -15,7 +15,7 @@ class RescueCallbackWrapper(
             origin.succeeded(data)
         } catch (e: DeadObjectException) {
             Timber.w(e.message)
-            rescueAnswerReceiver?.succeeded(data)
+            rescueAnswerSender?.succeeded(data)
         }
     }
 
@@ -24,7 +24,7 @@ class RescueCallbackWrapper(
             origin.failed(message, extraData)
         } catch (e: DeadObjectException) {
             Timber.w(e.message)
-            rescueAnswerReceiver?.failed(message, extraData)
+            rescueAnswerSender?.failed(message, extraData)
         }
     }
 
@@ -33,7 +33,7 @@ class RescueCallbackWrapper(
             origin.cancelled()
         } catch (e: DeadObjectException) {
             Timber.w(e.message)
-            rescueAnswerReceiver?.cancelled()
+            rescueAnswerSender?.cancelled()
         }
     }
 

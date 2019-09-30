@@ -2,12 +2,10 @@ package ru.modulkassa.pos.integration.core
 
 import android.app.Service
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
 import android.os.IBinder
 import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
-import ru.modulkassa.pos.integration.core.rescue.PluginServiceRescueAnswerReceiver
-import ru.modulkassa.pos.integration.core.rescue.RescueAnswerReceiver
-import ru.modulkassa.pos.integration.core.rescue.RescueAnswerReceiverHolder
 import ru.modulkassa.pos.integration.lib.R
 import ru.modulkassa.pos.integration.service.IPluginService
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback
@@ -15,8 +13,11 @@ import timber.log.Timber
 
 abstract class PluginService : Service() {
 
-    private var startServiceIntent: Intent? = null
-    private lateinit var rescueAnswerReceiver: RescueAnswerReceiver
+    private var rescueAnswerSenderEngine: IntentSender? = null
+
+    companion object {
+        const val RESCUE_ANSWER_SENDER_KEY: String = "rescue_answer_sender"
+    }
 
     private val binder = object : IPluginService.Stub() {
         override fun executeOperation(operationName: String?, data: Bundle?,
@@ -27,8 +28,7 @@ abstract class PluginService : Service() {
             }
             val handler = handlers[operationName]
             if (handler != null) {
-                RescueAnswerReceiverHolder.receiver = rescueAnswerReceiver
-                handler.handle(data, PluginServiceCallbackHolder(callback))
+                handler.handle(data, PluginServiceCallbackHolder(callback, rescueAnswerSenderEngine))
             } else {
                 Timber.w("Не найден обработчик для $operationName")
                 callback.failed(getString(R.string.method_is_unsupported), Bundle.EMPTY)
@@ -40,8 +40,7 @@ abstract class PluginService : Service() {
     private val handlers = HashMap<String, OperationHandler>()
 
     override fun onBind(intent: Intent?): IBinder? {
-        startServiceIntent = intent
-        rescueAnswerReceiver = PluginServiceRescueAnswerReceiver(this.applicationContext)
+        rescueAnswerSenderEngine = intent?.extras?.getParcelable(RESCUE_ANSWER_SENDER_KEY)
         return binder
     }
 

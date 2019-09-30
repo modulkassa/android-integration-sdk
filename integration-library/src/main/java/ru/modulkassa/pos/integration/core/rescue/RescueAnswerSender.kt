@@ -8,8 +8,8 @@ import android.os.Bundle
 interface RescueAnswerSender {
 
     companion object {
-        const val RESULT_KEY = "RescueAnswerReceiver.Result"
-        const val MESSAGE_KEY = "RescueAnswerReceiver.Message"
+        const val RESULT_KEY = "RescueAnswerSender.Result"
+        const val MESSAGE_KEY = "RescueAnswerSender.Message"
 
         const val RESULT_SUCCESS = 1
         const val RESULT_FAILED = 2

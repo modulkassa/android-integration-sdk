@@ -31,7 +31,7 @@ class RescueAnswerSenderViaIntent(
     }
 
     private fun sendIntent(addExtras: Intent.() -> Unit) {
-        val intent = Intent("ru.modulkassa.pos.RESCUE_SEND_ANSWER").apply {
+        val intent = Intent().apply {
             addExtras()
         }
         intentSender?.sendIntent(context, 0, intent, null, null)

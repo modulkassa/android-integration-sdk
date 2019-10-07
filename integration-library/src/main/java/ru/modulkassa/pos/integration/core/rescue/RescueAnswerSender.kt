@@ -10,10 +10,15 @@ interface RescueAnswerSender {
     companion object {
         const val RESULT_KEY = "RescueAnswerSender.Result"
         const val MESSAGE_KEY = "RescueAnswerSender.Message"
+    }
 
-        const val RESULT_SUCCESS = 1
-        const val RESULT_FAILED = 2
-        const val RESULT_CANCELLED = 3
+    /**
+     * Признак результата
+     */
+    enum class Result {
+        SUCCESS,
+        FAILED,
+        CANCELLED
     }
 
     /**

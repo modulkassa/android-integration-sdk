@@ -13,20 +13,20 @@ class RescueAnswerSenderViaIntent(
     override fun succeeded(data: Bundle?) {
         sendIntent {
             putExtras(data ?: Bundle.EMPTY)
-            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.RESULT_SUCCESS)
+            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.Result.SUCCESS)
         }
     }
 
     override fun failed(message: String?, extraData: Bundle?) {
         sendIntent {
-            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.RESULT_FAILED)
+            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.Result.FAILED)
             putExtra(RescueAnswerSender.MESSAGE_KEY, message ?: "")
         }
     }
 
     override fun cancelled() {
         sendIntent {
-            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.RESULT_CANCELLED)
+            putExtra(RescueAnswerSender.RESULT_KEY, RescueAnswerSender.Result.CANCELLED)
         }
     }
 

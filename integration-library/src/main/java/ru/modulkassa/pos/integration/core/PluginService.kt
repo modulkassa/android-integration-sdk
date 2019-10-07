@@ -1,6 +1,7 @@
 package ru.modulkassa.pos.integration.core
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
@@ -13,35 +14,14 @@ import timber.log.Timber
 
 abstract class PluginService : Service() {
 
-    private var rescueAnswerSenderEngine: IntentSender? = null
-
     companion object {
         const val RESCUE_ANSWER_SENDER_KEY: String = "rescue_answer_sender"
-    }
-
-    private val binder = object : IPluginService.Stub() {
-        override fun executeOperation(operationName: String?, data: Bundle?,
-                                      callback: IPluginServiceCallback?) {
-            if (operationName == null || data == null || callback == null) {
-                Timber.w("operationName, data и callback не должны быть null. Пропускаем")
-                return
-            }
-            val handler = handlers[operationName]
-            if (handler != null) {
-                handler.handle(data, PluginServiceCallbackHolder(callback, rescueAnswerSenderEngine))
-            } else {
-                Timber.w("Не найден обработчик для $operationName")
-                callback.failed(getString(R.string.method_is_unsupported), Bundle.EMPTY)
-            }
-        }
-
     }
 
     private val handlers = HashMap<String, OperationHandler>()
 
     override fun onBind(intent: Intent?): IBinder? {
-        rescueAnswerSenderEngine = intent?.extras?.getParcelable(RESCUE_ANSWER_SENDER_KEY)
-        return binder
+        return Binder(applicationContext, handlers, intent?.extras?.getParcelable(RESCUE_ANSWER_SENDER_KEY))
     }
 
     override fun onCreate() {
@@ -58,5 +38,25 @@ abstract class PluginService : Service() {
      * Модулькасса перед обращением к сервису проверяет возможность выполнения запроса.
      */
     abstract fun createHandlers(): List<OperationHandler>
+
+    private class Binder(
+        private val context: Context,
+        private val handlers: Map<String, OperationHandler>,
+        private val intentSender: IntentSender?
+    ) : IPluginService.Stub() {
+        override fun executeOperation(operationName: String?, data: Bundle?, callback: IPluginServiceCallback?) {
+            if (operationName == null || data == null || callback == null) {
+                Timber.w("operationName, data и callback не должны быть null. Пропускаем")
+                return
+            }
+            val handler = handlers[operationName]
+            if (handler != null) {
+                handler.handle(data, PluginServiceCallbackHolder(callback, intentSender))
+            } else {
+                Timber.w("Не найден обработчик для $operationName")
+                callback.failed(context. getString(R.string.method_is_unsupported), Bundle.EMPTY)
+            }
+        }
+    }
 }
 

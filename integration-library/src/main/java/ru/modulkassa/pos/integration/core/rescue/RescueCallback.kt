@@ -5,7 +5,7 @@ import android.os.DeadObjectException
 import ru.modulkassa.pos.integration.service.IPluginServiceCallback
 import timber.log.Timber
 
-class RescueCallback(
+internal class RescueCallback(
     private val origin: IPluginServiceCallback,
     private val rescueAnswerSender: RescueAnswerSender?
 ) : IPluginServiceCallback by origin {

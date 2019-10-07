@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 
-class RescueAnswerSenderViaIntent(
+internal class RescueAnswerSenderViaIntent(
     private val context: Context?,
     private val intentSender: IntentSender?
 ) : RescueAnswerSender {

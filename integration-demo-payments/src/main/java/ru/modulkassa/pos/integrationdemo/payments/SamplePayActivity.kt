@@ -26,7 +26,7 @@ class SamplePayActivity : AppCompatActivity() {
         // Ответим через 3 сек, чтобы показать длительное выполнение запроса
         Handler().postDelayed(
             {
-                PluginServiceCallbackHolder.getFromIntent(intent)?.get()?.succeeded(
+                PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
                     PayResult(UUID.randomUUID().toString(), listOf()).toBundle())
 
                 // после завершения обработки нужно закрыть активити

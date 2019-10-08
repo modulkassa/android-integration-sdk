@@ -7,7 +7,6 @@ import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import ru.modulkassa.pos.integration.entity.payment.RequestTypeSerialization
 import java.math.BigDecimal
 
 @RunWith(RobolectricTestRunner::class)
@@ -39,7 +38,6 @@ class LoyaltyResultTest {
         assertThat(bundle.getString("data"), equalTo("data"))
         assertThat(bundle.getString("printable_data"), equalTo("printable-data"))
         assertThat(bundle.getStringArrayList("impacts"), equalTo(ArrayList(listOf("first"))))
-        assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("LOYALTY"))
     }
 
     @Test

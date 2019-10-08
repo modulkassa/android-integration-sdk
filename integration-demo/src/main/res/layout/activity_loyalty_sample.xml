@@ -8,10 +8,22 @@
     tools:context="ru.modulkassa.pos.integrationtest.SampleLoyaltyActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Success"
+        />
+    <Button
+        android:id="@+id/failed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Failed"
+        />
+    <Button
+        android:id="@+id/cancelled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelled"
         />
 
 </LinearLayout>

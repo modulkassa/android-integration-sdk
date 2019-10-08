@@ -34,7 +34,9 @@ internal class RescueAnswerSenderViaIntent(
         val intent = Intent().apply {
             addExtras()
         }
-        intentSender?.sendIntent(context, 0, intent, null, null)
+        if (context != null) {
+            intentSender?.sendIntent(context, 0, intent, null, null)
+        }
     }
 
 }

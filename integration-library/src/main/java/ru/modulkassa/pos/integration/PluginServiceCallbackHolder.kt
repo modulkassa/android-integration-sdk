@@ -55,9 +55,9 @@ data class PluginServiceCallbackHolder(
             return arrayOfNulls(size)
         }
 
-        fun getFromIntent(intent: Intent, applicationContext: Context?): PluginServiceCallbackHolder? {
+        fun getFromIntent(intent: Intent, applicationContext: Context): PluginServiceCallbackHolder? {
             return intent.getParcelableExtra<PluginServiceCallbackHolder>(KEY_CALLBACK).apply {
-                this@apply.applicationContext = applicationContext?.applicationContext
+                this@apply.applicationContext = applicationContext.applicationContext
             }
         }
 

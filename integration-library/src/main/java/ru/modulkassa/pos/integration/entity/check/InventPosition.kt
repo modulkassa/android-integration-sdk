@@ -72,5 +72,15 @@ data class InventPosition(
     /**
      * Номер таможенной декларации
      */
-    var customsDeclarationNumber: String? = null
+    var customsDeclarationNumber: String? = null,
+    /**
+     * Сумма скидки без учета скидки для округления суммы чека
+     * Значение заполняет приложение МодульКасса при возврате ответа.
+     */
+    var discountAmount: BigDecimal? = null,
+    /**
+     * Сумма скидки для округления суммы чека
+     * Значение заполняет приложение МодульКасса при возврате ответа.
+     */
+    var roundDiscountAmount: BigDecimal? = null
 )

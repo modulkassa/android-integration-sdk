@@ -21,6 +21,10 @@ enum class ErrorType {
      */
     CANCELLED,
     /**
+     * МодульКасса обрабатывает предыдущий чек. Дождитесь ответа на предыдущий запрос
+     */
+    ANOTHER_REQUEST_IN_PROGRESS,
+    /**
      * Неизвестный тип
      */
     UNKNOWN

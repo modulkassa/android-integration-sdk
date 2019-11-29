@@ -36,6 +36,20 @@ class PaymentErrorDetailsTest {
     }
 
     @Test
+    fun FromBundle_WithCodes_SetsCodes() {
+        val bundle = Bundle()
+        bundle.putString("response_code", "response code")
+        bundle.putString("host_answer_code", "host code")
+        bundle.putString("issuer_answer_code", "issuer code")
+
+        val result = PaymentErrorDetails.fromBundle(bundle)
+
+        assertThat(result.responseCode, equalTo("response code"))
+        assertThat(result.hostAnswerCode, equalTo("host code"))
+        assertThat(result.issuerAnswerCode, equalTo("issuer code"))
+    }
+
+    @Test
     fun ToBundle_ByDefault_SavesData() {
         val failedResult = PaymentErrorDetails(listOf("some text"), "message")
 

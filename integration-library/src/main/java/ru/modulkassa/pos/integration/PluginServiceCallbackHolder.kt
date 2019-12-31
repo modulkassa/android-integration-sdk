@@ -30,12 +30,6 @@ data class PluginServiceCallbackHolder(
         null
     )
 
-    private constructor(callbackHolder: PluginServiceCallbackHolder, applicationContext: Context) : this(
-        callbackHolder.callback,
-        callbackHolder.rescueAnswerSenderEngine,
-        applicationContext
-    )
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeStrongBinder(callback.asBinder())
         rescueAnswerSenderEngine?.writeToParcel(parcel, flags)
@@ -62,7 +56,9 @@ data class PluginServiceCallbackHolder(
         }
 
         fun getFromIntent(intent: Intent, applicationContext: Context): PluginServiceCallbackHolder? {
-            return PluginServiceCallbackHolder(intent.getParcelableExtra(KEY_CALLBACK), applicationContext)
+            return intent.getParcelableExtra<PluginServiceCallbackHolder>(KEY_CALLBACK)?.let { holder ->
+                PluginServiceCallbackHolder(holder.callback, holder.rescueAnswerSenderEngine, applicationContext)
+            }
         }
 
     }

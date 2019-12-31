@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka-android'
-//apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.jfrog.bintray'
 
 def libVersionName = "1.0.2"
 version = libVersionName

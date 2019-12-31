@@ -51,7 +51,7 @@ abstract class PluginService : Service() {
             }
             val handler = handlers[operationName]
             if (handler != null) {
-                handler.handle(data, PluginServiceCallbackHolder(callback, intentSender))
+                handler.handle(data, PluginServiceCallbackHolder(callback, intentSender, context))
             } else {
                 Timber.w("Не найден обработчик для $operationName")
                 callback.failed(context. getString(R.string.method_is_unsupported), Bundle.EMPTY)

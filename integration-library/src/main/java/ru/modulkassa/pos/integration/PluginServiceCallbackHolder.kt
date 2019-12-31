@@ -16,18 +16,18 @@ import ru.modulkassa.pos.integration.service.IPluginServiceCallback
  */
 data class PluginServiceCallbackHolder(
     private val callback: IPluginServiceCallback,
-    private val rescueAnswerSenderEngine: IntentSender?
+    private val rescueAnswerSenderEngine: IntentSender?,
+    private val applicationContext: Context?
 ) : Parcelable {
-
-    private var applicationContext: Context? = null
 
     fun get(): IPluginServiceCallback {
         return RescueCallback(callback, RescueAnswerSenderViaIntent(applicationContext, rescueAnswerSenderEngine))
     }
 
-    constructor(parcel: Parcel) : this(
+    private constructor(parcel: Parcel) : this(
         IPluginServiceCallback.Stub.asInterface(parcel.readStrongBinder()),
-        IntentSender.readIntentSenderOrNullFromParcel(parcel)
+        IntentSender.readIntentSenderOrNullFromParcel(parcel), 
+        null
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -56,8 +56,8 @@ data class PluginServiceCallbackHolder(
         }
 
         fun getFromIntent(intent: Intent, applicationContext: Context): PluginServiceCallbackHolder? {
-            return intent.getParcelableExtra<PluginServiceCallbackHolder>(KEY_CALLBACK).apply {
-                this@apply.applicationContext = applicationContext.applicationContext
+            return intent.getParcelableExtra<PluginServiceCallbackHolder>(KEY_CALLBACK)?.let { holder ->
+                PluginServiceCallbackHolder(holder.callback, holder.rescueAnswerSenderEngine, applicationContext)
             }
         }
 

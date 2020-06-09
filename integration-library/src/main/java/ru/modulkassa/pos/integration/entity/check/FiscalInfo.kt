@@ -1,7 +1,6 @@
 package ru.modulkassa.pos.integration.entity.check
 
 import java.math.BigDecimal
-import java.util.Date
 
 /**
  * Фискальная информация документа
@@ -12,9 +11,9 @@ data class FiscalInfo(
      */
     val checkNumber: Int,
     /**
-     * Дата и время проведения чека
+     * Дата и время закрытия чека в формате ISO 8601
      */
-    val date: Date,
+    val date: String,
     /**
      * Метка документа из ФН
      */

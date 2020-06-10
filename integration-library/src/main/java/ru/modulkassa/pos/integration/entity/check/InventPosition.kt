@@ -82,5 +82,10 @@ data class InventPosition(
      * Сумма скидки для округления суммы чека
      * Значение заполняет приложение МодульКасса при возврате ответа.
      */
-    var roundDiscountAmount: BigDecimal? = null
+    var roundDiscountAmount: BigDecimal? = null,
+    /**
+     * Товарная марка в оригинальном виде
+     * Код товара для тега 1162 приложение МодульКасса вычисляет самостоятельно.
+     */
+    var productMark: String? = null
 )

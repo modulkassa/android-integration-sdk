@@ -11,6 +11,7 @@ import ru.modulkassa.pos.integration.entity.check.InventType.SERVICE
 import ru.modulkassa.pos.integration.entity.check.InventType.TOBACCO
 import ru.modulkassa.pos.integration.entity.check.Measure.KG
 import ru.modulkassa.pos.integration.entity.check.Measure.M2
+import ru.modulkassa.pos.integration.entity.check.Measure.MINUTE
 import java.math.BigDecimal
 import kotlin.test.assertFails
 
@@ -167,6 +168,19 @@ class LoyaltyRequestTest {
         assertThat(position.price, equalTo(BigDecimal("123.45")))
         assertThat(position.quantity, equalTo(BigDecimal("9.876")))
         assertThat(position.modifiers, equalTo(listOf()))
+    }
+
+    @Test
+    fun FromBundle_WithMinuteMeasureForPosition_CreatesPositionWithMinuteMeasure() {
+        val bundle = Bundle().apply {
+            addRequestAttrsToBundle(positions = listOf("item-id"))
+            addPositionAttrsToBundle(id = "item-id", measure = "MINUTE")
+        }
+
+        val loyaltyRequest = LoyaltyRequest.fromBundle(bundle)
+
+        val position = loyaltyRequest.positions[0]
+        assertThat(position.measure, equalTo(MINUTE))
     }
 
     @Test

@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka-android'
-apply plugin: 'com.jfrog.bintray'
 
 def libVersionName = "0.12.1"
 version = libVersionName
@@ -62,7 +61,7 @@ publishing {
     }
 
     publications {
-        Bintray(MavenPublication) {
+        release(MavenPublication) {
             groupId group
             artifactId 'integration-library'
             version libVersionName
@@ -111,20 +110,4 @@ task sourceJar(type: Jar) {
 
 artifacts {
     archives sourceJar, packageJavadoc
-}
-
-bintray {
-    user = System.getenv('bintray_user')
-    key = System.getenv('bintray_key')
-    configurations = ['archives']
-    pkg {
-        repo = 'public'
-        name = 'ru.modulkassa.integration'
-        userOrg = 'modulkassa'
-        licenses = ['Apache-2.0']
-        desc = 'ModulKassa integration SDK'
-        websiteUrl = "https://modulkassa.ru"
-        publish = false
-    }
-    publications = ['Bintray']
 }

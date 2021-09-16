@@ -18,7 +18,7 @@ data class ReconciliationResult(
 
         fun fromBundle(bundle: Bundle): ReconciliationResult {
             return ReconciliationResult(
-                slip = bundle.getStringArrayList(KEY_SLIP)
+                slip = bundle.getStringArrayList(KEY_SLIP) ?: emptyList()
             )
         }
 

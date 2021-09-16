@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka-android'
 
-def libVersionName = "0.12.2"
+def libVersionName = "0.12.3"
 version = libVersionName
 group 'ru.modulkassa.pos'
 
@@ -15,6 +15,7 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionName libVersionName
+        buildConfigField("String","VERSION_NAME", "\"${versionName}\"")
     }
 
     lintOptions {
@@ -26,6 +27,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -45,6 +50,25 @@ Properties properties = new Properties()
 File propertiesFile = project.rootProject.file('local.properties')
 if (propertiesFile.exists()) {
     properties.load(propertiesFile.newDataInputStream())
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+task packageJavadoc(type: Jar, dependsOn: 'dokkaJavadoc') {
+    from "$buildDir/javadoc"
+    classifier = 'javadoc'
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+artifacts {
+    archives sourceJar, packageJavadoc
 }
 
 publishing {
@@ -91,23 +115,4 @@ publishing {
             }
         }
     }
-}
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
-}
-
-task packageJavadoc(type: Jar, dependsOn: 'dokkaJavadoc') {
-    from "$buildDir/javadoc"
-    classifier = 'javadoc'
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
-}
-
-artifacts {
-    archives sourceJar, packageJavadoc
 }

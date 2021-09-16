@@ -36,9 +36,9 @@ data class RefundRequest(
 
         fun fromBundle(bundle: Bundle): RefundRequest {
             return RefundRequest(
-                paymentId = bundle.getString(KEY_PAYMENT_ID),
+                paymentId = bundle.getString(KEY_PAYMENT_ID) ?: "",
                 amount = BigDecimal(bundle.getString(KEY_AMOUNT)),
-                description = bundle.getString(KEY_DESCRIPTION),
+                description = bundle.getString(KEY_DESCRIPTION) ?: "",
                 paymentInfo = bundle.getString(KEY_PAYMENT_INFO, null)
             )
         }

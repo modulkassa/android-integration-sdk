@@ -20,7 +20,7 @@ class SamplePayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample_pay)
 
-        val payRequest = PayRequest.fromBundle(intent.getBundleExtra(KEY_DATA))
+        val payRequest = PayRequest.fromBundle(intent.getBundleExtra(KEY_DATA) ?: Bundle.EMPTY)
         amount.text = payRequest.amount.toString()
 
         // Ответим через 3 сек, чтобы показать длительное выполнение запроса

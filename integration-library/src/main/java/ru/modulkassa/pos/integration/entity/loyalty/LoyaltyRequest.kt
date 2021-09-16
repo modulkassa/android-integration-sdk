@@ -35,9 +35,9 @@ data class LoyaltyRequest(
         fun fromBundle(bundle: Bundle): LoyaltyRequest {
             return try {
                 LoyaltyRequest(
-                    id = bundle.getString(REQUEST_ID_KEY),
-                    retailPointId = bundle.getString(RETAIL_POINT_ID_KEY),
-                    userId = bundle.getString(USER_ID_KEY),
+                    id = bundle.getString(REQUEST_ID_KEY) ?: "",
+                    retailPointId = bundle.getString(RETAIL_POINT_ID_KEY) ?: "",
+                    userId = bundle.getString(USER_ID_KEY) ?: "",
                     positions = (bundle.getStringArrayList(POSITIONS_KEY) ?: arrayListOf())
                         .map { LoyaltyPosition.fromBundle(it, bundle) }
                 )

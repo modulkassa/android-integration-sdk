@@ -1,6 +1,8 @@
 # Библиотека для интеграции с приложением МодульКасса
 
-[![Download](https://api.bintray.com/packages/modulkassa/public/ru.modulkassa.integration/images/download.svg) ](https://bintray.com/modulkassa/public/ru.modulkassa.integration/_latestVersion)
+[![Release](https://jitpack.io/v/antashev/android-integration-sdk.svg)](https://jitpack.io/#antashev/android-integration-sdk)
+
+
 
 Предоставляет набор сущностей и методов для работы с МодульКассой.
 

@@ -14,6 +14,18 @@
 
 ## Подключение библиотеки
 
+Добавить новый репозиторий в build.gradle файл
+
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Подключить библиотеку
+
 ```groovy
 dependencies {
     implementation 'ru.modulkassa.pos:integration-library:x.x.x'

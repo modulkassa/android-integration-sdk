@@ -1,5 +1,5 @@
 jdk:
-  - openjdk11
+  - openjdk8
 install:
   - echo "Building artifacts"
   - ./gradlew clean :integration-library:build publishReleasePublicationToMavenLocal

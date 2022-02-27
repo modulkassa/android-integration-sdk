@@ -3,14 +3,15 @@ package ru.modulkassa.pos.integration.core.action
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.modulkassa.pos.integration.entity.check.Check
+import ru.modulkassa.pos.integration.entity.check.CheckInfoRequest
 import ru.modulkassa.pos.integration.service.IModulKassa
 import ru.modulkassa.pos.integration.service.IModulKassaOperationCallback
 
 /**
- * Команда получения информации об оплаченном чеке по id
+ * Команда получения информации о чеке, зарегистрированного через команду [PrintCheckAction]
  */
 class GetCheckInfoAction(
-    private val checkId: String
+    private val request: CheckInfoRequest
 ): Action<Check> {
 
     private val gson = Gson()
@@ -20,8 +21,7 @@ class GetCheckInfoAction(
     }
 
     override fun execute(kassa: IModulKassa, callback: ActionCallback<Check>?) {
-        val jsonData = "{ \"checkId\": \"$checkId\" }"
-        kassa.executeOperation(NAME, jsonData, object : IModulKassaOperationCallback.Stub() {
+        kassa.executeOperation(NAME, gson.toJson(request), object : IModulKassaOperationCallback.Stub() {
             override fun succeed(data: String) {
                 callback?.succeed(gson.fromJson(data, Check::class.java))
             }

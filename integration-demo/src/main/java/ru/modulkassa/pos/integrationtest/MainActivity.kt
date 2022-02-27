@@ -33,6 +33,7 @@ import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintTextAction
 import ru.modulkassa.pos.integration.entity.check.Check
+import ru.modulkassa.pos.integration.entity.check.CheckInfoRequest
 import ru.modulkassa.pos.integration.entity.check.DocumentType.RETURN
 import ru.modulkassa.pos.integration.entity.check.Employee
 import ru.modulkassa.pos.integration.entity.check.FiscalInfo
@@ -159,9 +160,8 @@ class MainActivity : AppCompatActivity() {
 
         getCheckInfo.setOnClickListener {
             modulkassa?.let {
-                // использовать id чека, к-й был указан при печати с помощью команды PrintCheckAction
                 GetCheckInfoAction(
-                    checkId = ""
+                    CheckInfoRequest(checkId = "")
                 ).execute(it, object : ActionCallback<Check> {
                     override fun succeed(result: Check?) {
                         runOnUiThread {

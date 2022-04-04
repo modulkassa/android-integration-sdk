@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.cancelByCard
 import kotlinx.android.synthetic.main.activity_main.closeShift
 import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
+import kotlinx.android.synthetic.main.activity_main.getCheckInfo
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
 import kotlinx.android.synthetic.main.activity_main.getShiftInfo
 import kotlinx.android.synthetic.main.activity_main.openShift
@@ -26,10 +27,13 @@ import kotlinx.android.synthetic.main.activity_main.refund
 import kotlinx.android.synthetic.main.activity_main.refundByCard
 import kotlinx.android.synthetic.main.activity_main.xShiftReport
 import ru.modulkassa.pos.integration.core.action.ActionCallback
+import ru.modulkassa.pos.integration.core.action.GetCheckInfoAction
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintTextAction
+import ru.modulkassa.pos.integration.entity.check.Check
+import ru.modulkassa.pos.integration.entity.check.CheckInfoRequest
 import ru.modulkassa.pos.integration.entity.check.DocumentType.RETURN
 import ru.modulkassa.pos.integration.entity.check.Employee
 import ru.modulkassa.pos.integration.entity.check.FiscalInfo
@@ -148,6 +152,26 @@ class MainActivity : AppCompatActivity() {
                     override fun failed(message: String, extra: Map<String, Any>?) {
                         runOnUiThread {
                             Toast.makeText(this@MainActivity, "$message", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
+        }
+
+        getCheckInfo.setOnClickListener {
+            modulkassa?.let {
+                GetCheckInfoAction(
+                    CheckInfoRequest(checkId = "")
+                ).execute(it, object : ActionCallback<Check> {
+                    override fun succeed(result: Check?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "CheckInfo - $result", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
                         }
                     }
                 })

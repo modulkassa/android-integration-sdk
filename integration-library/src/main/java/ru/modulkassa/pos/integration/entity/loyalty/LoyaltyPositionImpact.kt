@@ -49,7 +49,7 @@ data class LoyaltyPositionImpact(
             return try {
                 LoyaltyPositionImpact(
                     id = id,
-                    positionId = bundle.getString(POSITION_ID_KEY.format(id)),
+                    positionId = bundle.getString(POSITION_ID_KEY.format(id))!!,
                     price = BigDecimal(bundle.getString(PRICE_KEY.format(id))),
                     quantity = BigDecimal(bundle.getString(QUANTITY_KEY.format(id)))
                 )

@@ -65,11 +65,11 @@ data class LoyaltyPosition(
             return try {
                 LoyaltyPosition(
                     id = id,
-                    inventCode = bundle.getString(INVENT_CODE_KEY.format(id)),
-                    barcode = bundle.getString(BARCODE_KEY.format(id)),
-                    name = bundle.getString(NAME_KEY.format(id)),
-                    type = InventType.valueOf(bundle.getString(TYPE_KEY.format(id))),
-                    measure = Measure.valueOf(bundle.getString(MEASURE_KEY.format(id))),
+                    inventCode = bundle.getString(INVENT_CODE_KEY.format(id))!!,
+                    barcode = bundle.getString(BARCODE_KEY.format(id))!!,
+                    name = bundle.getString(NAME_KEY.format(id))!!,
+                    type = InventType.valueOf(bundle.getString(TYPE_KEY.format(id))!!),
+                    measure = Measure.valueOf(bundle.getString(MEASURE_KEY.format(id))!!),
                     price = BigDecimal(bundle.getString(PRICE_KEY.format(id))),
                     quantity = BigDecimal(bundle.getString(QUANTITY_KEY.format(id))),
                     modifiers = (bundle.getStringArrayList(MODIFIERS_KEY.format(id)) ?: arrayListOf())

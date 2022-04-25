@@ -37,7 +37,7 @@ data class LoyaltyModifier(
             return try {
                 LoyaltyModifier(
                     id = id,
-                    name = bundle.getString(NAME_KEY.format(id)),
+                    name = bundle.getString(NAME_KEY.format(id))!!,
                     price = BigDecimal(bundle.getString(PRICE_KEY.format(id))),
                     quantity = BigDecimal(bundle.getString(QUANTITY_KEY.format(id)))
                 )

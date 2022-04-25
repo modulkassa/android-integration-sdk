@@ -2,14 +2,16 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 apply plugin: 'org.jetbrains.dokka-android'
 
-def libVersionName = "1.2.0"
+def libVersionName = "1.3.0"
+def libArtifactId = "integration-library"
 version = libVersionName
 group 'ru.modulkassa.pos'
 
 android {
-    compileSdkVersion versions.compileSdk
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion versions.minSdk
@@ -48,8 +50,26 @@ if (propertiesFile.exists()) {
     properties.load(propertiesFile.newDataInputStream())
 }
 
-publishing {
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
 
+task packageJavadoc(type: Jar, dependsOn: 'dokkaJavadoc') {
+    from "$buildDir/javadoc"
+    classifier = 'javadoc'
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+artifacts {
+    archives sourceJar, packageJavadoc
+}
+
+publishing {
     repositories {
         maven {
             name 'Internal'
@@ -59,16 +79,58 @@ publishing {
                 password properties.getProperty("nexus.password")
             }
         }
+        maven {
+            name 'Central'
+            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username properties.getProperty("sonatype.username")
+                password properties.getProperty("sonatype.password")
+            }
+        }
     }
 
     publications {
         release(MavenPublication) {
             groupId group
-            artifactId 'integration-library'
+            artifactId libArtifactId
             version libVersionName
             artifact("$buildDir/outputs/aar/integration-library-release.aar")
             artifact packageJavadoc
             artifact sourceJar
+
+            pom {
+                name = libArtifactId
+                description = 'Modulkassa official Android SDK'
+                url = "https://github.com/modulkassa/android-integration-sdk"
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/modulkassa/android-integration-sdk/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'antashev'
+                        name = 'Antashev Ilya'
+                        email = 'i.antashev@modulbank.ru'
+                    }
+                    developer {
+                        id = 'AnastasiaKoreshkova'
+                        name = 'Anastasia Koreshkova'
+                        email = 'a.koreshkova@modulbank.ru'
+                    }
+                    developer {
+                        id = 'Ansar8'
+                        name = 'Ansar Kadyrov'
+                        email = 'a.kadyrov@modulbank.ru'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:github.com/modulkassa/android-integration-sdk.git'
+                    developerConnection = 'scm:git:ssh://github.com/modulkassa/android-integration-sdk.git'
+                    url = 'https://github.com/modulkassa/android-integration-sdk/tree/master'
+                }
+            }
 
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
@@ -94,21 +156,11 @@ publishing {
     }
 }
 
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
-}
-
-task packageJavadoc(type: Jar, dependsOn: 'dokkaJavadoc') {
-    from "$buildDir/javadoc"
-    classifier = 'javadoc'
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
-}
-
-artifacts {
-    archives sourceJar, packageJavadoc
+signing {
+    useInMemoryPgpKeys(
+        properties.getProperty("signing.keyId"),
+        properties.getProperty("signing.key"),
+        properties.getProperty("signing.password"),
+    )
+    sign publishing.publications
 }

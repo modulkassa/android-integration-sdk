@@ -2,7 +2,7 @@ name: Publish
 on:
   release:
     # We'll run this workflow when a new GitHub release is created
-    types: [push]
+    types: [released]
 jobs:
   publish:
     name: Release build and publish

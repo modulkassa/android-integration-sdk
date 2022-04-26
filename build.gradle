@@ -20,7 +20,6 @@ buildscript {
 }
 
 allprojects {
-
     repositories {
         google()
         mavenCentral()
@@ -28,6 +27,5 @@ allprojects {
         flatDir {
             dirs 'libs'
         }
-        maven { url 'https://dl.bintray.com/jetbrains/anko' }
     }
 }

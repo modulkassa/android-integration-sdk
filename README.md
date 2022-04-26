@@ -1,6 +1,7 @@
 # Библиотека для интеграции с приложением МодульКасса
 
-[![Release](https://jitpack.io/v/modulkassa/android-integration-sdk.svg)](https://jitpack.io/#modulkassa/android-integration-sdk)
+
+[![Release](https://jitpack.io/v/antashev/android-integration-sdk.svg)](https://jitpack.io/#antashev/android-integration-sdk)
 
 Предоставляет набор сущностей и методов для работы с МодульКассой.
 
@@ -22,6 +23,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
 ```
 
 Подключить библиотеку

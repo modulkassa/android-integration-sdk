@@ -17,6 +17,7 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionName libVersionName
+        buildConfigField("String","VERSION_NAME", "\"${versionName}\"")
     }
 
     lintOptions {
@@ -28,6 +29,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -160,7 +165,6 @@ publishing {
         }
     }
 }
-
 signing {
     useInMemoryPgpKeys(
         signingKeyId,

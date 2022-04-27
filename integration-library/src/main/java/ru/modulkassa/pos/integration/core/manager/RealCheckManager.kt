@@ -21,7 +21,7 @@ internal class RealCheckManager(
     }
 
     override fun parsePrintCheckSuccess(data: Intent): Check? {
-        return Check.fromBundle(data.extras)
+        return data.extras?.let { Check.fromBundle(it) }
     }
 
     override fun parsePrintCheckError(data: Intent): ResultError {

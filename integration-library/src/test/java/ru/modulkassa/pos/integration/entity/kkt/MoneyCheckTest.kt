@@ -106,7 +106,7 @@ class MoneyCheckTest {
 
         assertThat(convertedCheck.getString(MoneyCheck.KEY_TYPE), `is`("INCOME"))
         assertThat(convertedCheck.getString(MoneyCheck.KEY_AMOUNT), `is`("12.3"))
-        assertThat(convertedCheck.getStringArrayList(MoneyCheck.KEY_TEXT)[0], `is`("first line"))
+        assertThat(convertedCheck.getStringArrayList(MoneyCheck.KEY_TEXT)!![0], `is`("first line"))
         assertThat(convertedCheck.getString(Employee.KEY_EMPLOYEE_NAME), `is`("Name"))
     }
 }

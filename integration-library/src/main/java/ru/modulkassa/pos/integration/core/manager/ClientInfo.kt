@@ -8,7 +8,7 @@ import ru.modulkassa.pos.integration.entity.Bundable
  */
 data class ClientInfo(
     /**
-     * Версия библиотеки
+     * Версия SDK
      */
     val sdkVersion: String,
     /**

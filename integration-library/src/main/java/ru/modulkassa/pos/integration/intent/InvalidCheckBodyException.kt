@@ -12,4 +12,14 @@ class InvalidCheckBodyException(
      * Причина ошибки
      */
     cause: Throwable
-): Exception(cause)
+) : Exception(cause)
+
+/**
+ * Не указано имя кассира
+ */
+class EmployeeNameNotFoundException() : Exception()
+
+/**
+ * Не указан PIN кассира
+ */
+class PinNotFoundException() : Exception()

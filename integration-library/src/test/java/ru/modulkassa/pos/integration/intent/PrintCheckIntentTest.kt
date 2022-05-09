@@ -85,4 +85,26 @@ class PrintCheckIntentTest {
         assertThat(exception.cause, instanceOf(IllegalStateException::class.java))
     }
 
+    @Test
+    fun EmployeeNameFromIntent_NullValue_ThrowsInvalidCheckBodyException() {
+        val intent = mock<Intent> {
+            on { getStringExtra("employee_name") } doReturn null as String?
+        }
+
+        assertFailsWith<EmployeeNameNotFoundException> {
+            PrintCheckIntent.employeeNameFromIntent(intent)
+        }
+    }
+
+    @Test
+    fun PinFromIntent_NullValue_ThrowsInvalidCheckBodyException() {
+        val intent = mock<Intent> {
+            on { getStringExtra("pin") } doReturn null as String?
+        }
+
+        assertFailsWith<PinNotFoundException> {
+            PrintCheckIntent.pinFromIntent(intent)
+        }
+    }
+
 }

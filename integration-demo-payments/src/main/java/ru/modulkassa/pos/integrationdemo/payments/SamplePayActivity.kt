@@ -20,20 +20,23 @@ class SamplePayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample_pay)
 
-        val payRequest = PayRequest.fromBundle(intent.getBundleExtra(KEY_DATA))
-        amount.text = payRequest.amount.toString()
+        intent.getBundleExtra(KEY_DATA)?.let {
+            val payRequest = PayRequest.fromBundle(it)
+            amount.text = payRequest.amount.toString()
 
-        // Ответим через 3 сек, чтобы показать длительное выполнение запроса
-        Handler().postDelayed(
-            {
-                PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
-                    PayResult(UUID.randomUUID().toString(), listOf()).toBundle())
+            // Ответим через 3 сек, чтобы показать длительное выполнение запроса
+            Handler().postDelayed(
+                {
+                    PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
+                        PayResult(UUID.randomUUID().toString(), listOf()).toBundle()
+                    )
 
-                // после завершения обработки нужно закрыть активити
-                finish()
-            },
-            TIMEOUT
-        )
+                    // после завершения обработки нужно закрыть активити
+                    finish()
+                },
+                TIMEOUT
+            )
+        }
 
     }
 }

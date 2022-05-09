@@ -18,7 +18,8 @@
         <activity android:name=".SampleLoyaltyActivity">
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -26,7 +27,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".DemoBroadcastReceiver">
+        <receiver android:name=".DemoBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="ru.modulkassa.pos.events.CHECK_CLOSED"/>
                 <action android:name="ru.modulkassa.pos.events.CHECK_MODIFIED"/>
@@ -34,7 +36,8 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".UiEventsBroadcastReceiver">
+        <receiver android:name=".UiEventsBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="ru.modulkassa.pos.events.UI_RETURN_TO_MAIN_SCREEN"/>
             </intent-filter>

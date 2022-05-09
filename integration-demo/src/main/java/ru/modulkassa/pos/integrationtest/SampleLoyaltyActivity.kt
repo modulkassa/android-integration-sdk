@@ -24,30 +24,34 @@ class SampleLoyaltyActivity : AppCompatActivity() {
 
         success.setOnClickListener {
 
-            val loyaltyRequest = LoyaltyRequest.fromBundle(intent.getBundleExtra(LOYALTY_DATA))
-            val impacts = loyaltyRequest.positions.mapIndexed { index, position ->
-                LoyaltyPositionImpact(
-                    id = UUID.randomUUID().toString(),
-                    positionId = position.id,
-                    price = BigDecimal.TEN.multiply(BigDecimal.valueOf(index.toLong() + 1)),
-                    quantity = position.quantity
+            intent.getBundleExtra(LOYALTY_DATA)?.let {
+                val loyaltyRequest = LoyaltyRequest.fromBundle(it)
+                val impacts = loyaltyRequest.positions.mapIndexed { index, position ->
+                    LoyaltyPositionImpact(
+                        id = UUID.randomUUID().toString(),
+                        positionId = position.id,
+                        price = BigDecimal.TEN.multiply(BigDecimal.valueOf(index.toLong() + 1)),
+                        quantity = position.quantity
+                    )
+                }
+
+                PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
+                    LoyaltyResult(
+                        data = "SampleLoyalty",
+                        impacts = impacts,
+                        printableData = "Дополнительная информация для печати после фискального чека от системы лояльности"
+                    ).toBundle()
                 )
             }
-
-            PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
-                LoyaltyResult(
-                    data = "SampleLoyalty",
-                    impacts = impacts,
-                    printableData = "Дополнительная информация для печати после фискального чека от системы лояльности"
-                ).toBundle()
-            )
             // после завершения обработки нужно закрыть активити
             finish()
         }
 
         failed.setOnClickListener {
-            PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.failed("Some error!",
-                Bundle.EMPTY)
+            PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.failed(
+                "Some error!",
+                Bundle.EMPTY
+            )
             finish()
         }
 

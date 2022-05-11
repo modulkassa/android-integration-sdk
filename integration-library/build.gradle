@@ -7,7 +7,7 @@ plugins {
     id 'signing'
 }
 
-def libVersionName = "1.3.0_MK-12656" // todo make 1.4.0
+def libVersionName = "1.3.0_1_MK-12656" // todo make 1.4.0
 def libArtifactId = "integration-library"
 version = libVersionName
 group = 'ru.modulkassa.pos'

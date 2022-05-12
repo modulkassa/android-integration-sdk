@@ -7,7 +7,7 @@ import android.content.Intent
  */
 class ModulKassaServiceIntent : Intent() {
     init {
-        `package` = "com.avanpos.pos"
+        `package` = "com.avanpos.pos.rc"
         action = "ru.modulkassa.pos.MODULKASSA_SERVICE_INTENT"
     }
 }

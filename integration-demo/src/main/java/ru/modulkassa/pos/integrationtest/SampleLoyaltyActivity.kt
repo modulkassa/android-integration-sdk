@@ -35,7 +35,11 @@ class SampleLoyaltyActivity : AppCompatActivity() {
             }
 
             PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.succeeded(
-                LoyaltyResult(data = "SampleLoyalty", impacts = impacts).toBundle()
+                LoyaltyResult(
+                    data = "SampleLoyalty",
+                    impacts = impacts,
+                    printableData = "Дополнительная информация для печати после фискального чека от системы лояльности"
+                ).toBundle()
             )
             // после завершения обработки нужно закрыть активити
             finish()

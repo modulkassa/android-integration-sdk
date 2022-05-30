@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.google.gson.Gson
 import ru.modulkassa.pos.integration.entity.check.Check
+import timber.log.Timber
 import java.math.BigDecimal
 
 /**
@@ -23,27 +24,32 @@ open class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
         intent?.let {
-            when (intent.action) {
-                Events.CHECK_CLOSED -> onCheckClosed(
-                    context,
-                    it.getStringExtra(KEY_CHECK_ID),
-                    it.getStringExtra(KEY_CHECK_LINKED_ID),
-                    BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
-                    gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
-                Events.CHECK_CHANGED -> onCheckChanged(
-                    context,
-                    it.getStringExtra(KEY_CHECK_ID),
-                    it.getStringExtra(KEY_CHECK_LINKED_ID),
-                    BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
-                    gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
-                Events.CHECK_CANCELLED -> onCheckCancelled(
-                    context,
-                    it.getStringExtra(KEY_CHECK_ID),
-                    it.getStringExtra(KEY_CHECK_LINKED_ID),
-                    BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
-                    gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java))
+            it.getStringExtra(KEY_CHECK_ID)?.let { checkId ->
+                when (intent.action) {
+                    Events.CHECK_CLOSED -> onCheckClosed(
+                        context,
+                        checkId,
+                        it.getStringExtra(KEY_CHECK_LINKED_ID),
+                        BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
+                        gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java)
+                    )
+                    Events.CHECK_CHANGED -> onCheckChanged(
+                        context,
+                        checkId,
+                        it.getStringExtra(KEY_CHECK_LINKED_ID),
+                        BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
+                        gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java)
+                    )
+                    Events.CHECK_CANCELLED -> onCheckCancelled(
+                        context,
+                        checkId,
+                        it.getStringExtra(KEY_CHECK_LINKED_ID),
+                        BigDecimal(it.getStringExtra(KEY_CHECK_SUM)),
+                        gson.fromJson(it.getStringExtra(KEY_CHECK_DETAILS), Check::class.java)
+                    )
 
-            }
+                }
+            } ?: Timber.w("В запросе не указан обязательный параметр 'check_id'")
         }
     }
 

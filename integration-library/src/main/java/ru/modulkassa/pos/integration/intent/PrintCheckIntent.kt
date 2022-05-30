@@ -39,12 +39,20 @@ class PrintCheckIntent(
                 throw InvalidCheckBodyException(serializedCheck, e)
             } catch (e: JsonSyntaxException) {
                 throw InvalidCheckBodyException(serializedCheck, e)
+            } catch (e: NullPointerException) {
+                throw InvalidCheckBodyException(serializedCheck, e)
             }
         }
 
-        fun employeeNameFromIntent(intent: Intent) = intent.getStringExtra(KEY_EMPLOYEE_NAME)
+        fun employeeNameFromIntent(intent: Intent): String {
+            val employeeName = intent.getStringExtra(KEY_EMPLOYEE_NAME)
+            return employeeName ?: throw EmployeeNameNotFoundException()
+        }
 
-        fun pinFromIntent(intent: Intent) = intent.getStringExtra(KEY_PIN)
+        fun pinFromIntent(intent: Intent): String {
+            val pin = intent.getStringExtra(KEY_PIN)
+            return pin ?: throw PinNotFoundException()
+        }
     }
 
     init {

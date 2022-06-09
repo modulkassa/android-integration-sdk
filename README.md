@@ -28,7 +28,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'ru.modulkassa.pos:integration-library:x.x.x'
+    implementation 'com.github.modulkassa:android-integration-sdk:Tag'
 }
 ```
 

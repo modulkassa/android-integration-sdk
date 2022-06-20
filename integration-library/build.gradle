@@ -176,6 +176,7 @@ publishing {
 }
 
 signing {
+    required { gradle.taskGraph.hasTask("publishReleasePublicationToCentralRepository") }
     useInMemoryPgpKeys(
         signingKeyId,
         signingKey,
@@ -183,3 +184,4 @@ signing {
     )
     sign publishing.publications
 }
+

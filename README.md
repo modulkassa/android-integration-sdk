@@ -1,6 +1,6 @@
 # Библиотека для интеграции с приложением МодульКасса
 
-[![Release](https://jitpack.io/v/modulkassa/android-integration-sdk.svg)](https://jitpack.io/#modulkassa/android-integration-sdk)
+[![Release](https://jitpack.io/v/modulkassa/android-integration-sdk.svg)](https://jitpack.io/#modulkassa/android-integration-sdk) [![Maven Central](https://img.shields.io/maven-central/v/ru.modulkassa.pos/integration-library)](https://search.maven.org/artifact/ru.modulkassa.pos/integration-library)
 
 Предоставляет набор сущностей и методов для работы с МодульКассой.
 
@@ -14,12 +14,12 @@
 
 ## Подключение библиотеки
 
-Добавить новый репозиторий в build.gradle файл
+Добавить репозиторий в build.gradle файл
 
 ```groovy
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 ```
@@ -28,7 +28,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.modulkassa:android-integration-sdk:Tag'
+    implementation 'ru.modulkassa.pos:integration-library:x.x.x'
 }
 ```
 

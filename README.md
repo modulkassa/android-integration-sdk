@@ -28,7 +28,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'ru.modulkassa.pos:integration-library:1.3.0'
+    implementation 'ru.modulkassa.pos:integration-library:x.x.x'
 }
 ```
 

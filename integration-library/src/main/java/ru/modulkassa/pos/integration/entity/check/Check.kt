@@ -88,7 +88,11 @@ data class Check(
      * Номер чека
      * Значение заполняет приложение МодульКасса при возврате ответа.
      */
-    var number: Int? = null
+    var number: Int? = null,
+    /**
+     * Информация о чеке коррекции
+     */
+    var correctionInfo: CorrectionInfo? = null
 ) : Bundable {
 
     companion object {

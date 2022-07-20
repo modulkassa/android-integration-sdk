@@ -11,5 +11,13 @@ enum class DocumentType {
     /**
      * Возврат
      */
-    RETURN;
+    RETURN,
+    /**
+     * Коррекция прихода
+     */
+    SALE_CORRECTION,
+    /**
+     * Коррекция возврата прихода
+     */
+    SALE_RETURN_CORRECTION;
 }

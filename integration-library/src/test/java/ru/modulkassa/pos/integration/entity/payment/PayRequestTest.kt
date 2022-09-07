@@ -22,6 +22,7 @@ class PayRequestTest {
         assertThat(result.amount, equalTo(BigDecimal.ZERO))
         assertThat(result.description, equalTo(""))
         assertThat(result.merchantId, nullValue())
+        assertThat(result.inventPositions, nullValue())
     }
 
     @Test
@@ -31,6 +32,7 @@ class PayRequestTest {
             putString("amount", "12")
             putString("description", "desc")
             putString("merchant_id", "123456")
+            putString("positions", "[{\"name\":\"name\",\"price\":1,\"quantity\":10}]")
         }
 
         val result = PayRequest.fromBundle(bundle)
@@ -39,11 +41,13 @@ class PayRequestTest {
         assertThat(result.amount, equalTo(BigDecimal.valueOf(12)))
         assertThat(result.description, equalTo("desc"))
         assertThat(result.merchantId, equalTo("123456"))
+        assertThat(result.inventPositions, equalTo(listOf(PayRequestPosition("name", BigDecimal.ONE, BigDecimal.TEN))))
     }
 
     @Test
     fun ToBundle_Filled_SavesFields() {
-        val result = PayRequest("checkId", BigDecimal.TEN, "description", "merchantId")
+        val result = PayRequest("checkId", BigDecimal.TEN, "description", "merchantId",
+        inventPositions = listOf(PayRequestPosition("name", BigDecimal.ONE, BigDecimal.TEN)))
 
         val bundle = result.toBundle()
 
@@ -51,6 +55,7 @@ class PayRequestTest {
         assertThat(bundle.getString("amount"), equalTo("10"))
         assertThat(bundle.getString("description"), equalTo("description"))
         assertThat(bundle.getString("merchant_id"), equalTo("merchantId"))
+        assertThat(bundle.getString("positions"), equalTo("[{\"name\":\"name\",\"price\":1,\"quantity\":10}]"))
     }
 
     @Test
@@ -63,6 +68,17 @@ class PayRequestTest {
         assertThat(bundle.getString("amount"), equalTo("10"))
         assertThat(bundle.getString("description"), equalTo("description"))
         assertThat(bundle.getString("merchant_id"), nullValue())
+    }
+
+    @Test
+    fun ToBundle_NoPositions_SavesNull() {
+        val request = PayRequest("checkId", BigDecimal.TEN, "description")
+
+        val bundle = request.toBundle()
+        val result = PayRequest.fromBundle(bundle)
+
+        assertThat(bundle.getString("positions"), equalTo("null"))
+        assertThat(result.inventPositions, nullValue())
     }
 
     @Test

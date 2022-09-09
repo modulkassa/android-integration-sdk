@@ -78,14 +78,14 @@ data class PayRequestPosition(
     /**
      * Наименование товара
      */
-    val name: String? = null,
+    val name: String,
     /**
      * Цена товара
      * Точность должна быть указана до 2х знаков [BigDecimal.setScale(2, BigDecimal.ROUND_DOWN)]
      */
-    val price: BigDecimal? = null,
+    val price: BigDecimal,
     /**
      * Количество товара
      */
-    val quantity: BigDecimal? = null
+    val quantity: BigDecimal
 )

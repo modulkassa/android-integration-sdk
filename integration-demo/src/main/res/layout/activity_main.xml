@@ -95,6 +95,12 @@
             android:text="Получить данные о смене"/>
 
         <Button
+            android:id="@+id/createMoneyDocViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Внести наличные через МодульКассу"/>
+
+        <Button
             android:id="@+id/createMoneyDoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

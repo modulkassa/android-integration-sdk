@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.cancelByCard
 import kotlinx.android.synthetic.main.activity_main.closeShift
 import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
+import kotlinx.android.synthetic.main.activity_main.createMoneyDocViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.getCheckInfo
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
 import kotlinx.android.synthetic.main.activity_main.getShiftInfo
@@ -31,6 +32,7 @@ import ru.modulkassa.pos.integration.core.action.GetCheckInfoAction
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
+import ru.modulkassa.pos.integration.core.action.PrintMoneyCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintTextAction
 import ru.modulkassa.pos.integration.entity.check.Check
 import ru.modulkassa.pos.integration.entity.check.CheckInfoRequest
@@ -280,8 +282,7 @@ class MainActivity : AppCompatActivity() {
                 PrintTextAction(TextReport(linesForPrinting)).execute(service, object : ActionCallback<Boolean> {
                     override fun succeed(result: Boolean?) {
                         runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Текст напечатан",
-                                Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@MainActivity, "Текст напечатан", Toast.LENGTH_LONG).show()
                         }
                     }
 
@@ -334,12 +335,44 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        createMoneyDoc.setOnClickListener {
+        createMoneyDocViaModulKassa.setOnClickListener {
+            val moneyCheck = MoneyCheck (
+                type = INCOME,
+                amount = BigDecimal("100"),
+                text = listOf("Внесение в открытой смене"),
+                employee = Employee("Иванов И.И.")
+            )
+
             startActivityForResult(
-                modulKassaClient.checkManager().createMoneyCheckIntent(
-                    MoneyCheck(INCOME, BigDecimal("100"), listOf("Внесение при открытии смены"), Employee("Иванов И.И."))),
+                modulKassaClient.checkManager().createMoneyCheckIntent(moneyCheck),
                 CREATE_MONEY_DOC_REQUEST_CODE
             )
+        }
+
+        createMoneyDoc.setOnClickListener {
+            val moneyCheck = MoneyCheck(
+                type = INCOME,
+                amount = BigDecimal("100"),
+                text = listOf("Внесение в открытой смене"),
+                employee = Employee("Иванов И.И.")
+            )
+
+            modulkassa?.let {
+                PrintMoneyCheckAction(
+                    moneyCheck = moneyCheck
+                ).execute(it, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Внесение прошло успешно", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
         }
     }
 

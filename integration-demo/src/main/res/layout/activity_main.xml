@@ -71,6 +71,12 @@
             android:text="Напечатать произвольный текст"/>
 
         <Button
+            android:id="@+id/openShiftViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Открыть смену через МодульКассу"/>
+
+        <Button
             android:id="@+id/openShift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

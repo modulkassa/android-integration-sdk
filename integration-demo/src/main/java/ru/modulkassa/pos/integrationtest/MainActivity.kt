@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.getCheckInfo
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
 import kotlinx.android.synthetic.main.activity_main.getShiftInfo
 import kotlinx.android.synthetic.main.activity_main.openShift
+import kotlinx.android.synthetic.main.activity_main.openShiftViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.printCheck
 import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassaByCard
@@ -31,6 +32,7 @@ import ru.modulkassa.pos.integration.core.action.ActionCallback
 import ru.modulkassa.pos.integration.core.action.GetCheckInfoAction
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
+import ru.modulkassa.pos.integration.core.action.OpenShiftAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintMoneyCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintTextAction
@@ -314,11 +316,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        openShift.setOnClickListener {
+        openShiftViaModulKassa.setOnClickListener {
             startActivityForResult(
                 modulKassaClient.shiftManager().createOpenShiftIntent(Employee(name = "Иванов Иван")),
                 SHIFT_ACTION_REQUEST_CODE
             )
+        }
+
+        openShift.setOnClickListener {
+            modulkassa?.let {
+                OpenShiftAction(
+                    employee = Employee(name = "Иванов Иван")
+                ).execute(it, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Открытие смены выполнено", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
         }
 
         closeShift.setOnClickListener {
@@ -366,6 +388,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, "Внесение прошло успешно", Toast.LENGTH_LONG).show()
                         }
                     }
+
                     override fun failed(message: String, extra: Map<String, Any>?) {
                         runOnUiThread {
                             Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()

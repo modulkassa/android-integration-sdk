@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.cancelByCard
 import kotlinx.android.synthetic.main.activity_main.closeShift
+import kotlinx.android.synthetic.main.activity_main.closeShiftViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
 import kotlinx.android.synthetic.main.activity_main.createMoneyDocViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.getCheckInfo
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.refund
 import kotlinx.android.synthetic.main.activity_main.refundByCard
 import kotlinx.android.synthetic.main.activity_main.xShiftReport
 import ru.modulkassa.pos.integration.core.action.ActionCallback
+import ru.modulkassa.pos.integration.core.action.CloseShiftAction
 import ru.modulkassa.pos.integration.core.action.GetCheckInfoAction
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
@@ -343,11 +345,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        closeShift.setOnClickListener {
+        closeShiftViaModulKassa.setOnClickListener {
             startActivityForResult(
                 modulKassaClient.shiftManager().createCloseShiftIntent(Employee(name = "Иванов Иван")),
                 SHIFT_ACTION_REQUEST_CODE
             )
+        }
+
+        closeShift.setOnClickListener {
+            modulkassa?.let {
+                CloseShiftAction(
+                    employee = Employee(name = "Иванов Иван")
+                ).execute(it, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Закрытие смены выполнено", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
         }
 
         xShiftReport.setOnClickListener {

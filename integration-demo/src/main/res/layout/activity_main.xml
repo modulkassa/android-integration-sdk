@@ -83,6 +83,12 @@
             android:text="Открыть смену"/>
 
         <Button
+            android:id="@+id/closeShiftViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Закрыть смену через МодульКассу"/>
+
+        <Button
             android:id="@+id/closeShift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

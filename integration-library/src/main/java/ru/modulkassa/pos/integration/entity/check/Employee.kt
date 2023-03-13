@@ -1,9 +1,9 @@
 package ru.modulkassa.pos.integration.entity.check
 
 import android.os.Bundle
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.GsonFactory
 import ru.modulkassa.pos.integration.entity.InvalidEntityStructureException
 
 /**
@@ -18,7 +18,7 @@ data class Employee(
 
     companion object {
         const val KEY_EMPLOYEE_NAME = "integration.entity.employee.employee_name"
-        private val gson = Gson()
+        private val gson = GsonFactory.provide()
 
         fun fromBundle(bundle: Bundle): Employee? {
             return bundle.getString(KEY_EMPLOYEE_NAME)?.let {

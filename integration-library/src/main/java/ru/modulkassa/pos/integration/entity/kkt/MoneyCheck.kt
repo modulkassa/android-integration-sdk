@@ -1,9 +1,9 @@
 package ru.modulkassa.pos.integration.entity.kkt
 
 import android.os.Bundle
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.GsonFactory
 import ru.modulkassa.pos.integration.entity.InvalidEntityStructureException
 import ru.modulkassa.pos.integration.entity.check.Employee
 import java.math.BigDecimal
@@ -33,7 +33,7 @@ data class MoneyCheck(
         const val KEY_TYPE = "integration.entity.moneycheck.type"
         const val KEY_AMOUNT = "integration.entity.moneycheck.amount"
         const val KEY_TEXT = "integration.entity.moneycheck.text"
-        private val gson = Gson()
+        private val gson = GsonFactory.provide()
 
         @Throws(IllegalArgumentException::class)
         fun fromBundle(bundle: Bundle): MoneyCheck {

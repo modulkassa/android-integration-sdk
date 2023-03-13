@@ -1,8 +1,8 @@
 package ru.modulkassa.pos.integration.entity.check
 
 import android.os.Bundle
-import com.google.gson.Gson
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.GsonFactory
 
 /**
  * Документ из другого приложения, который необходимо фискализировать
@@ -97,7 +97,7 @@ data class Check(
 
     companion object {
         const val KEY_SERIALIZED_CHECK = "integration.entity.check.serialized_check"
-        private val gson = Gson()
+        private val gson = GsonFactory.provide()
 
         fun fromBundle(data: Bundle): Check? {
             return gson.fromJson(data.getString(KEY_SERIALIZED_CHECK), Check::class.java)

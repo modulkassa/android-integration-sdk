@@ -1,6 +1,8 @@
 package ru.modulkassa.pos.integration.entity.kkt
 
 import android.os.Bundle
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import ru.modulkassa.pos.integration.entity.Bundable
 import ru.modulkassa.pos.integration.entity.InvalidEntityStructureException
 import ru.modulkassa.pos.integration.entity.check.Employee
@@ -31,6 +33,7 @@ data class MoneyCheck(
         const val KEY_TYPE = "integration.entity.moneycheck.type"
         const val KEY_AMOUNT = "integration.entity.moneycheck.amount"
         const val KEY_TEXT = "integration.entity.moneycheck.text"
+        private val gson = Gson()
 
         @Throws(IllegalArgumentException::class)
         fun fromBundle(bundle: Bundle): MoneyCheck {
@@ -46,6 +49,15 @@ data class MoneyCheck(
                 throw InvalidEntityStructureException("Некорректная сумма внесения/выема", error)
             }
         }
+
+        fun fromJson(json: String): MoneyCheck {
+            try {
+                val moneyCheck = gson.fromJson(json, MoneyCheck::class.java)
+                return moneyCheck ?: throw IllegalStateException("Чек не может быть пустым")
+            } catch (error: JsonSyntaxException) {
+                throw InvalidEntityStructureException("Некорректная структура чека внесения/выема", error)
+            }
+        }
     }
 
     override fun toBundle(): Bundle {
@@ -56,6 +68,9 @@ data class MoneyCheck(
             putAll(employee.toBundle())
         }
     }
+
+    fun toJson(): String = gson.toJson(this)
+
 }
 
 /**

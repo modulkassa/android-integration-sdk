@@ -1,9 +1,9 @@
 package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.GsonFactory
 import ru.modulkassa.pos.integration.entity.payment.RequestType.PAY
 import java.math.BigDecimal
 
@@ -39,7 +39,7 @@ data class PayRequest(
         private const val KEY_DESCRIPTION = "description"
         private const val KEY_MERCHANT_ID = "merchant_id"
         private const val KEY_POSITIONS = "positions"
-        private val gson = Gson()
+        private val gson = GsonFactory.provide()
 
         fun fromBundle(bundle: Bundle): PayRequest {
             return PayRequest(

@@ -71,10 +71,22 @@
             android:text="Напечатать произвольный текст"/>
 
         <Button
+            android:id="@+id/openShiftViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Открыть смену через МодульКассу"/>
+
+        <Button
             android:id="@+id/openShift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Открыть смену"/>
+
+        <Button
+            android:id="@+id/closeShiftViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Закрыть смену через МодульКассу"/>
 
         <Button
             android:id="@+id/closeShift"
@@ -93,6 +105,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Получить данные о смене"/>
+
+        <Button
+            android:id="@+id/createMoneyDocViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Внести наличные через МодульКассу"/>
 
         <Button
             android:id="@+id/createMoneyDoc"

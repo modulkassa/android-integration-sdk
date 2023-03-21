@@ -14,11 +14,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.cancelByCard
 import kotlinx.android.synthetic.main.activity_main.closeShift
+import kotlinx.android.synthetic.main.activity_main.closeShiftViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
+import kotlinx.android.synthetic.main.activity_main.createMoneyDocViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.getCheckInfo
 import kotlinx.android.synthetic.main.activity_main.getKktDescription
 import kotlinx.android.synthetic.main.activity_main.getShiftInfo
 import kotlinx.android.synthetic.main.activity_main.openShift
+import kotlinx.android.synthetic.main.activity_main.openShiftViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.printCheck
 import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassa
 import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassaByCard
@@ -27,10 +30,13 @@ import kotlinx.android.synthetic.main.activity_main.refund
 import kotlinx.android.synthetic.main.activity_main.refundByCard
 import kotlinx.android.synthetic.main.activity_main.xShiftReport
 import ru.modulkassa.pos.integration.core.action.ActionCallback
+import ru.modulkassa.pos.integration.core.action.CloseShiftAction
 import ru.modulkassa.pos.integration.core.action.GetCheckInfoAction
 import ru.modulkassa.pos.integration.core.action.GetKktInfoAction
 import ru.modulkassa.pos.integration.core.action.GetShiftInfoAction
+import ru.modulkassa.pos.integration.core.action.OpenShiftAction
 import ru.modulkassa.pos.integration.core.action.PrintCheckAction
+import ru.modulkassa.pos.integration.core.action.PrintMoneyCheckAction
 import ru.modulkassa.pos.integration.core.action.PrintTextAction
 import ru.modulkassa.pos.integration.entity.check.Check
 import ru.modulkassa.pos.integration.entity.check.CheckInfoRequest
@@ -280,8 +286,7 @@ class MainActivity : AppCompatActivity() {
                 PrintTextAction(TextReport(linesForPrinting)).execute(service, object : ActionCallback<Boolean> {
                     override fun succeed(result: Boolean?) {
                         runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Текст напечатан",
-                                Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@MainActivity, "Текст напечатан", Toast.LENGTH_LONG).show()
                         }
                     }
 
@@ -313,18 +318,58 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        openShift.setOnClickListener {
+        openShiftViaModulKassa.setOnClickListener {
             startActivityForResult(
                 modulKassaClient.shiftManager().createOpenShiftIntent(Employee(name = "Иванов Иван")),
                 SHIFT_ACTION_REQUEST_CODE
             )
         }
 
-        closeShift.setOnClickListener {
+        openShift.setOnClickListener {
+            modulkassa?.let {
+                OpenShiftAction(
+                    employee = Employee(name = "Иванов Иван")
+                ).execute(it, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Открытие смены выполнено", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
+        }
+
+        closeShiftViaModulKassa.setOnClickListener {
             startActivityForResult(
                 modulKassaClient.shiftManager().createCloseShiftIntent(Employee(name = "Иванов Иван")),
                 SHIFT_ACTION_REQUEST_CODE
             )
+        }
+
+        closeShift.setOnClickListener {
+            modulkassa?.let {
+                CloseShiftAction(
+                    employee = Employee(name = "Иванов Иван")
+                ).execute(it, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Закрытие смены выполнено", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
         }
 
         xShiftReport.setOnClickListener {
@@ -334,12 +379,45 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        createMoneyDoc.setOnClickListener {
+        createMoneyDocViaModulKassa.setOnClickListener {
+            val moneyCheck = MoneyCheck (
+                type = INCOME,
+                amount = BigDecimal("100"),
+                text = listOf("Внесение в открытой смене"),
+                employee = Employee("Иванов И.И.")
+            )
+
             startActivityForResult(
-                modulKassaClient.checkManager().createMoneyCheckIntent(
-                    MoneyCheck(INCOME, BigDecimal("100"), listOf("Внесение при открытии смены"), Employee("Иванов И.И."))),
+                modulKassaClient.checkManager().createMoneyCheckIntent(moneyCheck),
                 CREATE_MONEY_DOC_REQUEST_CODE
             )
+        }
+
+        createMoneyDoc.setOnClickListener {
+            val moneyCheck = MoneyCheck(
+                type = INCOME,
+                amount = BigDecimal("100"),
+                text = listOf("Внесение в открытой смене"),
+                employee = Employee("Иванов И.И.")
+            )
+
+            modulkassa?.let {
+                PrintMoneyCheckAction(
+                    moneyCheck = moneyCheck
+                ).execute(it, object : ActionCallback<Boolean> {
+                    override fun succeed(result: Boolean?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Внесение прошло успешно", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun failed(message: String, extra: Map<String, Any>?) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+            }
         }
     }
 

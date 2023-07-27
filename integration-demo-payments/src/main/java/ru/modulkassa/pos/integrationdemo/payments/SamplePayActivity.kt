@@ -3,10 +3,10 @@ package ru.modulkassa.pos.integrationdemo.payments
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_sample_pay.amount
 import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
 import ru.modulkassa.pos.integration.entity.payment.PayRequest
 import ru.modulkassa.pos.integration.entity.payment.PayResult
+import ru.modulkassa.pos.integrationdemo.payments.databinding.ActivitySamplePayBinding
 import java.util.UUID
 
 class SamplePayActivity : AppCompatActivity() {
@@ -18,11 +18,13 @@ class SamplePayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample_pay)
+
+        val binding = ActivitySamplePayBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent.getBundleExtra(KEY_DATA)?.let {
             val payRequest = PayRequest.fromBundle(it)
-            amount.text = payRequest.amount.toString()
+            binding.amount.text = payRequest.amount.toString()
 
             // Ответим через 3 сек, чтобы показать длительное выполнение запроса
             Handler().postDelayed(

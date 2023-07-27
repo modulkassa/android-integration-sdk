@@ -2,13 +2,11 @@ package ru.modulkassa.pos.integrationtest
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_loyalty_sample.cancelled
-import kotlinx.android.synthetic.main.activity_loyalty_sample.failed
-import kotlinx.android.synthetic.main.activity_loyalty_sample.success
 import ru.modulkassa.pos.integration.PluginServiceCallbackHolder
 import ru.modulkassa.pos.integration.entity.loyalty.LoyaltyPositionImpact
 import ru.modulkassa.pos.integration.entity.loyalty.LoyaltyRequest
 import ru.modulkassa.pos.integration.entity.loyalty.LoyaltyResult
+import ru.modulkassa.pos.integrationtest.databinding.ActivityLoyaltySampleBinding
 import java.math.BigDecimal
 import java.util.UUID
 
@@ -20,9 +18,10 @@ class SampleLoyaltyActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_loyalty_sample)
+        val binding = ActivityLoyaltySampleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        success.setOnClickListener {
+        binding.success.setOnClickListener {
 
             intent.getBundleExtra(LOYALTY_DATA)?.let {
                 val loyaltyRequest = LoyaltyRequest.fromBundle(it)
@@ -47,7 +46,7 @@ class SampleLoyaltyActivity : AppCompatActivity() {
             finish()
         }
 
-        failed.setOnClickListener {
+        binding.failed.setOnClickListener {
             PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.failed(
                 "Some error!",
                 Bundle.EMPTY
@@ -55,7 +54,7 @@ class SampleLoyaltyActivity : AppCompatActivity() {
             finish()
         }
 
-        cancelled.setOnClickListener {
+        binding.cancelled.setOnClickListener {
             PluginServiceCallbackHolder.getFromIntent(intent, applicationContext)?.get()?.cancelled()
             finish()
         }

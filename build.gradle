@@ -3,6 +3,7 @@
 buildscript {
     // Gradle will not find vars defined in an external file when referring to them
     // in the buildscript block, unless you link it from the buildscript block, too.
+    apply from: 'dependencies.gradle'
 
     repositories {
         mavenCentral()
@@ -15,10 +16,7 @@ buildscript {
     }
 }
 
-apply from: 'dependencies.gradle'
-
 allprojects {
-
     repositories {
         google()
         mavenCentral()

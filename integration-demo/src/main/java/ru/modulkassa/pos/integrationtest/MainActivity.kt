@@ -12,23 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_main.cancelByCard
-import kotlinx.android.synthetic.main.activity_main.closeShift
-import kotlinx.android.synthetic.main.activity_main.closeShiftViaModulKassa
-import kotlinx.android.synthetic.main.activity_main.createMoneyDoc
-import kotlinx.android.synthetic.main.activity_main.createMoneyDocViaModulKassa
-import kotlinx.android.synthetic.main.activity_main.getCheckInfo
-import kotlinx.android.synthetic.main.activity_main.getKktDescription
-import kotlinx.android.synthetic.main.activity_main.getShiftInfo
-import kotlinx.android.synthetic.main.activity_main.openShift
-import kotlinx.android.synthetic.main.activity_main.openShiftViaModulKassa
-import kotlinx.android.synthetic.main.activity_main.printCheck
-import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassa
-import kotlinx.android.synthetic.main.activity_main.printCheckViaModulKassaByCard
-import kotlinx.android.synthetic.main.activity_main.printText
-import kotlinx.android.synthetic.main.activity_main.refund
-import kotlinx.android.synthetic.main.activity_main.refundByCard
-import kotlinx.android.synthetic.main.activity_main.xShiftReport
 import ru.modulkassa.pos.integration.core.action.ActionCallback
 import ru.modulkassa.pos.integration.core.action.CloseShiftAction
 import ru.modulkassa.pos.integration.core.action.GetCheckInfoAction
@@ -53,6 +36,7 @@ import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CASH
 import ru.modulkassa.pos.integration.intent.ModulKassaServiceIntent
 import ru.modulkassa.pos.integration.service.IModulKassa
+import ru.modulkassa.pos.integrationtest.databinding.ActivityMainBinding
 import java.math.BigDecimal
 import java.util.UUID
 
@@ -141,282 +125,296 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        printCheck.setOnClickListener {
-            modulkassa?.let {
-                PrintCheckAction(
-                    demoCheck.copy(id = UUID.randomUUID().toString())
-                ).execute(it, object : ActionCallback<FiscalInfo> {
-                    override fun succeed(result: FiscalInfo?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Printed - $result",
-                                Toast.LENGTH_LONG).show()
+        with(binding) {
+            printCheck.setOnClickListener {
+                modulkassa?.let {
+                    PrintCheckAction(
+                        demoCheck.copy(id = UUID.randomUUID().toString())
+                    ).execute(it, object : ActionCallback<FiscalInfo> {
+                        override fun succeed(result: FiscalInfo?) {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@MainActivity, "Printed - $result",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                    }
 
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "$message", Toast.LENGTH_LONG).show()
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "$message", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
-        }
 
-        getCheckInfo.setOnClickListener {
-            modulkassa?.let {
-                GetCheckInfoAction(
-                    CheckInfoRequest(checkId = "")
-                ).execute(it, object : ActionCallback<Check> {
-                    override fun succeed(result: Check?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "CheckInfo - $result", Toast.LENGTH_LONG).show()
+            getCheckInfo.setOnClickListener {
+                modulkassa?.let {
+                    GetCheckInfoAction(
+                        CheckInfoRequest(checkId = "")
+                    ).execute(it, object : ActionCallback<Check> {
+                        override fun succeed(result: Check?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "CheckInfo - $result", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
 
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
-        }
 
-        getKktDescription.setOnClickListener {
-            modulkassa?.let {
-                GetKktInfoAction().execute(it, object : ActionCallback<KktDescription> {
-                    override fun succeed(result: KktDescription?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "$result",
-                                Toast.LENGTH_LONG).show()
+            getKktDescription.setOnClickListener {
+                modulkassa?.let {
+                    GetKktInfoAction().execute(it, object : ActionCallback<KktDescription> {
+                        override fun succeed(result: KktDescription?) {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@MainActivity, "$result",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                    }
 
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "$message", Toast.LENGTH_LONG).show()
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "$message", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
-        }
 
-        if (ContextCompat.checkSelfPermission(this, "ru.modulkassa.pos.permission.PRINT_CHECK")
-            != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(this, "ru.modulkassa.pos.permission.KKT_INFO")
-            != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(this, "ru.modulkassa.pos.permission.CHECK_INFO")
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                arrayOf("ru.modulkassa.pos.permission.KKT_INFO",
-                    "ru.modulkassa.pos.permission.CHECK_INFO",
-                    "ru.modulkassa.pos.permission.PRINT_CHECK"),
-                PRINT_CHECK_PERMISSION_REQUEST)
-        } else {
-            connectToService()
-        }
-
-        printCheckViaModulKassa.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.checkManager().createPrintCheckIntent(
-                    demoCheck.copy(
-                        id = UUID.randomUUID().toString()
-                    )
-                ),
-                PRINT_CHECK_REQUEST_CODE
-            )
-        }
-
-        printCheckViaModulKassaByCard.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.checkManager().createPrintCheckIntent(
-                    demoCheck.copy(
-                        id = UUID.randomUUID().toString(),
-                        moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
-                    )
-                ),
-                PRINT_CHECK_REQUEST_CODE
-            )
-        }
-
-        refund.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.checkManager().createPrintCheckIntent(
-                    demoCheck.copy(
-                        id = UUID.randomUUID().toString(),
-                        docType = RETURN,
-                        moneyPositions = listOf(MoneyPosition(CASH, BigDecimal("300")))
-                    )
-                ),
-                PRINT_CHECK_REQUEST_CODE
-            )
-        }
-
-        refundByCard.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.checkManager().createPrintCheckIntent(
-                    demoCheck.copy(
-                        id = UUID.randomUUID().toString(),
-                        docType = RETURN,
-                        moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
-                    )
-                ),
-                PRINT_CHECK_REQUEST_CODE
-            )
-        }
-
-        cancelByCard.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.checkManager().createPrintCheckIntent(
-                    demoCheck.copy(
-                        id = UUID.randomUUID().toString(),
-                        docType = RETURN,
-                        modulKassaId = "75a19823-5c88-4685-b68e-e753f8249185",
-                        moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300"), true, "000010000014"))
-                    )
-                ),
-                PRINT_CHECK_REQUEST_CODE
-            )
-        }
-
-        printText.setOnClickListener {
-            modulkassa?.let { service ->
-                PrintTextAction(TextReport(linesForPrinting)).execute(service, object : ActionCallback<Boolean> {
-                    override fun succeed(result: Boolean?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Текст напечатан", Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-                        }
-                    }
-                })
+            if (ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.PRINT_CHECK")
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.KKT_INFO")
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.CHECK_INFO")
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(
+                        "ru.modulkassa.pos.permission.KKT_INFO",
+                        "ru.modulkassa.pos.permission.CHECK_INFO",
+                        "ru.modulkassa.pos.permission.PRINT_CHECK"
+                    ),
+                    PRINT_CHECK_PERMISSION_REQUEST
+                )
+            } else {
+                connectToService()
             }
-        }
 
-        getShiftInfo.setOnClickListener {
-            modulkassa?.let { service ->
-                GetShiftInfoAction().execute(service, object : ActionCallback<Shift> {
-                    override fun succeed(result: Shift?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Результат: $result",
-                                Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-                        }
-                    }
-                })
+            printCheckViaModulKassa.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.checkManager().createPrintCheckIntent(
+                        demoCheck.copy(
+                            id = UUID.randomUUID().toString()
+                        )
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
             }
-        }
 
-        openShiftViaModulKassa.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.shiftManager().createOpenShiftIntent(Employee(name = "Иванов Иван")),
-                SHIFT_ACTION_REQUEST_CODE
-            )
-        }
-
-        openShift.setOnClickListener {
-            modulkassa?.let {
-                OpenShiftAction(
-                    employee = Employee(name = "Иванов Иван")
-                ).execute(it, object : ActionCallback<Boolean> {
-                    override fun succeed(result: Boolean?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Открытие смены выполнено", Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-                        }
-                    }
-                })
+            printCheckViaModulKassaByCard.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.checkManager().createPrintCheckIntent(
+                        demoCheck.copy(
+                            id = UUID.randomUUID().toString(),
+                            moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
+                        )
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
             }
-        }
 
-        closeShiftViaModulKassa.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.shiftManager().createCloseShiftIntent(Employee(name = "Иванов Иван")),
-                SHIFT_ACTION_REQUEST_CODE
-            )
-        }
-
-        closeShift.setOnClickListener {
-            modulkassa?.let {
-                CloseShiftAction(
-                    employee = Employee(name = "Иванов Иван")
-                ).execute(it, object : ActionCallback<Boolean> {
-                    override fun succeed(result: Boolean?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Закрытие смены выполнено", Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
-                        }
-                    }
-                })
+            refund.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.checkManager().createPrintCheckIntent(
+                        demoCheck.copy(
+                            id = UUID.randomUUID().toString(),
+                            docType = RETURN,
+                            moneyPositions = listOf(MoneyPosition(CASH, BigDecimal("300")))
+                        )
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
             }
-        }
 
-        xShiftReport.setOnClickListener {
-            startActivityForResult(
-                modulKassaClient.shiftManager().createXReportIntent(),
-                SHIFT_ACTION_REQUEST_CODE
-            )
-        }
+            refundByCard.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.checkManager().createPrintCheckIntent(
+                        demoCheck.copy(
+                            id = UUID.randomUUID().toString(),
+                            docType = RETURN,
+                            moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
+                        )
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
+            }
 
-        createMoneyDocViaModulKassa.setOnClickListener {
-            val moneyCheck = MoneyCheck (
-                type = INCOME,
-                amount = BigDecimal("100"),
-                text = listOf("Внесение в открытой смене"),
-                employee = Employee("Иванов И.И.")
-            )
+            cancelByCard.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.checkManager().createPrintCheckIntent(
+                        demoCheck.copy(
+                            id = UUID.randomUUID().toString(),
+                            docType = RETURN,
+                            modulKassaId = "75a19823-5c88-4685-b68e-e753f8249185",
+                            moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300"), true, "000010000014"))
+                        )
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
+            }
 
-            startActivityForResult(
-                modulKassaClient.checkManager().createMoneyCheckIntent(moneyCheck),
-                CREATE_MONEY_DOC_REQUEST_CODE
-            )
-        }
-
-        createMoneyDoc.setOnClickListener {
-            val moneyCheck = MoneyCheck(
-                type = INCOME,
-                amount = BigDecimal("100"),
-                text = listOf("Внесение в открытой смене"),
-                employee = Employee("Иванов И.И.")
-            )
-
-            modulkassa?.let {
-                PrintMoneyCheckAction(
-                    moneyCheck = moneyCheck
-                ).execute(it, object : ActionCallback<Boolean> {
-                    override fun succeed(result: Boolean?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Внесение прошло успешно", Toast.LENGTH_LONG).show()
+            printText.setOnClickListener {
+                modulkassa?.let { service ->
+                    PrintTextAction(TextReport(linesForPrinting)).execute(service, object : ActionCallback<Boolean> {
+                        override fun succeed(result: Boolean?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "Текст напечатан", Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
 
-                    override fun failed(message: String, extra: Map<String, Any>?) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                })
+                    })
+                }
+            }
+
+            getShiftInfo.setOnClickListener {
+                modulkassa?.let { service ->
+                    GetShiftInfoAction().execute(service, object : ActionCallback<Shift> {
+                        override fun succeed(result: Shift?) {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@MainActivity, "Результат: $result",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    })
+                }
+            }
+
+            openShiftViaModulKassa.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.shiftManager().createOpenShiftIntent(Employee(name = "Иванов Иван")),
+                    SHIFT_ACTION_REQUEST_CODE
+                )
+            }
+
+            openShift.setOnClickListener {
+                modulkassa?.let {
+                    OpenShiftAction(
+                        employee = Employee(name = "Иванов Иван")
+                    ).execute(it, object : ActionCallback<Boolean> {
+                        override fun succeed(result: Boolean?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "Открытие смены выполнено", Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    })
+                }
+            }
+
+            closeShiftViaModulKassa.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.shiftManager().createCloseShiftIntent(Employee(name = "Иванов Иван")),
+                    SHIFT_ACTION_REQUEST_CODE
+                )
+            }
+
+            closeShift.setOnClickListener {
+                modulkassa?.let {
+                    CloseShiftAction(
+                        employee = Employee(name = "Иванов Иван")
+                    ).execute(it, object : ActionCallback<Boolean> {
+                        override fun succeed(result: Boolean?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "Закрытие смены выполнено", Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    })
+                }
+            }
+
+            xShiftReport.setOnClickListener {
+                startActivityForResult(
+                    modulKassaClient.shiftManager().createXReportIntent(),
+                    SHIFT_ACTION_REQUEST_CODE
+                )
+            }
+
+            createMoneyDocViaModulKassa.setOnClickListener {
+                val moneyCheck = MoneyCheck(
+                    type = INCOME,
+                    amount = BigDecimal("100"),
+                    text = listOf("Внесение в открытой смене"),
+                    employee = Employee("Иванов И.И.")
+                )
+
+                startActivityForResult(
+                    modulKassaClient.checkManager().createMoneyCheckIntent(moneyCheck),
+                    CREATE_MONEY_DOC_REQUEST_CODE
+                )
+            }
+
+            createMoneyDoc.setOnClickListener {
+                val moneyCheck = MoneyCheck(
+                    type = INCOME,
+                    amount = BigDecimal("100"),
+                    text = listOf("Внесение в открытой смене"),
+                    employee = Employee("Иванов И.И.")
+                )
+
+                modulkassa?.let {
+                    PrintMoneyCheckAction(
+                        moneyCheck = moneyCheck
+                    ).execute(it, object : ActionCallback<Boolean> {
+                        override fun succeed(result: Boolean?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, "Внесение прошло успешно", Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        override fun failed(message: String, extra: Map<String, Any>?) {
+                            runOnUiThread {
+                                Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    })
+                }
             }
         }
     }

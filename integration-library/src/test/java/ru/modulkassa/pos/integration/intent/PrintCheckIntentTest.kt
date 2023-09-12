@@ -34,7 +34,7 @@ class PrintCheckIntentTest {
         val exception = assertFailsWith<InvalidCheckBodyException> { PrintCheckIntent.checkFromIntent(intent) }
 
         assertThat(exception.body, equalTo(""))
-        assertThat(exception.cause, instanceOf(IllegalStateException::class.java))
+        assertThat(exception.cause, instanceOf(NullPointerException::class.java))
     }
 
     @Test
@@ -46,7 +46,7 @@ class PrintCheckIntentTest {
         val exception = assertFailsWith<InvalidCheckBodyException> { PrintCheckIntent.checkFromIntent(intent) }
 
         assertThat(exception.body, equalTo("null"))
-        assertThat(exception.cause, instanceOf(IllegalStateException::class.java))
+        assertThat(exception.cause, instanceOf(NullPointerException::class.java))
     }
 
     @Test
@@ -82,7 +82,7 @@ class PrintCheckIntentTest {
         val exception = assertFailsWith<InvalidCheckBodyException> { PrintCheckIntent.checkFromIntent(intent) }
 
         assertThat(exception.body, nullValue())
-        assertThat(exception.cause, instanceOf(IllegalStateException::class.java))
+        assertThat(exception.cause, instanceOf(NullPointerException::class.java))
     }
 
     @Test

@@ -2,12 +2,11 @@ ext.versions = [minSdk    : 21,
                 targetSdk : 32,
                 compileSdk: 32,
                 buildTools: '32.0.0',
-                kotlin    : '1.3.72',]
+                kotlin    : '1.4.20',]
 
 ext.gradlePlugins = [android         : 'com.android.tools.build:gradle:7.1.3',
                      grgit           : 'org.ajoberstar:grgit:1.1.0',
                      kotlin          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
-                     kotlinExtensions: "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlin",
                      sonar           : "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1",
                      jacoco          : 'org.jacoco:org.jacoco.core:0.8.6',
                      jacocoReports   : 'org.jacoco:org.jacoco.report:0.8.6']

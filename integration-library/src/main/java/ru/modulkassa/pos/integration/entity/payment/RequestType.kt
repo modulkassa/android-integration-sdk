@@ -19,7 +19,11 @@ enum class RequestType {
     /**
      * Сверка итогов
      */
-    RECONCILIATION
+    RECONCILIATION,
+    /**
+     * Проверка электронного сертификата
+     */
+    CHECK_CERTIFICATE
 }
 
 /**

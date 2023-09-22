@@ -24,17 +24,17 @@ data class PayResult(
      */
     val paymentInfo: String? = null,
     /**
-     * Полная сумма по транзакции
-     */
-    val amount: BigDecimal? = null,
-    /**
      * Тип оплаты
      */
     val paymentType: PaymentType = CARD,
     /**
      * Данные транзакции
      */
-    val transactionDetails: TransactionDetails? = null
+    val transactionDetails: TransactionDetails? = null,
+    /**
+     * Полная сумма по транзакции
+     */
+    val amount: BigDecimal? = null
 ) : Bundable {
 
     companion object {
@@ -49,9 +49,9 @@ data class PayResult(
                 paymentCancelId = bundle.getString(KEY_CANCEL_ID) ?: "",
                 slip = bundle.getStringArrayList(KEY_SLIP) ?: arrayListOf(),
                 paymentInfo = bundle.getString(KEY_PAYMENT_INFO),
-                amount = BigDecimal(bundle.getString(KEY_AMOUNT, "0")),
                 paymentType = PaymentType.valueOf(bundle.getString(KEY_PAYMENT_TYPE) ?: "CARD"),
-                transactionDetails = TransactionDetails.fromBundle(bundle)
+                transactionDetails = TransactionDetails.fromBundle(bundle),
+                amount = BigDecimal(bundle.getString(KEY_AMOUNT, "0"))
             )
         }
     }
@@ -61,10 +61,10 @@ data class PayResult(
             putString(KEY_CANCEL_ID, paymentCancelId)
             putStringArrayList(KEY_SLIP, ArrayList(slip))
             putString(KEY_PAYMENT_INFO, paymentInfo)
-            amount?.let { putString(KEY_AMOUNT, it.toPlainString()) }
             putString(KEY_PAYMENT_TYPE, paymentType.toString())
             putAll(transactionDetails?.toBundle() ?: Bundle.EMPTY)
             putString(RequestTypeSerialization.KEY, RequestType.PAY.name)
+            amount?.let { putString(KEY_AMOUNT, it.toPlainString()) }
         }
     }
 

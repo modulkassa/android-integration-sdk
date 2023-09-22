@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import ru.modulkassa.pos.integration.entity.payment.PaymentType.CARD
+import java.math.BigDecimal
 
 @RunWith(RobolectricTestRunner::class)
 class PayResultTest {
@@ -23,6 +24,7 @@ class PayResultTest {
         assertThat(result.paymentType, equalTo(CARD))
         assertThat(result.paymentInfo, nullValue())
         assertThat(result.transactionDetails, nullValue())
+        assertThat(result.amount, equalTo(BigDecimal.ZERO))
     }
 
     @Test
@@ -40,7 +42,7 @@ class PayResultTest {
 
     @Test
     fun ToBundle_ByDefault_SavesData() {
-        val payResult = PayResult("cancel-id", listOf("some text"), "info")
+        val payResult = PayResult("cancel-id", listOf("some text"), "info", amount = BigDecimal.ONE)
 
         val bundle = payResult.toBundle()
 
@@ -49,6 +51,16 @@ class PayResultTest {
         assertThat(bundle.getString("payment_type"), equalTo("CARD"))
         assertThat(bundle.getStringArrayList("slip"), equalTo(arrayListOf("some text")))
         assertThat(bundle.keySet().any { it.startsWith("transaction_details") }, equalTo(false))
+        assertThat(bundle.getString("amount"), equalTo("1"))
+    }
+
+    @Test
+    fun ToBundle_NullAmount_NoKey() {
+        val payResult = PayResult("cancel-id", listOf("some text"), amount = null)
+
+        val bundle = payResult.toBundle()
+
+        assertThat(bundle.getString("amount"), nullValue())
     }
 
     @Test

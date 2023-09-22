@@ -24,7 +24,7 @@ class PayResultTest {
         assertThat(result.paymentType, equalTo(CARD))
         assertThat(result.paymentInfo, nullValue())
         assertThat(result.transactionDetails, nullValue())
-        assertThat(result.amount, equalTo(BigDecimal.ZERO))
+        assertThat(result.amount, nullValue())
     }
 
     @Test

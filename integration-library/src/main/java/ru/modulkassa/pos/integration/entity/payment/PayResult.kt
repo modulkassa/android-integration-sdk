@@ -51,7 +51,7 @@ data class PayResult(
                 paymentInfo = bundle.getString(KEY_PAYMENT_INFO),
                 paymentType = PaymentType.valueOf(bundle.getString(KEY_PAYMENT_TYPE) ?: "CARD"),
                 transactionDetails = TransactionDetails.fromBundle(bundle),
-                amount = BigDecimal(bundle.getString(KEY_AMOUNT, "0"))
+                amount = bundle.getString(KEY_AMOUNT)?.let { BigDecimal(it) }
             )
         }
     }

@@ -23,6 +23,7 @@ class PayRequestTest {
         assertThat(result.description, equalTo(""))
         assertThat(result.merchantId, nullValue())
         assertThat(result.inventPositions, nullValue())
+        assertThat(result.certificate, nullValue())
     }
 
     @Test
@@ -33,6 +34,7 @@ class PayRequestTest {
             putString("description", "desc")
             putString("merchant_id", "123456")
             putString("positions", "[{\"name\":\"name\",\"price\":1,\"quantity\":10}]")
+            putString("certificate", "{\"basketId\":\"123456\",\"ecAmount\":1}")
         }
 
         val result = PayRequest.fromBundle(bundle)
@@ -42,12 +44,16 @@ class PayRequestTest {
         assertThat(result.description, equalTo("desc"))
         assertThat(result.merchantId, equalTo("123456"))
         assertThat(result.inventPositions, equalTo(listOf(PayRequestPosition("name", BigDecimal.ONE, BigDecimal.TEN))))
+        assertThat(result.certificate, equalTo(CertificateDetails("123456", BigDecimal.ONE)))
     }
 
     @Test
     fun ToBundle_Filled_SavesFields() {
-        val result = PayRequest("checkId", BigDecimal.TEN, "description", "merchantId",
-        inventPositions = listOf(PayRequestPosition("name", BigDecimal.ONE, BigDecimal.TEN)))
+        val result = PayRequest(
+            "checkId", BigDecimal.TEN, "description", "merchantId",
+            inventPositions = listOf(PayRequestPosition("name", BigDecimal.ONE, BigDecimal.TEN)),
+            certificate = CertificateDetails("123456", BigDecimal.ONE)
+        )
 
         val bundle = result.toBundle()
 
@@ -56,6 +62,7 @@ class PayRequestTest {
         assertThat(bundle.getString("description"), equalTo("description"))
         assertThat(bundle.getString("merchant_id"), equalTo("merchantId"))
         assertThat(bundle.getString("positions"), equalTo("[{\"name\":\"name\",\"price\":1,\"quantity\":10}]"))
+        assertThat(bundle.getString("certificate"), equalTo("{\"basketId\":\"123456\",\"ecAmount\":1}"))
     }
 
     @Test

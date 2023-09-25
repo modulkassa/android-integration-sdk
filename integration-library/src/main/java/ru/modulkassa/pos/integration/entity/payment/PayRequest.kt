@@ -16,7 +16,7 @@ data class PayRequest(
      */
     val checkId: String,
     /**
-     * Сумма к оплате
+     * Полная сумма к оплате
      */
     val amount: BigDecimal,
     /**
@@ -30,7 +30,11 @@ data class PayRequest(
     /**
      * Упрощенный список позиций
      */
-    val inventPositions: List<PayRequestPosition>? = null
+    val inventPositions: List<PayRequestPosition>? = null,
+    /**
+     * Данные для платежа с использованием электронного сертификата
+     */
+    val certificate: CertificateDetails? = null
 ) : Bundable, PaymentRequest {
 
     companion object {
@@ -39,6 +43,7 @@ data class PayRequest(
         private const val KEY_DESCRIPTION = "description"
         private const val KEY_MERCHANT_ID = "merchant_id"
         private const val KEY_POSITIONS = "positions"
+        private const val KEY_CERT = "certificate"
         private val gson = GsonFactory.provide()
 
         fun fromBundle(bundle: Bundle): PayRequest {
@@ -50,6 +55,10 @@ data class PayRequest(
                 inventPositions = gson.fromJson<List<PayRequestPosition>>(
                     bundle.getString(KEY_POSITIONS),
                     object : TypeToken<List<PayRequestPosition>>() {}.type
+                ),
+                certificate = gson.fromJson<CertificateDetails>(
+                    bundle.getString(KEY_CERT),
+                    object : TypeToken<CertificateDetails>() {}.type
                 )
             )
         }
@@ -66,9 +75,9 @@ data class PayRequest(
             putString(KEY_MERCHANT_ID, merchantId)
             putString(RequestTypeSerialization.KEY, requestType.name)
             putString(KEY_POSITIONS, gson.toJson(inventPositions))
+            putString(KEY_CERT, gson.toJson(certificate))
         }
     }
-
 }
 
 /**
@@ -88,4 +97,18 @@ data class PayRequestPosition(
      * Количество товара
      */
     val quantity: BigDecimal
+)
+
+/**
+ * Информация для платежа с использованием электронного сертификата
+ */
+data class CertificateDetails(
+    /**
+     * Идентификатор сформированной корзины покупки от НСПК
+     */
+    val basketId: String,
+    /**
+     * Сумма оплаты по электронному сертификату
+     */
+    val ecAmount: BigDecimal
 )

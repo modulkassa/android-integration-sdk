@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.widget.Toast
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleMoneyCheckAnswer(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this@MainActivity, "Внесение произошло", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MainActivity, "Внесение произошло", Toast.LENGTH_LONG).show()
         } else {
             val resultError = modulKassaClient.checkManager().parsePrintCheckError(data ?: Intent())
             Toast.makeText(
@@ -450,7 +451,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun connectToService() {
         val serviceIntent = ModulKassaServiceIntent()
-        startService(serviceIntent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        } else {
+            startService(serviceIntent)
+        }
         bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE)
     }
 }

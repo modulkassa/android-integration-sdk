@@ -110,5 +110,5 @@ data class CertificateDetails(
     /**
      * Сумма оплаты по электронному сертификату
      */
-    val ecAmount: BigDecimal
+    val certificateAmount: BigDecimal
 )

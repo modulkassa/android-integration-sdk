@@ -3,7 +3,8 @@ package ru.modulkassa.pos.integration.entity.payment
 import android.os.Bundle
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
-import org.junit.Assert.assertThat
+import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -25,6 +26,7 @@ class PayResultTest {
         assertThat(result.paymentInfo, nullValue())
         assertThat(result.transactionDetails, nullValue())
         assertThat(result.amount, nullValue())
+        assertThat(result.certificate, nullValue())
     }
 
     @Test
@@ -41,8 +43,21 @@ class PayResultTest {
     }
 
     @Test
+    fun FromBundle_WithCertificate_ReturnsResult() {
+        val bundle = Bundle().apply {
+            putString("certificate", "{\"basketId\":\"basketId\",\"certificateAmount\":1}")
+        }
+
+        val result = PayResult.fromBundle(bundle)
+
+        assertThat(result.certificate?.basketId, equalTo("basketId"))
+        assertThat(result.certificate?.certificateAmount, equalTo(BigDecimal.ONE))
+    }
+
+    @Test
     fun ToBundle_ByDefault_SavesData() {
-        val payResult = PayResult("cancel-id", listOf("some text"), "info", amount = BigDecimal.ONE)
+        val payResult = PayResult("cancel-id", listOf("some text"), "info", amount = BigDecimal.ONE,
+        certificate = CertificateDetails("basketId", BigDecimal.ONE))
 
         val bundle = payResult.toBundle()
 
@@ -52,6 +67,7 @@ class PayResultTest {
         assertThat(bundle.getStringArrayList("slip"), equalTo(arrayListOf("some text")))
         assertThat(bundle.keySet().any { it.startsWith("transaction_details") }, equalTo(false))
         assertThat(bundle.getString("amount"), equalTo("1"))
+        assertThat(bundle.getString("certificate"), equalTo("{\"basketId\":\"basketId\",\"certificateAmount\":1}"))
     }
 
     @Test
@@ -61,6 +77,15 @@ class PayResultTest {
         val bundle = payResult.toBundle()
 
         assertThat(bundle.getString("amount"), nullValue())
+    }
+
+    @Test
+    fun ToBundle_NullCertificate_NoKey() {
+        val payResult = PayResult("cancel-id", listOf("some text"), certificate = null)
+
+        val bundle = payResult.toBundle()
+
+        assertThat(bundle.getString("certificate"), nullValue())
     }
 
     @Test

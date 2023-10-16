@@ -34,7 +34,7 @@ class PayRequestTest {
             putString("description", "desc")
             putString("merchant_id", "123456")
             putString("positions", "[{\"name\":\"name\",\"price\":1,\"quantity\":10}]")
-            putString("certificate", "{\"basketId\":\"123456\",\"ecAmount\":1}")
+            putString("certificate", "{\"basketId\":\"123456\",\"certificateAmount\":1}")
         }
 
         val result = PayRequest.fromBundle(bundle)
@@ -62,7 +62,7 @@ class PayRequestTest {
         assertThat(bundle.getString("description"), equalTo("description"))
         assertThat(bundle.getString("merchant_id"), equalTo("merchantId"))
         assertThat(bundle.getString("positions"), equalTo("[{\"name\":\"name\",\"price\":1,\"quantity\":10}]"))
-        assertThat(bundle.getString("certificate"), equalTo("{\"basketId\":\"123456\",\"ecAmount\":1}"))
+        assertThat(bundle.getString("certificate"), equalTo("{\"basketId\":\"123456\",\"certificateAmount\":1}"))
     }
 
     @Test

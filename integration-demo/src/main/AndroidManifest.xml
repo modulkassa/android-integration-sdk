@@ -6,6 +6,12 @@
     <uses-permission android:name="ru.modulkassa.pos.permission.KKT_INFO"/>
     <uses-permission android:name="ru.modulkassa.pos.permission.CHECK_INFO"/>
 
+    <queries>
+        <intent>
+            <action android:name="ru.modulkassa.pos.MODULKASSA_SERVICE_INTENT" />
+        </intent>
+    </queries>
+
     <application
         android:name=".DemoApp"
         android:allowBackup="true"

@@ -50,4 +50,64 @@ class RefundRequestTest {
         assertThat(bundle.getString(RequestTypeSerialization.KEY), equalTo("REFUND"))
     }
 
+    @Test
+    fun FromBundle_EmptyBundle_ReturnsDefaultValues() {
+        val bundle = Bundle().apply {
+            putString("amount", BigDecimal.ZERO.toPlainString())
+        }
+
+        val result = RefundRequest.fromBundle(bundle)
+
+        assertThat(result.paymentId, equalTo(""))
+        assertThat(result.amount, equalTo(BigDecimal.ZERO))
+        assertThat(result.description, equalTo(""))
+        assertThat(result.paymentInfo, nullValue())
+        assertThat(result.certificate, nullValue())
+    }
+
+    @Test
+    fun FromBundle_FilledBundle_RestoresData() {
+        val bundle = Bundle().apply {
+            putString("payment_id", "check_id_123")
+            putString("amount", "12")
+            putString("description", "desc")
+            putString("payment_info", "payment-info")
+            putString("certificate", "{\"basketId\":\"123456\",\"certificateAmount\":1}")
+        }
+
+        val result = RefundRequest.fromBundle(bundle)
+
+        assertThat(result.paymentId, equalTo("check_id_123"))
+        assertThat(result.amount, equalTo(BigDecimal.valueOf(12)))
+        assertThat(result.description, equalTo("desc"))
+        assertThat(result.paymentInfo, equalTo("payment-info"))
+        assertThat(result.certificate, equalTo(CertificateDetails("123456", BigDecimal.ONE)))
+    }
+
+    @Test
+    fun ToBundle_Filled_SavesFields() {
+        val result = RefundRequest(
+            "payment-id", BigDecimal.TEN, "description", "payment-info",
+            certificate = CertificateDetails("123456", BigDecimal.ONE)
+        )
+
+        val bundle = result.toBundle()
+
+        assertThat(bundle.getString("payment_id"), equalTo("payment-id"))
+        assertThat(bundle.getString("amount"), equalTo("10"))
+        assertThat(bundle.getString("description"), equalTo("description"))
+        assertThat(bundle.getString("payment_info"), equalTo("payment-info"))
+        assertThat(bundle.getString("certificate"), equalTo("{\"basketId\":\"123456\",\"certificateAmount\":1}"))
+    }
+
+    @Test
+    fun ToBundle_NoCertificate_SavesNull() {
+        val result = RefundRequest("payment-id", BigDecimal.TEN, "description", null, null)
+
+        val bundle = result.toBundle()
+
+        assertThat(bundle.getString("payment_info"), nullValue())
+        assertThat(bundle.getString("certificate"), nullValue())
+    }
+
 }

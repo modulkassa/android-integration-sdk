@@ -98,17 +98,3 @@ data class PayRequestPosition(
      */
     val quantity: BigDecimal
 )
-
-/**
- * Информация для платежа с использованием электронного сертификата
- */
-data class CertificateDetails(
-    /**
-     * Идентификатор сформированной корзины покупки от НСПК
-     */
-    val basketId: String,
-    /**
-     * Сумма оплаты по электронному сертификату
-     */
-    val certificateAmount: BigDecimal
-)

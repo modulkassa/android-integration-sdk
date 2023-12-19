@@ -1,7 +1,9 @@
 package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
+import com.google.gson.reflect.TypeToken
 import ru.modulkassa.pos.integration.entity.Bundable
+import ru.modulkassa.pos.integration.entity.GsonFactory
 import ru.modulkassa.pos.integration.entity.payment.RequestType.REFUND
 import java.math.BigDecimal
 
@@ -26,7 +28,11 @@ data class RefundRequest(
      * **Внимание!** МодульКасса не ограничивает кассира в выборе способа оплаты при возврате.
      * Поэтому, поле может быть не заполнено или заполнено другими данными.
      */
-    val paymentInfo: String? = null
+    val paymentInfo: String? = null,
+    /**
+     * Данные для платежа с использованием электронного сертификата
+     */
+    val certificate: CertificateDetails? = null
 ) : Bundable, PaymentRequest {
 
     companion object {
@@ -34,13 +40,20 @@ data class RefundRequest(
         private const val KEY_AMOUNT = "amount"
         private const val KEY_DESCRIPTION = "description"
         private const val KEY_PAYMENT_INFO = "payment_info"
+        private const val KEY_CERT = "certificate"
+
+        private val gson = GsonFactory.provide()
 
         fun fromBundle(bundle: Bundle): RefundRequest {
             return RefundRequest(
                 paymentId = bundle.getString(KEY_PAYMENT_ID) ?: "",
                 amount = BigDecimal(bundle.getString(KEY_AMOUNT)),
                 description = bundle.getString(KEY_DESCRIPTION) ?: "",
-                paymentInfo = bundle.getString(KEY_PAYMENT_INFO, null)
+                paymentInfo = bundle.getString(KEY_PAYMENT_INFO, null),
+                certificate = gson.fromJson<CertificateDetails>(
+                    bundle.getString(KEY_CERT),
+                    object : TypeToken<CertificateDetails>() {}.type
+                )
             )
         }
     }
@@ -54,6 +67,7 @@ data class RefundRequest(
             putString(KEY_AMOUNT, amount.toPlainString())
             putString(KEY_DESCRIPTION, description)
             putString(KEY_PAYMENT_INFO, paymentInfo)
+            certificate?.let { putString(KEY_CERT, gson.toJson(certificate)) }
             putString(RequestTypeSerialization.KEY, requestType.name)
         }
     }

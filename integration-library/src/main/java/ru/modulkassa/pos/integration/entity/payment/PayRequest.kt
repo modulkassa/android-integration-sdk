@@ -96,5 +96,10 @@ data class PayRequestPosition(
     /**
      * Количество товара
      */
-    val quantity: BigDecimal
+    val quantity: BigDecimal,
+    /**
+     * Код ТРУ (товар, работа, услуга) для субсидированных товаров
+     * Используется при оплате по электронному сертификату
+     */
+    var truCode: String? = null
 )

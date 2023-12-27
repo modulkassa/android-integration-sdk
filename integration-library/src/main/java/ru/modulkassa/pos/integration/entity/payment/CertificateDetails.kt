@@ -8,6 +8,7 @@ import java.math.BigDecimal
 data class CertificateDetails(
     /**
      * Идентификатор сформированной корзины от НСПК
+     * Формат: 24 цифры
      */
     val basketId: String,
     /**

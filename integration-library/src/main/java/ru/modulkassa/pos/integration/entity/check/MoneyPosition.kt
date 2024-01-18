@@ -1,5 +1,6 @@
 package ru.modulkassa.pos.integration.entity.check
 
+import ru.modulkassa.pos.integration.entity.payment.CertificateDetails
 import ru.modulkassa.pos.integration.entity.payment.PaymentType
 import java.math.BigDecimal
 
@@ -12,7 +13,7 @@ data class MoneyPosition(
      */
     var paymentType: PaymentType,
     /**
-     * Сумма выбранного типа оплаты. Если сумма больше, чем итог по товарам, то сдача будет посчитана автоматически.
+     * Общая сумма выбранного типа оплаты. Если сумма больше, чем итог по товарам, то сдача будет посчитана автоматически.
      * Точность должна быть указана до 2х знаков [BigDecimal.setScale(2, BigDecimal.ROUND_DOWN)]
      */
     var sum: BigDecimal,
@@ -84,5 +85,9 @@ data class MoneyPosition(
      * Параметр является необязательным.
      * В одном чеке может быть только одна безналичная оплата с одним идентификатором мерчанта.
      */
-    val merchantId: String? = null
+    val merchantId: String? = null,
+    /**
+     * Информация для платежа/возврата с использованием электронного сертификата
+     */
+    val certificateDetails: CertificateDetails? = null
 )

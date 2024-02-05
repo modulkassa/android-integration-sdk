@@ -417,11 +417,26 @@ class MainActivity : AppCompatActivity() {
                     })
                 }
             }
+
+            printCheckWithSelect.setOnClickListener {
+                startActivityForResult(
+                    Intent.createChooser(
+                        modulKassaClient.checkManager().createPrintCheckIntent(
+                            demoCheck.copy(
+                                id = UUID.randomUUID().toString()
+                            )
+                        ),
+                        "Выберите приложение для печати чека"
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
+            }
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PRINT_CHECK_PERMISSION_REQUEST -> {
                 // If request is cancelled, the result arrays are empty.

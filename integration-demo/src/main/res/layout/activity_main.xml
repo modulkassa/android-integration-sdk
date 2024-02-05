@@ -118,6 +118,12 @@
             android:layout_height="wrap_content"
             android:text="Внести наличные"/>
 
+        <Button
+            android:id="@+id/printCheckWithSelect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Напечатать чек с выбором приложения"/>
+
     </LinearLayout>
 
 </ScrollView>

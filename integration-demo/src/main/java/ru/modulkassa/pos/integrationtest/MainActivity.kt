@@ -431,6 +431,80 @@ class MainActivity : AppCompatActivity() {
                     PRINT_CHECK_REQUEST_CODE
                 )
             }
+
+            printCheckWithPackageName.setOnClickListener {
+                startActivityForResult(
+                    Intent.createChooser(
+                        modulKassaClient.checkManager().createPrintCheckIntent(
+                            check = demoCheck.copy(
+                                id = UUID.randomUUID().toString()
+                            ),
+                            packageName = "com.avanpos.pos"
+                        ),
+                        "Выберите приложение для печати чека"
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
+            }
+
+            printCheckCardPayWithPackageName.setOnClickListener {
+                startActivityForResult(
+                    Intent.createChooser(
+                        modulKassaClient.checkManager().createPrintCheckIntent(
+                            check = demoCheck.copy(
+                                id = UUID.randomUUID().toString(),
+                                moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
+                            ),
+                            packageName = "com.avanpos.pos"
+                        ),
+                        "Выберите приложение для печати чека"
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
+            }
+
+            printCheckCardRefundWithPackageName.setOnClickListener {
+                startActivityForResult(
+                    Intent.createChooser(
+                        modulKassaClient.checkManager().createPrintCheckIntent(
+                            check = demoCheck.copy(
+                                id = UUID.randomUUID().toString(),
+                                docType = RETURN,
+                                moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
+                            ),
+                            packageName = "com.avanpos.pos"
+                        ),
+                        "Выберите приложение для печати чека"
+                    ),
+                    PRINT_CHECK_REQUEST_CODE
+                )
+            }
+
+            openShiftWithPackageName.setOnClickListener {
+                startActivityForResult(
+                    Intent.createChooser(
+                        modulKassaClient.shiftManager().createOpenShiftIntent(
+                            Employee(name = "Иванов Иван"),
+                            packageName = "com.avanpos.pos"
+                        ),
+                        "Выберите приложение для открытия смены"
+                    ),
+                    SHIFT_ACTION_REQUEST_CODE
+                )
+            }
+
+            closeShiftWithPackageName.setOnClickListener {
+                startActivityForResult(
+                    Intent.createChooser(
+                        modulKassaClient.shiftManager().createCloseShiftIntent(
+                            Employee(name = "Иванов Иван"),
+                            packageName = "com.avanpos.pos"
+                        ),
+                        "Выберите приложение для закрытия смены"
+                    ),
+                    SHIFT_ACTION_REQUEST_CODE
+                )
+            }
         }
     }
 

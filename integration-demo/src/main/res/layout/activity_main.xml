@@ -157,12 +157,6 @@
             android:text="Напечатать чек с оплатой картой" />
 
         <Button
-            android:id="@+id/printCheckCardRefundWithPackageName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Напечатать чек с возвратом по карте" />
-
-        <Button
             android:id="@+id/openShiftWithPackageName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

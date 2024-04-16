@@ -463,23 +463,6 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-            printCheckCardRefundWithPackageName.setOnClickListener {
-                startActivityForResult(
-                    Intent.createChooser(
-                        modulKassaClient.checkManager().createPrintCheckIntent(
-                            check = demoCheck.copy(
-                                id = UUID.randomUUID().toString(),
-                                docType = RETURN,
-                                moneyPositions = listOf(MoneyPosition(CARD, BigDecimal("300")))
-                            ),
-                            packageName = "com.avanpos.pos"
-                        ),
-                        "Выберите приложение для печати чека"
-                    ),
-                    PRINT_CHECK_REQUEST_CODE
-                )
-            }
-
             openShiftWithPackageName.setOnClickListener {
                 startActivityForResult(
                     Intent.createChooser(

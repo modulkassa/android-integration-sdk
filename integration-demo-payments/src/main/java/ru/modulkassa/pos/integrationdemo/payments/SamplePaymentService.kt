@@ -42,7 +42,7 @@ class SamplePaymentService : PluginService() {
                                           callback: PluginServiceCallbackHolder) {
                     thread() {
                         Thread.sleep(2_000)
-                        callback.get().succeeded(CancelResult(listOf()).toBundle())
+                        callback.get().succeeded(RefundResult(listOf()).toBundle())
                     }
                 }
             },

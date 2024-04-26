@@ -12,8 +12,9 @@ interface CheckManager {
 
     /**
      * Подготовить `Intent` для отправки чека на печать
+     * @param packageName - имя пакета приложения МодульКасса для вызова
      */
-    fun createPrintCheckIntent(check: Check): Intent
+    fun createPrintCheckIntent(check: Check, packageName: String? = null): Intent
 
     /**
      * Получение успешного результата печати чека
@@ -27,8 +28,9 @@ interface CheckManager {
 
     /**
      * Подготовить `Intent` для создание чека внесения/выема
+     * @param packageName - имя пакета приложения МодульКасса для вызова
      */
-    fun createMoneyCheckIntent(check: MoneyCheck): Intent
+    fun createMoneyCheckIntent(check: MoneyCheck, packageName: String? = null): Intent
 
     /**
      * Получение информации об ошибке при создании чека внесения/выема

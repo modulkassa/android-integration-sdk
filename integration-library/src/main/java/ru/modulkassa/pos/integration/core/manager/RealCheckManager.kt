@@ -12,9 +12,12 @@ internal class RealCheckManager(
     private val intentFactory: IntentFactory
 ) : CheckManager {
 
-    override fun createPrintCheckIntent(check: Check): Intent {
+    override fun createPrintCheckIntent(check: Check, packageName: String?): Intent {
         return intentFactory.createIntent().apply {
             action = ACTION_CHECK_REGISTRATION
+            packageName?.let {
+                `package` = it
+            }
             putExtra(KEY_CASH_DOCUMENT_TYPE, check.docType.name)
             putExtras(check.toBundle())
         }
@@ -28,9 +31,12 @@ internal class RealCheckManager(
         return ResultError.fromBundle(data.extras)
     }
 
-    override fun createMoneyCheckIntent(check: MoneyCheck): Intent {
+    override fun createMoneyCheckIntent(check: MoneyCheck, packageName: String?): Intent {
         return intentFactory.createIntent().apply {
             action = ACTION_MONEY_CHECK_REGISTRATION
+            packageName?.let {
+                `package` = it
+            }
             putExtras(check.toBundle())
         }
     }

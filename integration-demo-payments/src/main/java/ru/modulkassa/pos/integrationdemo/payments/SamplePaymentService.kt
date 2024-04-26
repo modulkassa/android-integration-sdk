@@ -40,7 +40,10 @@ class SamplePaymentService : PluginService() {
             object : RefundOperationHandler() {
                 override fun handleRefund(refundRequest: RefundRequest,
                                           callback: PluginServiceCallbackHolder) {
-                    callback.get().succeeded(RefundResult(listOf()).toBundle())
+                    thread() {
+                        Thread.sleep(2_000)
+                        callback.get().succeeded(RefundResult(listOf()).toBundle())
+                    }
                 }
             },
             /**
@@ -50,7 +53,7 @@ class SamplePaymentService : PluginService() {
                 override fun handleCancel(cancelRequest: CancelRequest,
                                           callback: PluginServiceCallbackHolder) {
                     thread() {
-                        Thread.sleep(5_000)
+                        Thread.sleep(2_000)
                         callback.get().succeeded(CancelResult(listOf()).toBundle())
                     }
                 }

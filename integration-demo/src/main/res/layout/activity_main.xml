@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context="ru.modulkassa.pos.integrationtest.MainActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="Сервисные методы (без UI)" />
 
         <Button
             android:id="@+id/printCheck"
@@ -21,7 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/getCheckInfo"
@@ -33,90 +38,135 @@
             android:id="@+id/getKktDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Получить данные о ККТ"/>
-        <Button
-            android:id="@+id/printCheckViaModulKassa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Напечатать чек через МодульКассу"/>
-
-        <Button
-            android:id="@+id/printCheckViaModulKassaByCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Напечатать чек через МодульКассу (картой)"/>
-
-        <Button
-            android:id="@+id/refund"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Возврат чека"/>
-
-        <Button
-            android:id="@+id/refundByCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Возврат чека (по карте)"/>
-
-        <Button
-            android:id="@+id/cancelByCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Отмена чека (по карте)"/>
+            android:text="Получить данные о ККТ" />
 
         <Button
             android:id="@+id/printText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Напечатать произвольный текст"/>
-
-        <Button
-            android:id="@+id/openShiftViaModulKassa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Открыть смену через МодульКассу"/>
-
-        <Button
-            android:id="@+id/openShift"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Открыть смену"/>
-
-        <Button
-            android:id="@+id/closeShiftViaModulKassa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Закрыть смену через МодульКассу"/>
-
-        <Button
-            android:id="@+id/closeShift"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Закрыть смену"/>
-
-        <Button
-            android:id="@+id/xShiftReport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Х-отчет"/>
+            android:text="Напечатать произвольный текст" />
 
         <Button
             android:id="@+id/getShiftInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Получить данные о смене"/>
+            android:text="Получить данные о смене" />
 
         <Button
-            android:id="@+id/createMoneyDocViaModulKassa"
+            android:id="@+id/openShift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Внести наличные через МодульКассу"/>
+            android:text="Открыть смену" />
+
+        <Button
+            android:id="@+id/closeShift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Закрыть смену" />
 
         <Button
             android:id="@+id/createMoneyDoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Внести наличные"/>
+            android:text="Внести наличные" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="UI методы" />
+
+        <Button
+            android:id="@+id/printCheckViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Напечатать чек через МодульКассу" />
+
+        <Button
+            android:id="@+id/printCheckViaModulKassaByCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Напечатать чек через МодульКассу (картой)" />
+
+        <Button
+            android:id="@+id/refund"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Возврат чека" />
+
+        <Button
+            android:id="@+id/refundByCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Возврат чека (по карте)" />
+
+        <Button
+            android:id="@+id/cancelByCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Отмена чека (по карте)" />
+
+        <Button
+            android:id="@+id/openShiftViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Открыть смену через МодульКассу" />
+
+        <Button
+            android:id="@+id/closeShiftViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Закрыть смену через МодульКассу" />
+
+        <Button
+            android:id="@+id/xShiftReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Х-отчет" />
+
+        <Button
+            android:id="@+id/createMoneyDocViaModulKassa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Внести наличные через МодульКассу" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="UI методы с указанием пакета приложения" />
+
+        <Button
+            android:id="@+id/printCheckWithSelect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Напечатать чек с выбором приложения" />
+
+        <Button
+            android:id="@+id/printCheckWithPackageName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Напечатать чек" />
+
+        <Button
+            android:id="@+id/printCheckCardPayWithPackageName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Напечатать чек с оплатой картой" />
+
+        <Button
+            android:id="@+id/openShiftWithPackageName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Открыть смену" />
+
+        <Button
+            android:id="@+id/closeShiftWithPackageName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Закрыть смену" />
 
     </LinearLayout>
 

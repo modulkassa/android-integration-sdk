@@ -30,6 +30,10 @@ data class RefundRequest(
      */
     val paymentInfo: String? = null,
     /**
+     * Идентификатор мерчанта
+     */
+    val merchantId: String? = null,
+    /**
      * Данные для платежа с использованием электронного сертификата
      */
     val certificate: CertificateDetails? = null

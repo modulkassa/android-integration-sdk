@@ -1,8 +1,8 @@
 package ru.modulkassa.pos.integration.entity.payment
 
 import android.os.Bundle
-import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -63,6 +63,7 @@ class RefundRequestTest {
         assertThat(result.description, equalTo(""))
         assertThat(result.paymentInfo, nullValue())
         assertThat(result.certificate, nullValue())
+        assertThat(result.merchantId, nullValue())
     }
 
     @Test
@@ -73,6 +74,7 @@ class RefundRequestTest {
             putString("description", "desc")
             putString("payment_info", "payment-info")
             putString("certificate", "{\"basketId\":\"123456\",\"certificateAmount\":1}")
+            putString("merchant_id", "merchantId")
         }
 
         val result = RefundRequest.fromBundle(bundle)
@@ -82,13 +84,14 @@ class RefundRequestTest {
         assertThat(result.description, equalTo("desc"))
         assertThat(result.paymentInfo, equalTo("payment-info"))
         assertThat(result.certificate, equalTo(CertificateDetails("123456", BigDecimal.ONE)))
+        assertThat(result.merchantId, equalTo("merchantId"))
     }
 
     @Test
     fun ToBundle_Filled_SavesFields() {
         val result = RefundRequest(
             "payment-id", BigDecimal.TEN, "description", "payment-info",
-            certificate = CertificateDetails("123456", BigDecimal.ONE)
+            certificate = CertificateDetails("123456", BigDecimal.ONE), merchantId = "merchantId"
         )
 
         val bundle = result.toBundle()
@@ -98,11 +101,12 @@ class RefundRequestTest {
         assertThat(bundle.getString("description"), equalTo("description"))
         assertThat(bundle.getString("payment_info"), equalTo("payment-info"))
         assertThat(bundle.getString("certificate"), equalTo("{\"basketId\":\"123456\",\"certificateAmount\":1}"))
+        assertThat(bundle.getString("merchant_id"), equalTo("merchantId"))
     }
 
     @Test
     fun ToBundle_NoCertificate_SavesNull() {
-        val result = RefundRequest("payment-id", BigDecimal.TEN, "description", null, null)
+        val result = RefundRequest("payment-id", BigDecimal.TEN, "description", null, certificate = null)
 
         val bundle = result.toBundle()
 

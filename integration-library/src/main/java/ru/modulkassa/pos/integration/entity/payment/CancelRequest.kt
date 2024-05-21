@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.google.gson.reflect.TypeToken
 import ru.modulkassa.pos.integration.entity.Bundable
 import ru.modulkassa.pos.integration.entity.GsonFactory
-import ru.modulkassa.pos.integration.entity.payment.RefundRequest.Companion
 import ru.modulkassa.pos.integration.entity.payment.RequestType.CANCEL
 import java.math.BigDecimal
 
@@ -31,6 +30,10 @@ data class CancelRequest(
      */
     val paymentInfo: String? = null,
     /**
+     * Идентификатор мерчанта
+     */
+    val merchantId: String? = null,
+    /**
      * Данные для платежа с использованием электронного сертификата
      */
     val certificate: CertificateDetails? = null
@@ -42,6 +45,7 @@ data class CancelRequest(
         private const val KEY_DESCRIPTION = "description"
         private const val KEY_PAYMENT_INFO = "payment_info"
         private const val KEY_CERT = "certificate"
+        private const val KEY_MERCHANT_ID = "merchant_id"
 
         private val gson = GsonFactory.provide()
 
@@ -54,7 +58,8 @@ data class CancelRequest(
                 certificate = gson.fromJson<CertificateDetails>(
                     bundle.getString(KEY_CERT),
                     object : TypeToken<CertificateDetails>() {}.type
-                )
+                ),
+                merchantId = bundle.getString(KEY_MERCHANT_ID)
             )
         }
     }
@@ -70,6 +75,7 @@ data class CancelRequest(
             putString(KEY_PAYMENT_INFO, paymentInfo)
             certificate?.let { putString(KEY_CERT, gson.toJson(certificate)) }
             putString(RequestTypeSerialization.KEY, requestType.name)
+            putString(KEY_MERCHANT_ID, merchantId)
         }
     }
 }

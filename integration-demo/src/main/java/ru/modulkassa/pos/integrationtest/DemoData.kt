@@ -3,6 +3,7 @@ package ru.modulkassa.pos.integrationtest
 import ru.modulkassa.pos.integration.entity.check.Check
 import ru.modulkassa.pos.integration.entity.check.ClientInformation
 import ru.modulkassa.pos.integration.entity.check.DocumentType.SALE
+import ru.modulkassa.pos.integration.entity.check.IndustryRequisite
 import ru.modulkassa.pos.integration.entity.check.InventPosition
 import ru.modulkassa.pos.integration.entity.check.InventType.INVENTORY
 import ru.modulkassa.pos.integration.entity.check.Measure.PCS
@@ -23,7 +24,7 @@ val demoCheck = Check(
     email = "some@email.ru",
     inventPositions = listOf(
         InventPosition(
-            name = "Материнская плата AS—Rock H32M R3.0, Socket1150, iH81, 2DDR3, PCI-Ex16, 2SATA2, 2SATA3",
+            name = "Простой товар",
             price = BigDecimal("200"),
             barcode = "2880000023757",
             vatTag = TAG_1103,
@@ -35,15 +36,18 @@ val demoCheck = Check(
             customsDeclarationNumber = "declaration 11"
         ),
         InventPosition(
-            name = "Жесткий диск Seagate",
+            name = "Маркированный товар",
             price = BigDecimal("100"),
-            barcode = "2880000023757",
             vatTag = TAG_1103,
             quantity = BigDecimal.ONE,
             measure = PCS,
-            inventCode = "2880000023757"
+            inventCode = "4690228031229",
+            productMark = "0104690228031229215(dUCb93sKQm",
+            industryRequisite = IndustryRequisite.createForChestnyZnakCheckMark(
+                reqId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                reqTimestamp = "1720177239625"
+            )
         )
-
     ),
     moneyPositions = listOf(MoneyPosition(
         paymentType = CASH,

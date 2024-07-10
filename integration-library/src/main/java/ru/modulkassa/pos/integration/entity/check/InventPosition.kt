@@ -95,5 +95,11 @@ data class InventPosition(
      * Пример: "325022129.11000010100000000001"
      * Формат: "\d{9}\.\d{20}"
      */
-    var truCode: String? = null
+    var truCode: String? = null,
+    /**
+     * Используется для указания отраслевого реквизита
+     * В том числе для указания результатов проверки марки [productMark] в ЧЗ
+     * Подробнее про проверку марки в ЧЗ можно почитать [здесь](https://modulkassa.ru/support/permissive_mode)
+     */
+    var industryRequisite: IndustryRequisite? = null,
 )

@@ -1,7 +1,7 @@
 ext.versions = [minSdk    : 21,
-                targetSdk : 33,
-                compileSdk: 33,
-                buildTools: '33.0.2',
+                targetSdk : 34,
+                compileSdk: 34,
+                buildTools: '34.0.0',
                 kotlin    : '1.4.20',]
 
 ext.gradlePlugins = [android         : 'com.android.tools.build:gradle:7.1.3',

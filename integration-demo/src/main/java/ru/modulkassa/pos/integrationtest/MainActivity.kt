@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     })
-                }
+                } ?: Toast.makeText(this@MainActivity, "Сервис не подключен", Toast.LENGTH_LONG).show()
             }
 
             getCheckInfo.setOnClickListener {

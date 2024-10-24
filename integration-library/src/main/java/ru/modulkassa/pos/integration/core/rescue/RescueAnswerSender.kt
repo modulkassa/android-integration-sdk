@@ -3,7 +3,7 @@ package ru.modulkassa.pos.integration.core.rescue
 import android.os.Bundle
 
 /**
- * Доставляет ответ до МодульКассы в случае обрыва связи, когда приложение выгружено из памяти.
+ * Доставляет ответ до Модулькассы в случае обрыва связи, когда приложение выгружено из памяти.
  */
 interface RescueAnswerSender {
 

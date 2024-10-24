@@ -5,7 +5,7 @@ package ru.modulkassa.pos.integration.entity.kkt
  */
 data class RetailPointInfo(
     /**
-     * Уникальный идентификатор в рамках МодульКассы
+     * Уникальный идентификатор в рамках Модулькассы
      */
     val id: String,
     /**

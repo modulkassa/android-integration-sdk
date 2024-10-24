@@ -11,7 +11,7 @@ data class Shift(
      */
     val id: String,
     /**
-     * Номер смены в МодульКассе
+     * Номер смены в Модулькассе
      */
     val number: Int,
     /**

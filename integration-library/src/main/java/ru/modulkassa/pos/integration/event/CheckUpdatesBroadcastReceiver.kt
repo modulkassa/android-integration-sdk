@@ -55,7 +55,7 @@ open class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     /**
      * Метод сообщающий о том, что чек закрыт
-     * @param checkId - ID чека в приложении МодульКасса
+     * @param checkId - ID чека в приложении Модулькасса
      * @param linkedDocId - ID в системе, которая сформировала чек (заказ, чек из другого приложения и тд)
      */
     open fun onCheckClosed(context: Context, checkId: String, linkedDocId: String?,
@@ -65,7 +65,7 @@ open class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     /**
      * Метод сообщающий о том, что чек отменен
-     * @param checkId - ID чека в приложении МодульКасса
+     * @param checkId - ID чека в приложении Модулькасса
      * @param linkedDocId - ID в системе, которая сформировала чек (заказ, чек из другого приложения и тд)
      */
     open fun onCheckCancelled(context: Context, checkId: String, linkedDocId: String?,
@@ -75,7 +75,7 @@ open class CheckUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     /**
      * Метод сообщающий о том, что чек изменен
-     * @param checkId - ID чека в приложении МодульКасса
+     * @param checkId - ID чека в приложении Модулькасса
      * @param linkedDocId - ID в системе, которая сформировала чек (заказ, чек из другого приложения и тд)
      */
     open fun onCheckChanged(context: Context, checkId: String, linkedDocId: String?,

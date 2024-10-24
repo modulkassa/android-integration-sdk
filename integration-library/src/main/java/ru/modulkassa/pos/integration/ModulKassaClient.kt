@@ -8,7 +8,7 @@ import ru.modulkassa.pos.integration.core.manager.RealShiftManager
 import ru.modulkassa.pos.integration.core.manager.ShiftManager
 
 /**
- * Клиент для работы с приложением МодульКасса
+ * Клиент для работы с приложением Модулькасса
  */
 class ModulKassaClient(
     context: Context

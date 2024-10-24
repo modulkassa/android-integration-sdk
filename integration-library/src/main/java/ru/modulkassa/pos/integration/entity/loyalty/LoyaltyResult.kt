@@ -13,7 +13,7 @@ data class LoyaltyResult(
      */
     val impacts: List<LoyaltyPositionImpact> = emptyList(),
     /**
-     * Данные системы лояльности (информация хранится в БД МодульКассы)
+     * Данные системы лояльности (информация хранится в БД Модулькассы)
      * Максимальная длина 32000.
      */
     val data: String? = null,

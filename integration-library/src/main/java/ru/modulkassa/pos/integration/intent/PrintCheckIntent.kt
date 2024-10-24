@@ -6,7 +6,7 @@ import com.google.gson.JsonSyntaxException
 import ru.modulkassa.pos.integration.entity.check.Check
 
 /**
- * Intent для печати(фискализации) чека в рамках приложения МодульКасса
+ * Intent для печати(фискализации) чека в рамках приложения Модулькасса
  */
 @Deprecated("Используйте ```CheckManager.createPrintCheckIntent()```")
 class PrintCheckIntent(
@@ -15,7 +15,7 @@ class PrintCheckIntent(
      */
     check: Check,
     /**
-     * Имя кассира (должно совпадать с именем кассира в приложении МодульКасса)
+     * Имя кассира (должно совпадать с именем кассира в приложении Модулькасса)
      */
     employeeName: String,
     /**

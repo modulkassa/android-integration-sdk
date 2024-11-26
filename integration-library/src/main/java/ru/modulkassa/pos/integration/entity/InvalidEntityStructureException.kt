@@ -1,7 +1,7 @@
 package ru.modulkassa.pos.integration.entity
 
 /**
- * Некорректная структура сущности обмена между МодульКассой и внешним приложением
+ * Некорректная структура сущности обмена между Модулькассой и внешним приложением
  */
 class InvalidEntityStructureException(
     /**

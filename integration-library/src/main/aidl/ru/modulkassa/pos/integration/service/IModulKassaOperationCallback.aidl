@@ -2,7 +2,7 @@
 package ru.modulkassa.pos.integration.service;
 
 /**
-* Результат выполенния оперции на стороне МодульКассы
+* Результат выполенния оперции на стороне Модулькассы
 */
 interface IModulKassaOperationCallback {
     /**

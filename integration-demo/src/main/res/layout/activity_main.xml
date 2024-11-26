@@ -81,13 +81,13 @@
             android:id="@+id/printCheckViaModulKassa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Напечатать чек через МодульКассу" />
+            android:text="Напечатать чек через Модулькассу" />
 
         <Button
             android:id="@+id/printCheckViaModulKassaByCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Напечатать чек через МодульКассу (картой)" />
+            android:text="Напечатать чек через Модулькассу (картой)" />
 
         <Button
             android:id="@+id/refund"
@@ -111,13 +111,13 @@
             android:id="@+id/openShiftViaModulKassa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Открыть смену через МодульКассу" />
+            android:text="Открыть смену через Модулькассу" />
 
         <Button
             android:id="@+id/closeShiftViaModulKassa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Закрыть смену через МодульКассу" />
+            android:text="Закрыть смену через Модулькассу" />
 
         <Button
             android:id="@+id/xShiftReport"
@@ -129,7 +129,7 @@
             android:id="@+id/createMoneyDocViaModulKassa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Внести наличные через МодульКассу" />
+            android:text="Внести наличные через Модулькассу" />
 
         <TextView
             android:layout_width="match_parent"

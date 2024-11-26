@@ -1,15 +1,15 @@
-# Библиотека для интеграции с приложением МодульКасса
+# Библиотека для интеграции с приложением Модулькасса
 
 [![Release](https://jitpack.io/v/modulkassa/android-integration-sdk.svg)](https://jitpack.io/#modulkassa/android-integration-sdk) [![Maven Central](https://img.shields.io/maven-central/v/ru.modulkassa.pos/integration-library)](https://search.maven.org/artifact/ru.modulkassa.pos/integration-library)
 
-Предоставляет набор сущностей и методов для работы с МодульКассой.
+Предоставляет набор сущностей и методов для работы с Модулькассой.
 
 ## Возможности
 
 - работа со сменами
 - регистрация чеков
 - работа с различными платежными системами (Ingenico, INPAS, AliPay, PayMe, Sunmi P1)
-- интеграция своей платежной системы в МодульКассу
+- интеграция своей платежной системы в Модулькассу
 - и тд
 
 ## Подключение библиотеки

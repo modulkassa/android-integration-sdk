@@ -131,43 +131,6 @@
             android:layout_height="wrap_content"
             android:text="Внести наличные через Модулькассу" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="UI методы с указанием пакета приложения" />
-
-        <Button
-            android:id="@+id/printCheckWithSelect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Напечатать чек с выбором приложения" />
-
-        <Button
-            android:id="@+id/printCheckWithPackageName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Напечатать чек" />
-
-        <Button
-            android:id="@+id/printCheckCardPayWithPackageName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Напечатать чек с оплатой картой" />
-
-        <Button
-            android:id="@+id/openShiftWithPackageName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Открыть смену" />
-
-        <Button
-            android:id="@+id/closeShiftWithPackageName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Закрыть смену" />
-
     </LinearLayout>
 
 </ScrollView>

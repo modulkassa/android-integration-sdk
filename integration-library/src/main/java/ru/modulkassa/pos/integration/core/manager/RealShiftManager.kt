@@ -13,30 +13,24 @@ internal class RealShiftManager(
     private val intentFactory: IntentFactory
 ) : ShiftManager {
 
-    override fun createOpenShiftIntent(employee: Employee, packageName: String?): Intent {
-        return createIntent(employee.name, OPEN_SHIFT_REQUEST, packageName)
+    override fun createOpenShiftIntent(employee: Employee): Intent {
+        return createIntent(employee.name, OPEN_SHIFT_REQUEST)
     }
 
-    override fun createCloseShiftIntent(employee: Employee, packageName: String?): Intent {
-        return createIntent(employee.name, CLOSE_SHIFT_REQUEST, packageName)
+    override fun createCloseShiftIntent(employee: Employee): Intent {
+        return createIntent(employee.name, CLOSE_SHIFT_REQUEST)
     }
 
-    override fun createXReportIntent(packageName: String?): Intent {
+    override fun createXReportIntent(): Intent {
         return intentFactory.createIntent().apply {
             action = ACTION_SHIFT
-            packageName?.let {
-                `package` = it
-            }
             putExtra(KEY_SHIFT_REQUEST_TYPE, X_REPORT_SHIFT_REQUEST)
         }
     }
 
-    private fun createIntent(employeeName: String, requestType: String, packageName: String?): Intent {
+    private fun createIntent(employeeName: String, requestType: String): Intent {
         return intentFactory.createIntent().apply {
             action = ACTION_SHIFT
-            packageName?.let {
-                `package` = it
-            }
             putExtra(KEY_SHIFT_REQUEST_TYPE, requestType)
             putExtras(Employee(name = employeeName).toBundle())
         }

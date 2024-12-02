@@ -11,15 +11,13 @@ interface ShiftManager {
 
     /**
      * Подготовить `Intent` для открытия смены
-     * @param packageName - имя пакета приложения Модулькасса для вызова
      */
-    fun createOpenShiftIntent(employee: Employee, packageName: String? = null): Intent
+    fun createOpenShiftIntent(employee: Employee): Intent
 
     /**
      * Подготовить `Intent` для закрытия смены
-     * @param packageName - имя пакета приложения Модулькасса для вызова
      */
-    fun createCloseShiftIntent(employee: Employee, packageName: String? = null): Intent
+    fun createCloseShiftIntent(employee: Employee): Intent
 
     /**
      * Получение информации об ошибке запроса
@@ -28,8 +26,7 @@ interface ShiftManager {
 
     /**
      * Подготовить `Intent` для печати x-отчета
-     * @param packageName - имя пакета приложения Модулькасса для вызова
      */
-    fun createXReportIntent(packageName: String? = null): Intent
+    fun createXReportIntent(): Intent
 
 }

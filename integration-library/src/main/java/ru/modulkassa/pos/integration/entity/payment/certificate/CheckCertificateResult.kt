@@ -10,24 +10,24 @@ import ru.modulkassa.pos.integration.entity.payment.RequestTypeSerialization
  */
 class CheckCertificateResult(
     /**
-     * Хешированное значение pan карты
+     * Payment Account Reference карты
      */
-    val panSha256: String
+    val par: String
 ) : Bundable {
 
     companion object {
-        private const val KEY_PAN = "pan"
+        private const val KEY_PAR = "par"
 
         fun fromBundle(bundle: Bundle): CheckCertificateResult {
             return CheckCertificateResult(
-                panSha256 = bundle.getString(KEY_PAN) ?: ""
+                par = bundle.getString(KEY_PAR) ?: ""
             )
         }
     }
 
     override fun toBundle(): Bundle {
         return Bundle().apply {
-            putString(KEY_PAN, panSha256)
+            putString(KEY_PAR, par)
             putString(RequestTypeSerialization.KEY, RequestType.CHECK_CERTIFICATE.name)
         }
     }

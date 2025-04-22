@@ -4,7 +4,7 @@ import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
 
 /**
- * Результат на подтвеждение заказа во внешней crm системе
+ * Результат на подтверждение заказа во внешней crm системе
  */
 data class ConfirmOrderToCrmResult(
     val success: Boolean

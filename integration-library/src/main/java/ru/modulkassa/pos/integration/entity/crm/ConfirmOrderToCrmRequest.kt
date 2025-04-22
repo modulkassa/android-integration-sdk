@@ -4,7 +4,7 @@ import android.os.Bundle
 import ru.modulkassa.pos.integration.entity.Bundable
 
 /**
- * Запрос на подтвеждение заказа во внешней crm системе
+ * Запрос на подтверждение заказа во внешней crm системе
  */
 data class ConfirmOrderToCrmRequest(
     /**

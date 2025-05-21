@@ -13,7 +13,7 @@ data class CorrectionInfo(
     /**
      * Номер документа основания
      */
-    val documentNum: String,
+    val documentNum: String?,
     /**
      * Фискальный признак документа основания
      */

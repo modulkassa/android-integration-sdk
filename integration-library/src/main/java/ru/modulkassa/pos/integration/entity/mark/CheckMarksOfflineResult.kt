@@ -55,7 +55,6 @@ data class MarkOfflineResult(
      * Сопроводительный текст
      */
     val message: String? = null,
-    // todo добавить inst ЛМ?
 )
 
 enum class MarkOfflineStatus {

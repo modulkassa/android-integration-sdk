@@ -4,8 +4,6 @@ import android.os.Bundle
 import com.google.gson.reflect.TypeToken
 import ru.modulkassa.pos.integration.entity.Bundable
 import ru.modulkassa.pos.integration.entity.GsonFactory
-import ru.modulkassa.pos.integration.entity.check.Employee
-import java.math.BigDecimal
 
 /**
  * Запрос на создание заказа во внешней crm системе
@@ -29,7 +27,6 @@ data class CreateOrderToCrmRequest(
         private const val KEY_RETAIL_POINT_ID = "retailPointId"
         private const val KEY_POSITIONS = "positions"
         private const val KEY_IS_ADMIN = "isEmployeeAdmin"
-
 
         private val gson = GsonFactory.provide()
 
@@ -57,33 +54,3 @@ data class CreateOrderToCrmRequest(
         }
     }
 }
-
-data class CrmPosition(
-    /**
-     * Штрихкод товара
-     */
-    var barcode: String,
-    /**
-     * Количество товара
-     */
-    var quantity: BigDecimal,
-    /**
-     * Цена товара
-     */
-    var price: BigDecimal,
-    /**
-     * Список модификаторов
-     */
-    val modifiers: List<CrmModifier>
-)
-
-data class CrmModifier(
-    /**
-     * Наименование модификатора
-     */
-    val name: String,
-    /**
-     * Цена модификатора
-     */
-    val price: BigDecimal
-)

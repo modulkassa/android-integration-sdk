@@ -4,6 +4,10 @@ import java.math.BigDecimal
 
 data class CrmPosition(
     /**
+     * Идентификатор позиции
+     */
+    var id: String,
+    /**
      * Штрихкод товара
      */
     var barcode: String,

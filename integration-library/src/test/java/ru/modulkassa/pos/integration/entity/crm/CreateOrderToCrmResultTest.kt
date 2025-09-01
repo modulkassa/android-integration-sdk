@@ -47,14 +47,14 @@ class CreateOrderToCrmResultTest {
         val createOrderToCrmResult = CreateOrderToCrmResult(
             orderId = 12345,
             phone = "+70008887766",
-            positions = listOf(CrmPosition("barcode", BigDecimal.ONE, BigDecimal.ONE, listOf()))
+            positions = listOf(CrmPosition("id","barcode", BigDecimal.ONE, BigDecimal.ONE, listOf()))
         )
 
         val bundle = createOrderToCrmResult.toBundle()
 
         assertThat(
             bundle.getString("positions"),
-            equalTo("[{\"barcode\":\"barcode\",\"quantity\":1,\"price\":1,\"modifiers\":[]}]")
+            equalTo("[{\"id\":\"id\",\"barcode\":\"barcode\",\"quantity\":1,\"price\":1,\"modifiers\":[]}]")
         )
     }
 
@@ -105,14 +105,14 @@ class CreateOrderToCrmResultTest {
         val bundle = Bundle().apply {
             putInt("orderId", 12345)
             putString("phone", "+70008887766")
-            putString("positions", "[{\"barcode\":\"barcode\",\"quantity\":1,\"price\":1,\"modifiers\":[]}]")
+            putString("positions", "[{\"id\":\"id\",\"barcode\":\"barcode\",\"quantity\":1,\"price\":1,\"modifiers\":[]}]")
         }
 
         val createOrderToCrmResult = CreateOrderToCrmResult.fromBundle(bundle)
 
         assertThat(
             createOrderToCrmResult.positions,
-            equalTo(listOf(CrmPosition("barcode", BigDecimal.ONE, BigDecimal.ONE, listOf())))
+            equalTo(listOf(CrmPosition("id","barcode", BigDecimal.ONE, BigDecimal.ONE, listOf())))
         )
     }
 

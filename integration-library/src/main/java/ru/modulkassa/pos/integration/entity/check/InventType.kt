@@ -93,7 +93,7 @@ enum class InventType {
      */
     SALES_TAX,
     /**
-     * Курортный сбор
+     * Туристический налог
      */
     RESORT_FEE
 }

@@ -17,10 +17,6 @@ enum class TaxationMode {
      */
     SIMPLIFIED_WITH_EXPENSE,
     /**
-     * ЕНВД
-     */
-    ENVD,
-    /**
      * ЕСХН (сельхозналог)
      */
     COMMON_AGRICULTURAL,

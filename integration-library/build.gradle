@@ -6,7 +6,6 @@ plugins {
     id 'signing'
 }
 
-def libVersionName = "1.7.17"
 def libVersionName = "1.7.18_MK-15055"
 def libArtifactId = "integration-library"
 version = libVersionName

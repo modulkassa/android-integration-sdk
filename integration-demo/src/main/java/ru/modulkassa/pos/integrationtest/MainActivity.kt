@@ -451,7 +451,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToService() {
-        val serviceIntent = ModulKassaServiceIntent()
+        val serviceIntent = ModulKassaServiceIntent() // ModulKassaMarketServiceIntent() для маркет сборки Модулькассы
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(serviceIntent)
         } else {

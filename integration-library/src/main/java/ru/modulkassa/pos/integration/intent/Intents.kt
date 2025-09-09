@@ -11,3 +11,14 @@ class ModulKassaServiceIntent : Intent() {
         action = "ru.modulkassa.pos.MODULKASSA_SERVICE_INTENT"
     }
 }
+
+/**
+ * Intent для коннекта к сервису приложения Модулькасса из маркета (RuStore),
+ * устанавливается в основном на телефоны, также настроено на production окружение
+ */
+class ModulKassaMarketServiceIntent : Intent() {
+    init {
+        `package` = "ru.modulkassa.android.apps.pos"
+        action = "ru.modulkassa.pos.MODULKASSA_SERVICE_INTENT"
+    }
+}

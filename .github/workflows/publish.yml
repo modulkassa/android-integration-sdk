@@ -24,7 +24,10 @@ jobs:
       - name: Publish to MavenCentral
         run: ./gradlew :integration-library:publishReleasePublicationToCentralRepository --max-workers 1
       - name: Upload staging repository to Portal
-        run: curl -X POST -u "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" "https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/${NAMESPACE}"
+        run: |
+          curl -X POST \
+          -u "$SONATYPE_USERNAME:$SONATYPE_PASSWORD" \
+          "https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/${NAMESPACE}"
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}

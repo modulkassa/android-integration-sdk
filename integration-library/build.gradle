@@ -6,7 +6,7 @@ plugins {
     id 'signing'
 }
 
-def libVersionName = "1.7.21_3"
+def libVersionName = "1.7.22"
 def libArtifactId = "integration-library"
 version = libVersionName
 group = 'ru.modulkassa.pos'

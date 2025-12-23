@@ -3,8 +3,8 @@ on:
   release:
     # We'll run this workflow when a new GitHub release is created
     types: [released]
+  # Ручной запуск
   workflow_dispatch:
-    # Ручной запуск
     
 jobs:
   publish:
@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v3.1.1
         with:
           distribution: adopt
-          java-version: 11          
+          java-version: 11
   
       - name: Release build
         run: ./gradlew :integration-library:clean :integration-library:build

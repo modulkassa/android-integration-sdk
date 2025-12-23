@@ -1,8 +1,16 @@
 name: Publish
-on:
-  release:
+
+# on:
+  # release:
     # We'll run this workflow when a new GitHub release is created
-    types: [released]
+   # types: [released]
+
+on:
+  push:
+    branches:
+      - feature/MK-15060
+
+   
 jobs:
   publish:
     name: Release build and publish

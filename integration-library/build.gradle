@@ -6,7 +6,7 @@ plugins {
     id 'signing'
 }
 
-def libVersionName = "1.7.21"
+def libVersionName = "1.7.21_1"
 def libArtifactId = "integration-library"
 version = libVersionName
 group = 'ru.modulkassa.pos'
@@ -99,7 +99,7 @@ publishing {
         }
         maven {
             name 'Central'
-            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
             credentials {
                 username sonatypeUsername
                 password sonatypePassword

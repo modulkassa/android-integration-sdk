@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.modulkassa.pos.integrationtest">
 
-    <uses-permission android:name="ru.modulkassa.pos.permission.PRINT_CHECK"/>
-    <uses-permission android:name="ru.modulkassa.pos.permission.KKT_INFO"/>
-    <uses-permission android:name="ru.modulkassa.pos.permission.CHECK_INFO"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="ru.modulkassa.pos.permission.PRINT_CHECK" />
+    <uses-permission android:name="ru.modulkassa.pos.permission.KKT_INFO" />
+    <uses-permission android:name="ru.modulkassa.pos.permission.CHECK_INFO" />
 
     <queries>
         <intent>
@@ -21,43 +22,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SampleLoyaltyActivity">
-        </activity>
+        <activity android:name=".SampleLoyaltyActivity"/>
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".DemoBroadcastReceiver"
+        <receiver
+            android:name=".DemoBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="ru.modulkassa.pos.events.CHECK_CLOSED"/>
-                <action android:name="ru.modulkassa.pos.events.CHECK_MODIFIED"/>
-                <action android:name="ru.modulkassa.pos.events.CHECK_CANCELLED"/>
+                <action android:name="ru.modulkassa.pos.events.CHECK_CLOSED" />
+                <action android:name="ru.modulkassa.pos.events.CHECK_MODIFIED" />
+                <action android:name="ru.modulkassa.pos.events.CHECK_CANCELLED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".UiEventsBroadcastReceiver"
+        <receiver
+            android:name=".UiEventsBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="ru.modulkassa.pos.events.UI_RETURN_TO_MAIN_SCREEN"/>
+                <action android:name="ru.modulkassa.pos.events.UI_RETURN_TO_MAIN_SCREEN" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".SampleLoyaltyService"
+        <service
+            android:name=".SampleLoyaltyService"
+            android:description="@string/loyalty_description"
             android:enabled="true"
             android:exported="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:label="@string/loyalty_button_label"
-            android:description="@string/loyalty_description">
+            android:label="@string/loyalty_button_label">
 
             <intent-filter>
-                <action android:name="ru.modulkassa.LOYALTY_SERVICE"/>
+                <action android:name="ru.modulkassa.LOYALTY_SERVICE" />
             </intent-filter>
         </service>
 

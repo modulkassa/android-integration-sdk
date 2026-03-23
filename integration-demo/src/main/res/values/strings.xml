@@ -2,4 +2,5 @@
     <string name="app_name">Модулькасса Интеграции</string>
     <string name="loyalty_button_label">Демо лояльность</string>
     <string name="loyalty_description">Чтобы решить проблему, свяжитесь с [название компании] по [телефон или e-mail]</string>
+    <string name="notification_content_text">Подтвердите вызов системы лояльности</string>
 </resources>

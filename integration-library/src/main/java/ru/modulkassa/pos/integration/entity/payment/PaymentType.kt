@@ -19,5 +19,9 @@ enum class PaymentType {
     /**
      * Кредит
      */
-    CREDIT
+    CREDIT,
+    /**
+     * Иная форма оплаты (встречное предоставление)
+     */
+    OTHER
 }

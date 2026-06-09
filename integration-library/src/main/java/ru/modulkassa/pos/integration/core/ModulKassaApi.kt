@@ -16,5 +16,7 @@ class ModulKassaApi {
         const val X_REPORT_SHIFT_REQUEST = "XReport"
         // регистрация чека внесения/выема
         const val ACTION_MONEY_CHECK_REGISTRATION = "ru.modulkassa.pos.MONEY_CHECK_REGISTRATION"
+        // офлайн оплата
+        const val ACTION_OFF_QR = "ru.modulcash.app.OFF_QR"
     }
 }

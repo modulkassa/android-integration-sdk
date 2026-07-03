@@ -8,7 +8,7 @@ import ru.modulkassa.pos.integration.entity.GsonFactory
 /**
  * Результат ошибки офлайн оплаты
  */
-class OffQrResultError(
+data class OffQrResultError(
     /**
      * Идентификатор документа
      */

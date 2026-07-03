@@ -27,5 +27,14 @@
             android:layout_height="wrap_content"
             android:text="Офлайн возврат чека через Модулькассу" />
 
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="16dp"
+            android:padding="4dp"
+            android:text="" />
+
     </LinearLayout>
 </ScrollView>

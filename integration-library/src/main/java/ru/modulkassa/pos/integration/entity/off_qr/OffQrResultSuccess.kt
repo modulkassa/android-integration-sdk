@@ -8,7 +8,7 @@ import ru.modulkassa.pos.integration.entity.check.MoneyPosition
 /**
  * Результат успешной офлайн оплаты
  */
-class OffQrResultSuccess(
+data class OffQrResultSuccess(
     /**
      * Идентификатор документа
      */

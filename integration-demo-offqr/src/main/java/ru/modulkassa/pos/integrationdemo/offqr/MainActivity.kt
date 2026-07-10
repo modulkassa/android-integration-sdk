@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun createOffQrIntent(check: Check): Intent {
         return Intent().apply {
             action = ACTION_OFF_QR
-            putExtra(KEY_CASH_DOCUMENT_TYPE, check.docType.name) // todo по нему определять продажа или возврат
+            putExtra(KEY_CASH_DOCUMENT_TYPE, check.docType.name)
             putExtras(check.toBundle())
         }
     }

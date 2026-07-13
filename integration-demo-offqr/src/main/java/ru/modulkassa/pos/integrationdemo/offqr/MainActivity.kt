@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.modulkassa.pos.integration.core.ModulKassaApi.Companion.ACTION_OFF_QR
 import ru.modulkassa.pos.integration.core.ModulKassaApi.Companion.KEY_CASH_DOCUMENT_TYPE
 import ru.modulkassa.pos.integration.entity.check.Check
+import ru.modulkassa.pos.integration.entity.check.DocumentType
 import ru.modulkassa.pos.integration.entity.off_qr.OffQrResultError
 import ru.modulkassa.pos.integration.entity.off_qr.OffQrResultSuccess
 import ru.modulkassa.pos.integrationdemo.offqr.databinding.ActivityMainBinding
@@ -31,6 +32,18 @@ class MainActivity : AppCompatActivity() {
                     createOffQrIntent(
                         demoCheck.copy(
                             id = UUID.randomUUID().toString()
+                        )
+                    ),
+                    OFF_QR_REQUEST_CODE
+                )
+            }
+
+            refundOffline.setOnClickListener {
+                startActivityForResult(
+                    createOffQrIntent(
+                        demoCheck.copy(
+                            id = UUID.randomUUID().toString(),
+                            docType = DocumentType.RETURN
                         )
                     ),
                     OFF_QR_REQUEST_CODE

@@ -21,7 +21,7 @@ val demoCheck = Check(
         InventPosition(
             name = "Товар",
             inventType = INVENTORY,
-            price = BigDecimal("200"),
+            price = BigDecimal.valueOf(10),
             vatTag = TAG_1102,
             quantity = BigDecimal.ONE,
             measure = PCS,
@@ -32,7 +32,8 @@ val demoCheck = Check(
     moneyPositions = listOf(
         MoneyPosition(
             paymentType = CARD,
-            sum = BigDecimal("200")
+            sum = BigDecimal.valueOf(10),
+            linkedId = "AD00112233445566778899AASSDDFFN"
         )
     ),
     taxMode = COMMON,

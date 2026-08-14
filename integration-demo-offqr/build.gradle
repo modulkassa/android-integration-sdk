@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+Properties localProperties = new Properties()
+File propertiesFile = project.rootProject.file('local.properties')
+if (propertiesFile.exists()) {
+    localProperties.load(propertiesFile.newDataInputStream())
+}
+
+android {
+    namespace 'ru.modulkassa.pos.integrationdemo.offqr'
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        applicationId "ru.modulkassa.pos.integrationdemo.offqr"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../demo_keystore.jks")
+            storePassword System.getProperty("android.storePassword") ?: localProperties.getProperty("android.storePassword")
+            keyAlias System.getProperty("android.keyAlias") ?: localProperties.getProperty("android.keyAlias")
+            keyPassword System.getProperty("android.keyPassword") ?: localProperties.getProperty("android.keyPassword")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(':integration-library')
+    implementation libraries.kotlin
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+
+    testImplementation libraries.junit
+}

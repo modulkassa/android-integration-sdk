@@ -1,1 +1,4 @@
-include ':integration-demo', ':integration-library', ':integration-demo-payments'
+include ':integration-demo',
+    ':integration-library',
+    ':integration-demo-payments',
+    ':integration-demo-offqr'

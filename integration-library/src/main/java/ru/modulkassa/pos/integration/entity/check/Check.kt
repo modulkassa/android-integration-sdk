@@ -92,7 +92,15 @@ data class Check(
     /**
      * Информация о чеке коррекции
      */
-    var correctionInfo: CorrectionInfo? = null
+    var correctionInfo: CorrectionInfo? = null,
+    /**
+     * Идентификатор заказа/заявки
+     */
+    var orderId: String? = null,
+    /**
+     * URL для подтверждения успешной фискализации с сервера (callback)
+     */
+    var responseURL: String? = null,
 ) : Bundable {
 
     companion object {

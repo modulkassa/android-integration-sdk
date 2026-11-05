@@ -1,5 +1,6 @@
 package ru.modulkassa.pos.integrationtest
 
+import android.Manifest
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         private const val PRINT_CHECK_REQUEST_CODE = 2
         private const val SHIFT_ACTION_REQUEST_CODE = 3
         private const val CREATE_MONEY_DOC_REQUEST_CODE = 4
+        private const val NOTIFICATION_REQUEST_CODE = 5
     }
 
     private var modulkassa: IModulKassa? = null
@@ -194,24 +196,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            if (ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.PRINT_CHECK")
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.KKT_INFO")
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.CHECK_INFO")
-                != PackageManager.PERMISSION_GRANTED
-            ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 ActivityCompat.requestPermissions(
                     this@MainActivity,
-                    arrayOf(
-                        "ru.modulkassa.pos.permission.KKT_INFO",
-                        "ru.modulkassa.pos.permission.CHECK_INFO",
-                        "ru.modulkassa.pos.permission.PRINT_CHECK"
-                    ),
-                    PRINT_CHECK_PERMISSION_REQUEST
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_REQUEST_CODE
                 )
             } else {
-                connectToService()
+                setupCheckOperations()
             }
 
             printCheckViaModulKassa.setOnClickListener {
@@ -420,8 +412,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    private fun setupCheckOperations() {
+        if (ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.PRINT_CHECK")
+            != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.KKT_INFO")
+            != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this@MainActivity, "ru.modulkassa.pos.permission.CHECK_INFO")
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this@MainActivity,
+                arrayOf(
+                    "ru.modulkassa.pos.permission.KKT_INFO",
+                    "ru.modulkassa.pos.permission.CHECK_INFO",
+                    "ru.modulkassa.pos.permission.PRINT_CHECK"
+                ),
+                PRINT_CHECK_PERMISSION_REQUEST
+            )
+        } else {
+            connectToService()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PRINT_CHECK_PERMISSION_REQUEST -> {
@@ -431,12 +447,28 @@ class MainActivity : AppCompatActivity() {
                     connectToService()
 
                 } else {
-                    Toast.makeText(this, "Разрешение на печать было отклонено пользователем",
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this, "Разрешение на печать было отклонено пользователем",
+                        Toast.LENGTH_LONG
+                    ).show()
                     finish()
                 }
                 return
             }
+
+            NOTIFICATION_REQUEST_CODE -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    setupCheckOperations() //выполняем стандартную логику на запрос прав по работе с чеком
+                } else {
+                    Toast.makeText(
+                        this, "Разрешение на уведомления было отклонено пользователем",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    finish()
+                }
+            }
+
             else -> {
                 // Ignore all other requests.
             }
